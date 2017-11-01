@@ -14,7 +14,7 @@
  *   Dennis Jimenez
  *   Michael Ackerman
  */
-package edu.cpp.cs.cs141.prog_assgmnt_3;
+package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 
 public class PowerUp extends GameObject {
 	private PowerUpType type;

@@ -17,12 +17,14 @@
 
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
+import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.ActiveAgent;
+import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObject;
 
 public class Grid {
-	private GameObject[][] grid = new GameObject[9][9];
+	private GameObject[][] grid = new GameObject[Constants.GridColumns][Constants.GridRows];
 	
 	public boolean hasObjectAt(int x, int y) {
-		if (x < 0 || x > 9  || y < 0 || y > 9)
+		if (x < 0 || x > Constants.GridColumns || y < 0 || y > Constants.GridRows)
 			return false;
 		
 		return grid[x][y] != null;
