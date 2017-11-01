@@ -20,13 +20,8 @@ package edu.cpp.cs.cs141.prog_assgmnt_3;
  * @author Nick Huiting
  *
  */
-public abstract class GameObject {
-	private Position position;
-	
-	public Position getPosition() {
-		return position;
-	}
-	
-	
-	public abstract char getSymbol();
+public enum PowerUpType {
+	Radar,
+	Ammo,
+	Invincibility
 }

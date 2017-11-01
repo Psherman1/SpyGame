@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodríguez
+ * Professor: Edwin Rodr&iacute;guez
  *
  * Programming Assignment FinalProject
  *
@@ -18,17 +18,17 @@ package edu.cpp.cs.cs141.prog_assgmnt_3;
 
 /**
  * @author JoseRodriguez
- * Interface created for the Enemy class and Player class.
+ * Base class created for the Enemy class and Player class.
  */
-public interface ActiveAgent {
+public abstract class ActiveAgent extends GameObject {
 	/** 
 	 * Method signature for an Enemy object killing a Player object or
 	 * a Player object killing an Enemy object.
 	 */
-	void kill();
+	public abstract void kill();
 	
 	/**
 	 * Method signature for allowing the view distance of the Player and Enemy to change.
 	 */
-	void look();
+	public abstract void look();
 }

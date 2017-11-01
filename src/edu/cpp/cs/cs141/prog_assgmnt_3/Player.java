@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodríguez
+ * Professor: Edwin Rodr&iacute;guez
  *
  * Programming Assignment FinalProject
  *
@@ -20,7 +20,12 @@ package edu.cpp.cs.cs141.prog_assgmnt_3;
  * @author JoseRodriguez
  * This class represent the player. It implements the ActiveAgent interface.
  */
-public class Player implements ActiveAgent {
+public class Player extends ActiveAgent {
+	private Gun gun;
+	
+	public boolean canAttack() {
+		return gun.hasAmmo();
+	}
 
 	@Override
 	public void kill() {
@@ -34,6 +39,9 @@ public class Player implements ActiveAgent {
 		
 	}
 
-
-
+	@Override
+	public char getSymbol() {
+		// TODO Auto-generated method stub
+		return 'P';
+	}
 }

@@ -18,15 +18,8 @@ package edu.cpp.cs.cs141.prog_assgmnt_3;
 
 /**
  * @author Nick Huiting
- *
+ * Container for all game constants to be used by the engine and elsewhere.
  */
-public abstract class GameObject {
-	private Position position;
-	
-	public Position getPosition() {
-		return position;
-	}
-	
-	
-	public abstract char getSymbol();
+public final class Constants {
+	public static final int PlayerLives = 3;
 }

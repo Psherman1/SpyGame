@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodríguez
+ * Professor: Edwin Rodr&iacute;guez
  *
  * Programming Assignment FinalProject
  *
@@ -22,5 +22,17 @@ package edu.cpp.cs.cs141.prog_assgmnt_3;
  *
  */
 public class Grid {
-
+	private GameObject[][] grid = new GameObject[9][9];
+	
+	public boolean hasObjectAt(int x, int y) {
+		if (x < 0 || x > 9  || y < 0 || y > 9)
+			return false;
+		
+		return grid[x][y] != null;
+	}
+	
+	public String getBoardString() throws Exception {
+		//TODO 
+		throw new Exception();
+	}
 }

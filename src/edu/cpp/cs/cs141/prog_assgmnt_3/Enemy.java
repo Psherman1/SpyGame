@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodríguez
+ * Professor: Edwin Rodr&iacute;guez
  *
  * Programming Assignment FinalProject
  *
@@ -21,7 +21,7 @@ package edu.cpp.cs.cs141.prog_assgmnt_3;
  * @author JoseRodriguez
  *	This class represents the Enemy. It implements the ActiveAgent interface.
  */
-public class Enemy implements ActiveAgent {
+public class Enemy extends ActiveAgent {
 
 	@Override
 	public void kill() {
@@ -35,6 +35,9 @@ public class Enemy implements ActiveAgent {
 		
 	}
 
-
+	@Override
+	public char getSymbol() {
+		return 'X';
+	}
 
 }
