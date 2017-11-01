@@ -17,16 +17,23 @@
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
 /**
- * @author Nick Huiting
- *
+ * @author JoseRodriguez
+ * This class represent the player. It implements the ActiveAgent interface.
  */
-public class Main {
+public class Player implements ActiveAgent {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		//System.out.println("Hello");
+	@Override
+	public void kill() {
+		// TODO make it so the Player can kill the Enemy.
+		
 	}
+
+	@Override
+	public void look() {
+		// TODO add code to allow the player to change view distances...
+		
+	}
+
+
 
 }

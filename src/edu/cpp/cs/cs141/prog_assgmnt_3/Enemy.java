@@ -14,19 +14,27 @@
  *   Dennis Jimenez
  *   Michael Ackerman
  */
+
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
 /**
- * @author Nick Huiting
- *
+ * @author JoseRodriguez
+ *	This class represents the Enemy. It implements the ActiveAgent interface.
  */
-public class Main {
+public class Enemy implements ActiveAgent {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		//System.out.println("Hello");
+	@Override
+	public void kill() {
+		// TODO make it so Enemy can kill the player
+		
 	}
+
+	@Override
+	public void look() {
+		// TODO make it so the view distance can be changed depending on difficulty
+		
+	}
+
+
 
 }

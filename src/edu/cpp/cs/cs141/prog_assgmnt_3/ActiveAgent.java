@@ -17,16 +17,18 @@
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
 /**
- * @author Nick Huiting
- *
+ * @author JoseRodriguez
+ * Interface created for the Enemy class and Player class.
  */
-public class Main {
-
-	/**
-	 * @param args
+public interface ActiveAgent {
+	/** 
+	 * Method signature for an Enemy object killing a Player object or
+	 * a Player object killing an Enemy object.
 	 */
-	public static void main(String[] args) {
-		//System.out.println("Hello");
-	}
-
+	void kill();
+	
+	/**
+	 * Method signature for allowing the view distance of the Player and Enemy to change.
+	 */
+	void look();
 }
