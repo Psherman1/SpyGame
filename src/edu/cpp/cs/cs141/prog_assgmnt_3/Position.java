@@ -16,10 +16,7 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
-/**
- * @author Nick Huiting
- *
- */
+
 public class Position {
 	private int x;
 	private int y;

@@ -16,10 +16,6 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
-/**
- * @author Nick Huiting
- *
- */
 public class Main {
 
 	/**
