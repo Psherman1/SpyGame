@@ -21,7 +21,7 @@ public class GameEngine {
 	private Grid grid;
 	
 	public GameEngine() {
-		//lives = Constants.PlayerLives;
+		lives = Constants.PlayerLives;
 	}
 
 }
