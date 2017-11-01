@@ -16,16 +16,9 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
-import edu.cpp.cs.cs141.prog_assgmnt_3.UI.IGameUI;
-import edu.cpp.cs.cs141.prog_assgmnt_3.UI.UI;
-
-public class Main {
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		IGameUI ui = new UI();
-		GameEngine.start(ui);
-	}
+/**
+ *
+ */
+public enum GameState {
+	
 }

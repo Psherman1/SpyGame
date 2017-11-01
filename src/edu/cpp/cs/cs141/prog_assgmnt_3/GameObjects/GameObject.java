@@ -14,17 +14,17 @@
  *   Dennis Jimenez
  *   Michael Ackerman
  */
-package edu.cpp.cs.cs141.prog_assgmnt_3;
+package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 
-public class Room extends GameObject {
+import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 
-	@Override
-	public char getSymbol() {
-		return 0;
+public abstract class GameObject {
+	private Position position;
+	
+	public Position getPosition() {
+		return position;
 	}
 	
-	public boolean hasBriefcase() {
-		// TODO: Implement function
-		return true;
-	}
+	
+	public abstract char getSymbol();
 }

@@ -17,6 +17,8 @@
 
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
+import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.ActiveAgent;
+import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObject;
 
 public class Grid {
 	private GameObject[][] grid = new GameObject[9][9];

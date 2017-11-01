@@ -16,7 +16,9 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
-
+/**
+ * Immutable position that includes an x and a y value. 
+ */
 public class Position {
 	private int x;
 	private int y;
@@ -32,5 +34,13 @@ public class Position {
 	
 	public int getY() {
 		return y;
+	}
+	
+	public Position changeX(int x) {
+		return new Position(x, this.y);
+	}
+	
+	public Position changeY(int y) {
+		return new Position(this.x, y);
 	}
 }

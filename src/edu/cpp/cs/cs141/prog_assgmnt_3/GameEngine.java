@@ -16,12 +16,25 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
+import edu.cpp.cs.cs141.prog_assgmnt_3.UI.IGameUI;
+
 public class GameEngine {
+	private IGameUI ui;
 	private int lives;
 	private Grid grid;
 	
-	public GameEngine() {
+	private GameEngine(IGameUI ui) {
+		this.ui = ui;
 		lives = Constants.PlayerLives;
+		grid = new Grid();
 	}
 
+	public static void start(IGameUI ui) {
+		GameEngine engine = new GameEngine(ui);
+		engine.enterLoop();
+	}
+	
+	private void enterLoop() {
+		//TODO while loop for prompting for ui, processing input based on state, requesting UI update 
+	}
 }

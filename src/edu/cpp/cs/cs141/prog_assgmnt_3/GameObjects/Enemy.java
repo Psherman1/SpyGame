@@ -14,34 +14,30 @@
  *   Dennis Jimenez
  *   Michael Ackerman
  */
-package edu.cpp.cs.cs141.prog_assgmnt_3;
+
+package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 
 /**
  * @author JoseRodriguez
- * This class represent the player. It implements the ActiveAgent interface.
+ *	This class represents the Enemy. It implements the ActiveAgent interface.
  */
-public class Player extends ActiveAgent {
-	private Gun gun;
-	
-	public boolean canAttack() {
-		return gun.hasAmmo();
-	}
+public class Enemy extends ActiveAgent {
 
 	@Override
 	public void kill() {
-		// TODO make it so the Player can kill the Enemy.
+		// TODO make it so Enemy can kill the player
 		
 	}
 
 	@Override
 	public void look() {
-		// TODO add code to allow the player to change view distances...
+		// TODO make it so the view distance can be changed depending on difficulty
 		
 	}
 
 	@Override
 	public char getSymbol() {
-		// TODO Auto-generated method stub
-		return 'P';
+		return 'X';
 	}
+
 }
