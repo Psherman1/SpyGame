@@ -22,4 +22,6 @@ package edu.cpp.cs.cs141.prog_assgmnt_3;
  */
 public final class Constants {
 	public static final int PlayerLives = 3;
+	public static final int GridRows = 9; //y
+	public static final int GridColumns = 9; //x
 }

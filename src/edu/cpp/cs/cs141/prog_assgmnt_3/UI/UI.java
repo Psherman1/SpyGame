@@ -18,8 +18,6 @@
 package edu.cpp.cs.cs141.prog_assgmnt_3.UI;
 
 import java.util.Scanner;
-
-import edu.cpp.cs.cs141.prog_assgmnt_3.GameEngine;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameState;
 
 public class UI implements IGameUI {
