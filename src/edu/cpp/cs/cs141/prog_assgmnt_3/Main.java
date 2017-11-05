@@ -26,7 +26,11 @@ public class Main {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) {
+<<<<<<< HEAD
+		System.out.println("Hello");
+=======
 		IGameUI ui = new UI();
+<<<<<<< HEAD
 		
 		try {
 			GameEngine.start(ui);
@@ -36,5 +40,9 @@ public class Main {
 			e.printStackTrace();
 			return;
 		}
+=======
+		GameEngine.start(ui);
+>>>>>>> abd5d98772cb2dbbca934e7648df814f0eeae5b6
+>>>>>>> origin/master
 	}
 }
