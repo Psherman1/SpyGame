@@ -19,9 +19,9 @@ package edu.cpp.cs.cs141.prog_assgmnt_3;
 /**
  * Immutable position that includes an x and a y value. 
  */
-public class Position {
-	private int x;
-	private int y;
+public final class Position {
+	private final int x;
+	private final int y;
 	
 	public Position(int x, int y) {
 		this.x = x;

@@ -19,29 +19,38 @@ package edu.cpp.cs.cs141.prog_assgmnt_3;
 
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.ActiveAgent;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObject;
+import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObjectSet;
 
 public class Grid {
-	private GameObject[][] grid = new GameObject[Constants.GridColumns][Constants.GridRows];
+	private GameObjectSet[][] grid = new GameObjectSet[Constants.GridColumns][Constants.GridRows];
+	
+	public Grid() {
+		for (int i = 0; i < Constants.GridColumns; i++) {
+			for (int j = 0; j < Constants.GridRows; j++) { 
+				grid[i][j] = new GameObjectSet();
+			}
+		}
+	}
 	
 	public boolean hasObjectAt(int x, int y) {
-		if (x < 0 || x > Constants.GridColumns || y < 0 || y > Constants.GridRows)
+		if (validatePos(new Position(x, y)) == false)
 			return false;
 		
 		return grid[x][y] != null;
 	}
 	
 	public String getBoardString() throws Exception {
-		//TODO 
+		//TODO we need to create a string representation of the board
 		throw new Exception();
 	}
 
 	/**
 	 *
 	 * @param pos position of an item to get from the grid
-	 * @return GameObject of the item if found, otherwise null
+	 * @return GameObjectSet at that space.
 	 */
-	public GameObject get(Position pos) {
-		return null;
+	public GameObjectSet get(Position pos) {
+		return grid[pos.getX()][pos.getY()];
 	}
 
 	/**
@@ -63,16 +72,16 @@ public class Grid {
 	}
 
 	/**
-	 * Searches the grid for the specified object. Returns a position [x,y].
+	 * Searches the grid for the specified object. Returns a position.
 	 */
-	public int[] Search(GameObject obj) {
+	public Position Search(GameObject obj) {
 		// implement me.
 		return null;
 	}
 
 	/**
 	 * Helper function to get valid adjacent indexes from the grid.
-	 * @param pos pos of the index to get the valid neighbors of.
+	 * @param pos Position of the index to get the valid neighbors of.
 	 * @return Returns an array of valid positions in the form of [pos1, pos2]
 	 */
 	public Position[] getAdjacent(Position pos) {
@@ -85,7 +94,7 @@ public class Grid {
 	 * @param agent
 	 * @param pos
 	 */
-	public void move(ActiveAgent agent, Position pos){
+	public void move(ActiveAgent agent, Position pos) {
 		// TODO: exception if not valid.
 	}
 
@@ -94,7 +103,7 @@ public class Grid {
 	 * @param pos
 	 * @return
 	 */
-	public Boolean validatePos(Position pos) {
-		return null;
+	public boolean validatePos(Position pos) {
+		return pos.getX() >= 0 && pos.getX() < Constants.GridColumns && pos.getY() >= 0 && pos.getY() < Constants.GridRows;
 	}
 }

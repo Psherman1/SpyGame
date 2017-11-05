@@ -20,5 +20,10 @@ package edu.cpp.cs.cs141.prog_assgmnt_3;
  *
  */
 public enum GameState {
-	
+	Menu,
+	Loading,
+	Playing,
+	Dead,
+	Victory,
+	Quit
 }

@@ -18,13 +18,31 @@ package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 
 import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 
+/**
+ * 
+ */
 public abstract class GameObject {
 	private Position position;
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public Position getPosition() {
 		return position;
 	}
-	
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public abstract char getSymbol();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getPriority() {
+		return 0;
+	}
 }

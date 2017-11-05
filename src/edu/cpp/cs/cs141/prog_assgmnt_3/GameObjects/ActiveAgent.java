@@ -31,4 +31,9 @@ public abstract class ActiveAgent extends GameObject {
 	 * Method signature for allowing the view distance of the Player and Enemy to change.
 	 */
 	public abstract void look();
+	
+	@Override
+	public int getPriority() {
+		return 1;
+	}
 }

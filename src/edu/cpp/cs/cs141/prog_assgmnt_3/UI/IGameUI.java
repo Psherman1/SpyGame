@@ -17,6 +17,7 @@
 package edu.cpp.cs.cs141.prog_assgmnt_3.UI;
 
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameState;
+import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.GameStateException;
 
 /**
  *An interface for all user interfaces to interact with the game.
@@ -26,7 +27,7 @@ public interface IGameUI {
 	 * 
 	 * @return
 	 */
-	String getKeyInput(GameState state);
+	String getKeyInput(GameState state) throws GameStateException;
 	
 	/**
 	 * 

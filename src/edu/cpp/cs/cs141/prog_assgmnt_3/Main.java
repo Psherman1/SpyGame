@@ -23,9 +23,18 @@ public class Main {
 
 	/**
 	 * @param args
+	 * @throws Exception 
 	 */
 	public static void main(String[] args) {
 		IGameUI ui = new UI();
-		GameEngine.start(ui);
+		
+		try {
+			GameEngine.start(ui);
+		} 
+		catch (Exception e) {
+			System.out.println("Unrecoverable Exception encountered.  The game will now exit.\n\n");
+			e.printStackTrace();
+			return;
+		}
 	}
 }
