@@ -21,12 +21,15 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.ActiveAgent;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObject;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObjectSet;
 
+/**
+ * Assumes top left corner is 0,0
+ */
 public class Grid {
 	private GameObjectSet[][] grid = new GameObjectSet[Constants.GridColumns][Constants.GridRows];
 	
 	public Grid() {
-		for (int i = 0; i < Constants.GridColumns; i++) {
-			for (int j = 0; j < Constants.GridRows; j++) { 
+		for (int i = 0; i < Constants.GridRows; i++) {
+			for (int j = 0; j < Constants.GridColumns; j++) {
 				grid[i][j] = new GameObjectSet();
 			}
 		}
@@ -67,25 +70,71 @@ public class Grid {
 	 * @param col Integer of col desired.
 	 * @return sorted array of all valid positions in specified col.
 	 */
-	public Position[] getCol(int col) {
-		return null;
+	public GameObjectSet[] getCol(int col) {
+		return grid[col];
 	}
 
 	/**
 	 * Searches the grid for the specified object. Returns a position.
 	 */
 	public Position Search(GameObject obj) {
-		// implement me.
+		for (int i = 0; i < Constants.GridRows; ++i) {
+			for (int j = 0 ; j < Constants.GridColumns; ++j) {
+				GameObjectSet set = grid[i][j];
+				if (set.search(obj) != null) {
+					return new Position(i,j);
+				}
+			}
+		}
 		return null;
 	}
 
 	/**
-	 * Helper function to get valid adjacent indexes from the grid.
+	 * Helper function to get valid adjacent indexes from the grid. If the position is not valid, it will
+	 * be null. For example: [null, topPos, rightPos, bottomPos], the leftPos is not valid. Also, diagonal
+	 * cells do not count as neighbors, Only cells directly above, below, left, and right.
 	 * @param pos Position of the index to get the valid neighbors of.
-	 * @return Returns an array of valid positions in the form of [pos1, pos2]
+	 * @return Returns an array of valid positions in the form of [leftPos, topPos, rightPos, bottomPos]
 	 */
 	public Position[] getAdjacent(Position pos) {
-		return null;
+		//TODO: This function could be streamlined....
+		// elses can be removed?
+		Position[] posArray = new Position[4];
+
+		int leftX = pos.getX() - 1;
+		int topY = pos.getY() - 1;
+		int rightX = pos.getX() + 1;
+		int bottomY = pos.getY() + 1;
+
+		if(leftX >= 0){
+			posArray[0] = new Position(leftX, pos.getY());
+		}
+		else{
+			posArray[0] = null;
+		}
+
+		if(topY >= 0){
+			posArray[1] = new Position(pos.getX(), topY);
+		}
+		else{
+			posArray[1] = null;
+		}
+
+		if(rightX <= Constants.GridColumns){
+			posArray[2] = new Position(rightX, pos.getY());
+		}
+		else{
+			posArray[2] = null;
+		}
+
+		if(bottomY <= Constants.GridRows){
+			posArray[3] = new Position(pos.getX(), bottomY);
+		}
+		else {
+			posArray[3] = null;
+		}
+
+		return posArray;
 	}
 
 	/**
@@ -96,6 +145,8 @@ public class Grid {
 	 */
 	public void move(ActiveAgent agent, Position pos) {
 		// TODO: exception if not valid.
+		// grid.validateMove() < probably needs to be implemented.
+
 	}
 
 	/**

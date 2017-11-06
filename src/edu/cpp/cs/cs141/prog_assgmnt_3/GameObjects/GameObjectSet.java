@@ -39,4 +39,12 @@ public class GameObjectSet {
 		
 		return objects[0].getPriority() > objects[1].getPriority() ? objects[0].getSymbol() : objects[1].getSymbol();
 	}
+
+	/**
+	 *
+	 */
+	public GameObject search(GameObject entry) {
+		//TODO implement me!
+		return null;
+	}
 }
