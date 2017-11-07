@@ -17,12 +17,17 @@
 
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
+import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.PositionException;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.ActiveAgent;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObject;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObjectSet;
+import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.Player;
 
 /**
+ * Contains all game objects.
  * Assumes top left corner is 0,0
+ * Column values represent X values.
+ * Row values represent Y values.
  */
 public class Grid {
 	private GameObjectSet[][] grid = new GameObjectSet[Constants.GridColumns][Constants.GridRows];
@@ -42,9 +47,27 @@ public class Grid {
 		return grid[x][y] != null;
 	}
 	
-	public String getBoardString() throws Exception {
-		//TODO we need to create a string representation of the board
-		throw new Exception();
+	/**
+	 * Creates a string for each row in the board.
+	 * @return
+	 */
+	public String[] getBoardString(Position playerPosition, ViewDirection viewDirection) {
+		String[] lines = new String[Constants.GridRows + 1];
+		String header = "   ";
+		for (int i = 1; i <= Constants.GridRows; i++)
+			header += i + "  ";
+		
+		lines[0] = header;
+		
+		for (int i = 0; i < Constants.GridRows; i++) {
+			String line =  (i + 1) + " ";
+			for (int j = 0; j < Constants.GridColumns; j++) {
+				line += "[" + grid[j][i].getSymbol(playerPosition.isAdjacent(j, i) || playerPosition.posEquals(j, i)) + "]";
+			}
+			lines[i + 1] = line;
+		}
+		
+		return lines;
 	}
 
 	/**
@@ -77,11 +100,12 @@ public class Grid {
 	/**
 	 * Searches the grid for the specified object. Returns a position.
 	 */
-	public Position Search(GameObject obj) {
+	public Position search(GameObject obj) {
+		//TODO we don't need this since the objects have positions stored in them already.
 		for (int i = 0; i < Constants.GridRows; ++i) {
 			for (int j = 0 ; j < Constants.GridColumns; ++j) {
 				GameObjectSet set = grid[i][j];
-				if (set.search(obj) != null) {
+				if (set.search(obj)) {
 					return new Position(i,j);
 				}
 			}
@@ -139,14 +163,17 @@ public class Grid {
 
 	/**
 	 * Function to move an agent to a specific location. Updates the grid by removing the old location,
-	 * and updating the index. This function should be called whenever ActiveAgent.move() is called.
+	 * and updating the index.
 	 * @param agent
 	 * @param pos
 	 */
-	public void move(ActiveAgent agent, Position pos) {
-		// TODO: exception if not valid.
-		// grid.validateMove() < probably needs to be implemented.
-
+	public void move(ActiveAgent agent, Position pos) throws PositionException {
+		if (validatePos(pos) == false)
+			throw new PositionException("Invalid position.", pos);
+		
+		grid[agent.getPosition().getX()][agent.getPosition().getY()].remove(agent);
+		agent.move(pos);
+		grid[pos.getX()][pos.getY()].add(agent);
 	}
 
 	/**

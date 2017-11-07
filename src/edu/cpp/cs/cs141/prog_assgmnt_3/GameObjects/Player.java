@@ -17,13 +17,18 @@
 package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 
 import edu.cpp.cs.cs141.prog_assgmnt_3.Gun;
+import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 
 /**
  * @author JoseRodriguez
  * This class represent the player. It implements the ActiveAgent interface.
  */
 public class Player extends ActiveAgent {
-	private Gun gun;
+	private Gun gun = new Gun();
+	
+	public Player() {
+		super(new Position(0,0));
+	}
 	
 	public boolean canAttack() {
 		return gun.hasAmmo();

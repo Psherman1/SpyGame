@@ -22,7 +22,11 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
  * 
  */
 public abstract class GameObject {
-	private Position position;
+	protected Position position;
+	
+	protected GameObject(Position pos) {
+		position = pos;
+	}
 	
 	/**
 	 * 
@@ -42,7 +46,7 @@ public abstract class GameObject {
 	 * 
 	 * @return
 	 */
-	public int getPriority() {
-		return 0;
+	public VisibilityPriority getPriority() {
+		return VisibilityPriority.None;
 	}
 }

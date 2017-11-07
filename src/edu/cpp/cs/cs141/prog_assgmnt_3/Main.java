@@ -26,7 +26,6 @@ public class Main {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) {
-		System.out.println("Hello");
 		IGameUI ui = new UI();
 		
 		try {

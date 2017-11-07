@@ -17,11 +17,16 @@
 
 package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 
+import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
+
 /**
- * @author JoseRodriguez
- *	This class represents the Enemy. It implements the ActiveAgent interface.
+ *	This class represents the Enemy.
  */
 public class Enemy extends ActiveAgent {
+
+	public Enemy(Position pos) {
+		super(pos);
+	}
 
 	@Override
 	public void kill() {

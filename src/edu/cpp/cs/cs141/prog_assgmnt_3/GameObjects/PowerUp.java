@@ -16,7 +16,15 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 
+import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
+
 public class PowerUp extends GameObject {
+	
+	public PowerUp(Position pos, PowerUpType type) {
+		super(pos);
+		this.type = type;
+	}
+
 	private PowerUpType type;
 	
 	public PowerUpType getType() {
@@ -25,22 +33,15 @@ public class PowerUp extends GameObject {
 	
 	@Override
 	public char getSymbol() {
-		//todo different symbol for each power up type
 		switch (type) {
 			case Radar:
-				break;
+				return 'R';
 			case Invincibility:
-				break;
+				return 'I';
 			case Ammo:
-				break;
+				return 'A';
 			default:
-				break;
+				return 0;
 		}
-		
-		return 0;
-	}
-	
-	public void randomPosition() {
-		//todo 
 	}
 }

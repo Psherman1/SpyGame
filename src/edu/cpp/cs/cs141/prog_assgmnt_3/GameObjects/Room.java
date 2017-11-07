@@ -16,15 +16,26 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 
+import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
+
 public class Room extends GameObject {
+
+	public Room(Position pos) {
+		super(pos);
+	}
 
 	@Override
 	public char getSymbol() {
-		return 0;
+		return '@'; //TODO change this
 	}
 	
 	public boolean hasBriefcase() {
 		// TODO: Implement function
 		return true;
+	}
+	
+	@Override
+	public VisibilityPriority getPriority() {
+		return VisibilityPriority.AlwaysRender;
 	}
 }

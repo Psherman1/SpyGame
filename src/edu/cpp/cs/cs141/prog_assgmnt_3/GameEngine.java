@@ -17,6 +17,8 @@
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
 import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.GameStateException;
+import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.Player;
+import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.Enemy;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.IGameUI;
 
 public class GameEngine {
@@ -24,10 +26,14 @@ public class GameEngine {
 	private int lives;
 	private Grid grid;
 	private GameState state;
+	private Player player;
+	private Enemy[] enemies;
 	
 	private GameEngine(IGameUI ui) {
 		this.ui = ui;
 		lives = Constants.PlayerLives;
+		player = new Player();
+		enemies = new Enemy[Constants.EnemyCount];
 		grid = new Grid();
 		state = GameState.Menu;
 	}
@@ -49,6 +55,7 @@ public class GameEngine {
 		do {
 			String input = ui.getKeyInput(state);
 			processInput(input);
+			//String gridLines = grid.getBoardString(player.getPosition(), ViewDirection.None);
 			ui.updateUI();
 		} while (state != GameState.Quit);
 	}

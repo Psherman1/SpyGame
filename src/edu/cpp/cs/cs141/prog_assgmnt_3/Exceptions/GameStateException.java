@@ -29,8 +29,8 @@ public class GameStateException extends Exception {
 	}
 	
 	@Override
-	public String getMessage() {
-		String message = super.getMessage(); 
+	public String toString() {
+		String message = super.toString(); 
 		return  message + "\n\nState: " + state;
 	}
 }
