@@ -55,7 +55,9 @@ public class GameEngine {
 		do {
 			String input = ui.getKeyInput(state);
 			processInput(input);
-			//String gridLines = grid.getBoardString(player.getPosition(), ViewDirection.None);
+			String[] gridLines = grid.getBoardString(player.getPosition(), ViewDirection.None, true);
+//			for (String s : gridLines)
+//				System.out.println(s);
 			ui.updateUI();
 		} while (state != GameState.Quit);
 	}

@@ -19,6 +19,7 @@ package edu.cpp.cs.cs141.prog_assgmnt_3;
 
 import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.PositionException;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.ActiveAgent;
+import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.Enemy;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObject;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObjectSet;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.Player;
@@ -51,7 +52,7 @@ public class Grid {
 	 * Creates a string for each row in the board.
 	 * @return
 	 */
-	public String[] getBoardString(Position playerPosition, ViewDirection viewDirection) {
+	public String[] getBoardString(Position playerPosition, ViewDirection viewDirection, boolean debug) {
 		String[] lines = new String[Constants.GridRows + 1];
 		String header = "   ";
 		for (int i = 1; i <= Constants.GridRows; i++)
@@ -62,7 +63,7 @@ public class Grid {
 		for (int i = 0; i < Constants.GridRows; i++) {
 			String line =  (i + 1) + " ";
 			for (int j = 0; j < Constants.GridColumns; j++) {
-				line += "[" + grid[j][i].getSymbol(playerPosition.isAdjacent(j, i) || playerPosition.posEquals(j, i)) + "]";
+				line += "[" + grid[j][i].getSymbol(playerPosition.isAdjacent(j, i) || playerPosition.posEquals(j, i), debug) + "]";
 			}
 			lines[i + 1] = line;
 		}

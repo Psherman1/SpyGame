@@ -77,12 +77,12 @@ public class GameObjectSet {
 	 * Gets the symbol for the set in the space.  If the set isn't adjacent, an asterisk is returned to represent an non-visible space.
 	 * @return
 	 */
-	public char getSymbol(boolean isVisible) {
+	public char getSymbol(boolean isVisible, boolean debug) {
 		if (count == 0)
-			return isVisible ? ' ' : '*';
+			return debug || isVisible ? ' ' : '*';
 		
 		if (count == 1)
-			return isVisible || objects[0].getPriority() == VisibilityPriority.AlwaysRender ? objects[0].getSymbol() : '*';
+			return debug || (isVisible || objects[0].getPriority() == VisibilityPriority.AlwaysRender) ? objects[0].getSymbol() : '*';
 		
 		
 		if (isVisible == false) {
@@ -92,8 +92,10 @@ public class GameObjectSet {
 			if (objects[1].getPriority() == VisibilityPriority.AlwaysRender)
 				return objects[1].getSymbol();
 			
-			return '*';
+			if (debug == false)
+				return '*';
 		}
+		
 		return Utilities.priorityGreater(objects[0].getPriority(), objects[1].getPriority()) ? 
 				objects[0].getSymbol() : 
 				objects[1].getSymbol();
