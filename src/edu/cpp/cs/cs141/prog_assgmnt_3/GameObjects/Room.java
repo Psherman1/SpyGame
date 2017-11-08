@@ -19,19 +19,31 @@ package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 
 public class Room extends GameObject {
-
+	boolean hasBriefcase;
+	
 	public Room(Position pos) {
 		super(pos);
+	}
+	
+	public Room(Position pos, boolean briefcase) {
+		super(pos);
+		hasBriefcase = false;
 	}
 
 	@Override
 	public char getSymbol() {
+		if (hasBriefcase) { //TODO This needs to only show if debug mode is on
+			return '!';
+		}
+		
 		return '@'; //TODO change this
 	}
 	
+	public void setHasBriefcaseTrue() {
+		hasBriefcase = true;
+	}
 	public boolean hasBriefcase() {
-		// TODO: Implement function
-		return true;
+		return hasBriefcase;
 	}
 	
 	@Override

@@ -27,7 +27,7 @@ public abstract class GameObject {
 	protected GameObject(Position pos) {
 		position = pos;
 	}
-	
+
 	/**
 	 * 
 	 * @return

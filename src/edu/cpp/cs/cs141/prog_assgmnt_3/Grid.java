@@ -195,4 +195,21 @@ public class Grid {
 	public boolean validatePos(Position pos) {
 		return pos.getX() >= 0 && pos.getX() < Constants.GridColumns && pos.getY() >= 0 && pos.getY() < Constants.GridRows;
 	}
+	
+	
+	/**
+	 * Check for the char value at the parameterized grid location [x][y].
+	 * If it contains a '*' without debug mode, and contains ' ' with debug mode,
+	 * then it is considered a valid spawning location and returns true. 
+	 * Locations are considered valid when it is an open space at least 3 squares away from the player.
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean validSpawn(int x, int y) {
+		if (grid[x][y].getSymbol(false, false) == '*' && grid[x][y].getSymbol(true, true) == ' ') {
+			return true;
+		}
+		return false;
+	}
 }
