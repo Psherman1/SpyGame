@@ -188,7 +188,7 @@ public class GameEngine {
 		grid.add(rooms[8], rooms[8].getPosition());
 
 		Random rand = new Random();
-		int briefCaseRoom = rand.nextInt((10));
+		int briefCaseRoom = rand.nextInt(rooms.length - 1);
 		rooms[briefCaseRoom].setHasBriefcaseTrue();	
 	}
 	
