@@ -10,7 +10,7 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions;
 
-import edu.cpp.cs.cs141.prog_assgmnt_3.GameState;
+import edu.cpp.cs.cs141.prog_assgmnt_3.Engine.GameState;
 
 /**
  * @author Nick Huiting

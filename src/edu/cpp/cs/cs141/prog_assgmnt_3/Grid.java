@@ -31,14 +31,24 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.Player;
  * Row values represent Y values.
  */
 public class Grid {
-	private GameObjectSet[][] grid = new GameObjectSet[Constants.GridColumns][Constants.GridRows];
+	private GameObjectSet[][] grid;
 	
 	public Grid() {
+		clear();
+		
 		for (int i = 0; i < Constants.GridRows; i++) {
 			for (int j = 0; j < Constants.GridColumns; j++) {
 				grid[i][j] = new GameObjectSet();
 			}
 		}
+	}
+	
+	public void add(GameObject obj, Position pos) {
+		grid[pos.getX()][pos.getY()].add(obj);
+	}
+	
+	public void clear() {
+		grid = new GameObjectSet[Constants.GridColumns][Constants.GridRows];
 	}
 	
 	public boolean hasObjectAt(int x, int y) {

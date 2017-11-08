@@ -14,16 +14,13 @@
  *   Dennis Jimenez
  *   Michael Ackerman
  */
-package edu.cpp.cs.cs141.prog_assgmnt_3;
+package edu.cpp.cs.cs141.prog_assgmnt_3.UI;
 
 /**
- *
+ * Command sent from the engine to the UI to perform a UI-specific action in lieu of displaying game information.
  */
-public enum GameState {
-	Menu,
-	Loading,
-	Playing,
-	Dead,
-	Victory,
-	Quit
+public enum UICommand {
+	PrintHelp,
+	PrintGame,
+	None
 }

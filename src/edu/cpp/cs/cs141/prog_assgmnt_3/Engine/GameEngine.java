@@ -14,27 +14,30 @@
  *   Dennis Jimenez
  *   Michael Ackerman
  */
-package edu.cpp.cs.cs141.prog_assgmnt_3;
+package edu.cpp.cs.cs141.prog_assgmnt_3.Engine;
 
+import edu.cpp.cs.cs141.prog_assgmnt_3.Constants;
+import edu.cpp.cs.cs141.prog_assgmnt_3.Grid;
+import edu.cpp.cs.cs141.prog_assgmnt_3.ViewDirection;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.GameStateException;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.Player;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.Enemy;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.IGameUI;
+import edu.cpp.cs.cs141.prog_assgmnt_3.UI.UICommand;
 
 public class GameEngine {
+	private boolean debug;
+	
 	private IGameUI ui;
 	private int lives;
 	private Grid grid;
 	private GameState state;
 	private Player player;
 	private Enemy[] enemies;
+	private UICommand command;
 	
 	private GameEngine(IGameUI ui) {
 		this.ui = ui;
-		lives = Constants.PlayerLives;
-		player = new Player();
-		enemies = new Enemy[Constants.EnemyCount];
-		grid = new Grid();
 		state = GameState.Menu;
 	}
 
@@ -53,12 +56,16 @@ public class GameEngine {
 	private void enterLoop() throws GameStateException {
 		ui.initialize();
 		do {
+			command = UICommand.None;
+			
 			String input = ui.getKeyInput(state);
 			processInput(input);
-			String[] gridLines = grid.getBoardString(player.getPosition(), ViewDirection.None, true);
-//			for (String s : gridLines)
-//				System.out.println(s);
-			ui.updateUI();
+			
+			boolean canPrintGame = state == GameState.Playing; 
+			GameTurnResult result = canPrintGame ? 
+					new GameTurnResult(grid.getBoardString(player.getPosition(), ViewDirection.None, debug), lives, command) : 
+					new GameTurnResult(command);
+			ui.updateUI(result);
 		} while (state != GameState.Quit);
 	}
 	
@@ -68,17 +75,61 @@ public class GameEngine {
 			processMenuInput(input);
 			break;
 		case Playing:
-			processMenuInput(input);
+			procesPlayingInput(input);
 			break;
 		}
 	}
 	
 	private void processMenuInput(String input) {
 		switch (input) {
-		case "5":
+		case "1":
+			state = GameState.Playing;
+			command = UICommand.PrintGame;
+			resetGame();
+			break;
+		case "2":
+			//TODO load save
+			break;
+		case "3":
+			command = UICommand.PrintHelp;
+			break;
+		case "4":
 			state = GameState.Quit;
 			break;
-			
 		}
+	}
+	
+	private void procesPlayingInput(String input) {
+		switch (input) {
+		case "1":
+			state = GameState.Playing;
+			resetGame();
+			break;
+		case "2":
+			//TODO move
+			break;
+		case "3":
+			state = GameState.Menu;
+			break;
+		case "4":
+			//TODO save
+			break;
+		case "5":
+			//TODO load
+			break;
+		case "6":
+			debug = !debug;
+			command = UICommand.PrintGame;
+			break;
+		}
+	}
+	
+	private void resetGame() {
+		lives = Constants.PlayerLives;
+		grid = new Grid();
+		player = new Player();
+		enemies = new Enemy[Constants.EnemyCount];
+		
+		grid.add(player, player.getPosition());
 	}
 }

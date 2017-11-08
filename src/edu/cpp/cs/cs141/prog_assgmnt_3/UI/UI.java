@@ -18,7 +18,10 @@
 package edu.cpp.cs.cs141.prog_assgmnt_3.UI;
 
 import java.util.Scanner;
-import edu.cpp.cs.cs141.prog_assgmnt_3.GameState;
+
+import edu.cpp.cs.cs141.prog_assgmnt_3.Constants;
+import edu.cpp.cs.cs141.prog_assgmnt_3.Engine.GameState;
+import edu.cpp.cs.cs141.prog_assgmnt_3.Engine.GameTurnResult;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.GameStateException;
 
 public class UI implements IGameUI {
@@ -30,12 +33,14 @@ public class UI implements IGameUI {
 
 	@Override
 	public String getKeyInput(GameState state) throws GameStateException {
+		
+		//prompt for input
 		switch (state) {
 			case Menu:
 				printMainMenu();
 				break;
 			case Playing:
-				
+				printPlayingMenu();
 				break;
 			case Dead:
 				
@@ -57,9 +62,22 @@ public class UI implements IGameUI {
 	}
 
 	@Override
-	public void updateUI() {
-		// TODO Auto-generated method stub
-		
+	public void updateUI(GameTurnResult result) {
+		switch (result.getCommand()) {
+			case None:
+				return;
+			case PrintGame:
+				for (String line : result.getGridLines())
+					System.out.println(line);
+				
+				System.out.println("Player lives: " + result.getLives() + "/" + Constants.PlayerLives);
+				break;
+			case PrintHelp:
+				printHelp();
+				return;
+			default:
+				break;
+		}
 	}
 
 	@Override
@@ -68,7 +86,7 @@ public class UI implements IGameUI {
 	}
 	
 	private static void printWelcomeMessage() {
-		System.out.println("Welcome to SpyGame");
+		System.out.println("Welcome to SpyGame");//TODO better welcome
 	}
 	
 	private static void printMainMenu() {
@@ -78,11 +96,20 @@ public class UI implements IGameUI {
 		System.out.println("4). Quit");
 	}
 	
+	private static void printPlayingMenu() {
+		System.out.println("1). Look");
+		System.out.println("2). Move");
+		System.out.println("3). Menu");
+		System.out.println("4). Save");
+		System.out.println("5). Load");
+		System.out.println("6). Toggle Debug");
+	}
+	
 	private static void printHelp() {
-		System.out.println("You just entered a pitch-black square room of length 9 for each side.");
+		System.out.println("You just entered a pitch-black square room of length" + Constants.GridColumns + " for each side.");
 		System.out.println("Your goal is to bypass the ninjas to get to a closet with a briefcase.");
 		System.out.println("The closets can only be accessed from the North side.");
-		System.out.println("At the beginning of each turn, you can choose to 'look' at any direction "); //(no diagonal looking) ?!?
+		System.out.println("At the beginning of each turn, you can choose to 'look' at any cardinal direction ");
 		System.out.println("and then perform either of the following tasks: ");
 		System.out.println("	- Move one square in any direction");
 		System.out.println("	- If there is still ammo left, shoot in any direction");

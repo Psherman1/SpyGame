@@ -1,2 +1,6 @@
 -10/30/17 - Discussed program architecture and get people up to speed with the Github repo.
 -10/31/17 - Got people using git to push and pull, added classes and discussed architecture choices.
+-11/1/17 - Planned out TODO list items after a basic architecture was added.
+-11/5/17 - Fixed some merge issues and briefly discussed branches.
+-11/6/17 - Discussed grid milestones and assigned some roles.
+-11/7/17 - Talked about Grid implementation and the coordinate system

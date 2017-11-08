@@ -16,7 +16,8 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3.UI;
 
-import edu.cpp.cs.cs141.prog_assgmnt_3.GameState;
+import edu.cpp.cs.cs141.prog_assgmnt_3.Engine.GameState;
+import edu.cpp.cs.cs141.prog_assgmnt_3.Engine.GameTurnResult;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.GameStateException;
 
 /**
@@ -33,7 +34,7 @@ public interface IGameUI {
 	 * 
 	 * @return
 	 */
-	void updateUI();
+	void updateUI(GameTurnResult result);
 	
 	/**
 	 * 

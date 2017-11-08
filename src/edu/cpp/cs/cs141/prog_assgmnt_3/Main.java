@@ -16,6 +16,7 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
+import edu.cpp.cs.cs141.prog_assgmnt_3.Engine.GameEngine;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.IGameUI;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.UI;
 
