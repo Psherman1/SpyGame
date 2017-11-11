@@ -32,7 +32,7 @@ public class PowerUp extends GameObject {
 	}
 	
 	@Override
-	public char getSymbol() {
+	public char getSymbol(boolean debug) {
 		switch (type) {
 			case Radar:
 				return 'R';

@@ -31,12 +31,8 @@ public class Room extends GameObject {
 	}
 
 	@Override
-	public char getSymbol() {
-		if (hasBriefcase) { //TODO This needs to only show if debug mode is on
-			return '!';
-		}
-		
-		return '@'; //TODO change this
+	public char getSymbol(boolean debug) {
+		return debug && hasBriefcase ? '!': '@';
 	}
 	
 	public void setHasBriefcaseTrue() {

@@ -36,8 +36,8 @@ public class Grid {
 	public Grid() {
 		clear();
 		
-		for (int i = 0; i < Constants.GridRows; i++) {
-			for (int j = 0; j < Constants.GridColumns; j++) {
+		for (int i = 0; i < Constants.GridColumns; i++) {
+			for (int j = 0; j < Constants.GridRows; j++) {
 				grid[i][j] = new GameObjectSet();
 			}
 		}
@@ -65,13 +65,14 @@ public class Grid {
 	public String[] getBoardString(Position playerPosition, ViewDirection viewDirection, boolean debug) {
 		String[] lines = new String[Constants.GridRows + 1];
 		String header = "   ";
-		for (int i = 1; i <= Constants.GridRows; i++)
+		for (int i = 1; i <= Constants.GridColumns; i++)
 			header += i + "  ";
 		
 		lines[0] = header;
 		
 		for (int i = 0; i < Constants.GridRows; i++) {
-			String line =  (i + 1) + " ";
+			String line = (i + 1) + "";
+			line += Constants.GridRows >= 10 && (i + 1) < 10 ? "  " : " ";
 			for (int j = 0; j < Constants.GridColumns; j++) {
 				line += "[" + grid[j][i].getSymbol(playerPosition.isAdjacent(j, i) || playerPosition.posEquals(j, i), debug) + "]";
 			}
@@ -133,7 +134,6 @@ public class Grid {
 	 */
 	public Position[] getAdjacent(Position pos) {
 		//TODO: This function could be streamlined....
-		// elses can be removed?
 		Position[] posArray = new Position[4];
 
 		int leftX = pos.getX() - 1;
@@ -141,33 +141,17 @@ public class Grid {
 		int rightX = pos.getX() + 1;
 		int bottomY = pos.getY() + 1;
 
-		if(leftX >= 0){
+		if(leftX >= 0)
 			posArray[0] = new Position(leftX, pos.getY());
-		}
-		else{
-			posArray[0] = null;
-		}
 
-		if(topY >= 0){
+		if(topY >= 0)
 			posArray[1] = new Position(pos.getX(), topY);
-		}
-		else{
-			posArray[1] = null;
-		}
 
-		if(rightX <= Constants.GridColumns){
+		if(rightX <= Constants.GridColumns)
 			posArray[2] = new Position(rightX, pos.getY());
-		}
-		else{
-			posArray[2] = null;
-		}
 
-		if(bottomY <= Constants.GridRows){
+		if(bottomY <= Constants.GridRows)
 			posArray[3] = new Position(pos.getX(), bottomY);
-		}
-		else {
-			posArray[3] = null;
-		}
 
 		return posArray;
 	}

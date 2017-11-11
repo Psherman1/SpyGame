@@ -96,7 +96,7 @@ public class GameEngine {
 			resetGame();
 			break;
 		case "2":
-			//TODO load save
+			//TODO load
 			break;
 		case "3":
 			command = UICommand.PrintHelp;
@@ -132,6 +132,9 @@ public class GameEngine {
 		}
 	}
 	
+	/**
+	 * Resets all game objects and creates a new randomized game board.
+	 */
 	private void resetGame() {
 		lives = Constants.PlayerLives;
 		grid = new Grid();
@@ -144,12 +147,12 @@ public class GameEngine {
 		resetPowerups();
 	}
 
-/**
- * Initiates all the possible rooms on the grid.
- * One random room will be selected to have the briefcase. 
- * That room will have its hasBriefcase boolean value
- * set to true.
- */
+	/**
+	 * Initiates all the possible rooms on the grid.
+	 * One random room will be selected to have the briefcase. 
+	 * That room will have its hasBriefcase boolean value
+	 * set to true.
+	 */
 	private void resetRooms() {
 		Position pos = new Position(1,1);
 		rooms[0] = new Room(pos);
@@ -188,7 +191,7 @@ public class GameEngine {
 		grid.add(rooms[8], rooms[8].getPosition());
 
 		Random rand = new Random();
-		int briefCaseRoom = rand.nextInt(rooms.length - 1);
+		int briefCaseRoom = rand.nextInt(rooms.length);
 		rooms[briefCaseRoom].setHasBriefcaseTrue();	
 	}
 	
@@ -222,19 +225,18 @@ public class GameEngine {
 		int randomPosX, randomPosY; 
 		for (int i = 0; i < Constants.EnemyCount; ++i) {
 			do {
-				randomPosX = rand.nextInt((9));
-				randomPosY = rand.nextInt((9));
-				grid.validSpawn(randomPosX, randomPosY);
-			} while (grid.validSpawn(randomPosX, randomPosY) != true);		
+				randomPosX = rand.nextInt(Constants.GridColumns);
+				randomPosY = rand.nextInt(Constants.GridRows);
+			} while (grid.validSpawn(randomPosX, randomPosY) == false);	
+			
 			Position pos = new Position(randomPosX, randomPosY);
 			enemies[i] = new Enemy(pos);
 			grid.add(enemies[i], enemies[i].getPosition());
-			
 		}
 	}
 	
 	/**
-	 * Adds powerups to valid random locations.
+	 * Adds power ups to valid random locations.
 	 * The coordinates are first randomized then checked for validity
 	 * through validSpawn method in grid class. If valid = returned true, they will be
 	 * assigned to the grid. Otherwise, a new pair of coordinates are randomized
@@ -244,31 +246,25 @@ public class GameEngine {
 		Random rand = new Random();
 		int randomPosX, randomPosY; 
 		do {													
-			randomPosX = rand.nextInt((9));
-			randomPosY = rand.nextInt((9));
-			grid.validSpawn(randomPosX, randomPosY);
-		} while (grid.validSpawn(randomPosX, randomPosY) != true);
+			randomPosX = rand.nextInt(Constants.GridColumns);
+			randomPosY = rand.nextInt(Constants.GridRows);
+		} while (grid.validSpawn(randomPosX, randomPosY) == false);
 		Position pos = new Position(randomPosX, randomPosY);
 		grid.add(new PowerUp(pos, PowerUpType.Radar), pos);		
 		
 		do {													
-			randomPosX = rand.nextInt((9));
-			randomPosY = rand.nextInt((9));
-			grid.validSpawn(randomPosX, randomPosY);
-		} while (grid.validSpawn(randomPosX, randomPosY) != true);
+			randomPosX = rand.nextInt(Constants.GridColumns);
+			randomPosY = rand.nextInt(Constants.GridRows);
+		} while (grid.validSpawn(randomPosX, randomPosY) == false);
 		pos = new Position(randomPosX, randomPosY);
 		grid.add(new PowerUp(pos, PowerUpType.Invincibility), pos);	
 		
 		do {												
-			randomPosX = rand.nextInt((9));
-			randomPosY = rand.nextInt((9));
-			grid.validSpawn(randomPosX, randomPosY);
-		} while (grid.validSpawn(randomPosX, randomPosY) != true);
+			randomPosX = rand.nextInt(Constants.GridColumns);
+			randomPosY = rand.nextInt(Constants.GridRows);
+		} while (grid.validSpawn(randomPosX, randomPosY) == false);
 		pos = new Position(randomPosX, randomPosY);
 		grid.add(new PowerUp(pos, PowerUpType.Ammo), pos);	
-		
 	}
-	
-	
 }
 

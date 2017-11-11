@@ -40,7 +40,7 @@ public abstract class GameObject {
 	 * 
 	 * @return
 	 */
-	public abstract char getSymbol();
+	public abstract char getSymbol(boolean debug);
 	
 	/**
 	 * 

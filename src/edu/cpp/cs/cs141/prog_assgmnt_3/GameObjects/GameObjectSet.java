@@ -82,23 +82,23 @@ public class GameObjectSet {
 			return debug || isVisible ? ' ' : '*';
 		
 		if (count == 1)
-			return debug || (isVisible || objects[0].getPriority() == VisibilityPriority.AlwaysRender) ? objects[0].getSymbol() : '*';
+			return debug || (isVisible || objects[0].getPriority() == VisibilityPriority.AlwaysRender) ? objects[0].getSymbol(debug) : '*';
 		
 		
 		if (isVisible == false) {
 			if (objects[0].getPriority() == VisibilityPriority.AlwaysRender)
-				return objects[0].getSymbol();
+				return objects[0].getSymbol(debug);
 			
 			if (objects[1].getPriority() == VisibilityPriority.AlwaysRender)
-				return objects[1].getSymbol();
+				return objects[1].getSymbol(debug);
 			
 			if (debug == false)
 				return '*';
 		}
 		
 		return Utilities.priorityGreater(objects[0].getPriority(), objects[1].getPriority()) ? 
-				objects[0].getSymbol() : 
-				objects[1].getSymbol();
+				objects[0].getSymbol(debug) : 
+				objects[1].getSymbol(debug);
 	}
 
 	/**

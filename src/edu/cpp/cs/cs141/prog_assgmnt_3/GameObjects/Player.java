@@ -48,8 +48,7 @@ public class Player extends ActiveAgent {
 	}
 
 	@Override
-	public char getSymbol() {
-		// TODO Auto-generated method stub
+	public char getSymbol(boolean debug) {
 		return 'P';
 	}
 }
