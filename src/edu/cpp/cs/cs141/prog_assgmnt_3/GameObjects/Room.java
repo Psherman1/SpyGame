@@ -31,8 +31,8 @@ public class Room extends GameObject {
 	}
 
 	@Override
-	public char getSymbol(boolean debug) {
-		return debug && hasBriefcase ? '!': '@';
+	public char getSymbol(boolean debug, boolean radar) {
+		return (debug || radar) && hasBriefcase  ? '!': '@';
 	}
 	
 	public void setHasBriefcaseTrue() {

@@ -27,6 +27,22 @@ public class GameObjectSet {
 		
 	}
 	
+	public GameObject getAt(int index) {
+		if (count == 0)
+			return null;
+		
+		if (count == 1 && index == 0)
+			return objects[0];
+		
+		if (index == 0)
+			return objects[0];
+		
+		if (index == 1)
+			return objects[1];
+		
+		return null;
+	}
+	
 	public void add(GameObject obj) throws IndexOutOfBoundsException {
 		if (count < 2) {
 			objects[count] = obj;
@@ -77,28 +93,28 @@ public class GameObjectSet {
 	 * Gets the symbol for the set in the space.  If the set isn't adjacent, an asterisk is returned to represent an non-visible space.
 	 * @return
 	 */
-	public char getSymbol(boolean isVisible, boolean debug) {
+	public char getSymbol(boolean isVisible, boolean debug, boolean radar) {
 		if (count == 0)
 			return debug || isVisible ? ' ' : '*';
 		
 		if (count == 1)
-			return debug || (isVisible || objects[0].getPriority() == VisibilityPriority.AlwaysRender) ? objects[0].getSymbol(debug) : '*';
+			return debug || (isVisible || objects[0].getPriority() == VisibilityPriority.AlwaysRender) ? objects[0].getSymbol(debug, radar) : '*';
 		
 		
 		if (isVisible == false) {
 			if (objects[0].getPriority() == VisibilityPriority.AlwaysRender)
-				return objects[0].getSymbol(debug);
+				return objects[0].getSymbol(debug, radar);
 			
 			if (objects[1].getPriority() == VisibilityPriority.AlwaysRender)
-				return objects[1].getSymbol(debug);
+				return objects[1].getSymbol(debug, radar);
 			
 			if (debug == false)
 				return '*';
 		}
 		
 		return Utilities.priorityGreater(objects[0].getPriority(), objects[1].getPriority()) ? 
-				objects[0].getSymbol(debug) : 
-				objects[1].getSymbol(debug);
+				objects[0].getSymbol(debug, radar) : 
+				objects[1].getSymbol(debug, radar);
 	}
 
 	/**

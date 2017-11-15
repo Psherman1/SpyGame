@@ -41,7 +41,7 @@ public class Enemy extends ActiveAgent {
 	}
 
 	@Override
-	public char getSymbol(boolean debug) {
+	public char getSymbol(boolean debug, boolean radar) {
 		return 'X';
 	}
 

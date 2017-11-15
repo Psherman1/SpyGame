@@ -23,4 +23,8 @@ public class Gun {
 	public boolean hasAmmo() {
 		return ammo > 0;
 	}
+	
+	public void setAmmo(int ammo) {
+		this.ammo = ammo;
+	}
 }

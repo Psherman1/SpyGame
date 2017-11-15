@@ -28,13 +28,14 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.PowerUpType;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.Room;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.Enemy;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObject;
+import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObjectSet;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.IGameUI;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.UICommand;
 import java.util.Random;
 
 public class GameEngine {
 	private boolean debug;
-	
+	private boolean radar;
 	private IGameUI ui;
 	private int lives;
 	private Grid grid;
@@ -87,7 +88,7 @@ public class GameEngine {
 			//Create a result of the turn.
 			boolean canPrintGame = state == GameState.Playing || state == GameState.PlayingAfterLook || state == GameState.Moving; 
 			GameTurnResult result = canPrintGame ? 
-					new GameTurnResult(grid.getBoardString(player.getPosition(), lookDirection, debug), lives, command) : 
+					new GameTurnResult(grid.getBoardString(player.getPosition(), lookDirection, debug, player.getRadar()), lives, command) : 
 					new GameTurnResult(command);
 					
 			//Request that the user interface update given the result of the turn.
@@ -428,6 +429,14 @@ public class GameEngine {
 		} while (grid.validSpawn(randomPosX, randomPosY) == false);
 		pos = new Position(randomPosX, randomPosY);
 		grid.add(new PowerUp(pos, PowerUpType.Ammo), pos);	
+	}
+	public void tryUsePowerUp() {
+		GameObjectSet set = grid.get(player.getPosition());
+		GameObject first = set.getAt(0);
+		if (first != null && first instanceof PowerUp) {
+			PowerUp powerUp = (PowerUp)first;
+			powerUp.getType();
+		}
 	}
 }
 
