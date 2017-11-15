@@ -108,6 +108,9 @@ public class UI implements IGameUI {
 			case PrintEnd:
 				printEnd();
 				break;
+			case PrintDead:
+				printDeath();
+				break;
 			default:
 				break;
 		}

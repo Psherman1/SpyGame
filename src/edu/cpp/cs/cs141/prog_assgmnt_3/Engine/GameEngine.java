@@ -365,6 +365,11 @@ public class GameEngine {
 			
 			grid.move(player, newPos, canEnterRoom ? null : rooms);
 			
+			if (checkRoomVictory()) {
+				state = GameState.Victory;
+				return;
+			}
+			
 			//move the ninjas
 			processMoveNinjas();
 			
@@ -372,10 +377,13 @@ public class GameEngine {
 			for (Enemy ninja : enemies) {
 				if (player.isInvincible() == false && ninja.getPosition().posEquals(player.getPosition()))
 				{
-					state = GameState.Dead;
+					command = UICommand.PrintDead;
+					state = GameState.Playing;
+					resetGame();
+					
 					lives--;
 					if (lives == 0) {
-						state = GameState.Menu;
+						state = GameState.Dead;
 						command = UICommand.PrintEnd;
 					}
 					return;
@@ -396,6 +404,19 @@ public class GameEngine {
 		catch(PositionException ex) {
 			command = UICommand.PrintMoveError;
 		}
+	}
+	
+	/**
+	 * Checks if the player is in a room with a briefcase.
+	 * @return
+	 */
+	private boolean checkRoomVictory() {
+		for (Room r : rooms) {
+			if (player.getPosition().posEquals(r.getPosition()) && r.hasBriefcase())
+				return true;
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -585,9 +606,18 @@ public class GameEngine {
 	 */
 	private void resetEnemies() {
 		Random rand = new Random();
+		GameObject[] invalidPositions = new GameObject[rooms.length + enemies.length];
+		int ct = 0;
+		for (Room r : rooms) {
+			invalidPositions[ct] = r;
+			ct++;
+		}
+		
 		for (int i = 0; i < Constants.EnemyCount; ++i) {
-			Position pos = Utilities.getRandomValidPosition(rand, grid, rooms, enemies, player.getPosition(), Constants.StartingPositionTolerance);
+			Position pos = Utilities.getRandomValidPosition(rand, grid, invalidPositions, player.getPosition(), Constants.StartingPositionTolerance);
 			enemies[i] = new Enemy(pos);
+			invalidPositions[ct] = enemies[i];
+			ct++;
 			grid.add(enemies[i], pos);
 		}
 	}
@@ -601,14 +631,31 @@ public class GameEngine {
 	 */
 	private void resetPowerups() {
 		Random rand = new Random();
+		GameObject[] invalidPositions = new GameObject[rooms.length + enemies.length + 2];
+		int ct = 0;
+		for (Room r : rooms) {
+			invalidPositions[ct] = r;
+			ct++;
+		}
 		
-		Position pos = Utilities.getRandomValidPosition(rand, grid, rooms, enemies, player.getPosition(), -1);
-		grid.add(new PowerUp(pos, PowerUpType.Radar), pos);		
+		for (Enemy n : enemies) {
+			invalidPositions[ct] = n;
+			ct++;
+		}
 		
-		pos = Utilities.getRandomValidPosition(rand, grid, rooms, enemies, player.getPosition(), -1);
-		grid.add(new PowerUp(pos, PowerUpType.Invincibility), pos);	
+		Position pos = Utilities.getRandomValidPosition(rand, grid, invalidPositions, player.getPosition(), -1);
+		PowerUp p = new PowerUp(pos, PowerUpType.Radar);
+		grid.add(p, pos);
+		invalidPositions[ct] = p;
+		ct++;
 		
-		pos = Utilities.getRandomValidPosition(rand, grid, rooms, enemies, player.getPosition(), -1);
+		pos = Utilities.getRandomValidPosition(rand, grid, invalidPositions, player.getPosition(), -1);
+		p = new PowerUp(pos, PowerUpType.Invincibility);
+		grid.add(p, pos);	
+		invalidPositions[ct] = p;
+		ct++;
+		
+		pos = Utilities.getRandomValidPosition(rand, grid, invalidPositions, player.getPosition(), -1);
 		grid.add(new PowerUp(pos, PowerUpType.Ammo), pos);	
 	}
 	
