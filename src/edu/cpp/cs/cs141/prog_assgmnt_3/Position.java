@@ -91,4 +91,13 @@ public final class Position {
 	public boolean posEquals(int x, int y) {
 		return this.x == x && this.y == y;
 	}
+	
+	/**
+	 * 
+	 * @param pos
+	 * @return
+	 */
+	public boolean posEquals(Position pos) {
+		return this.x == pos.getX() && this.y == pos.getY();
+	}
 }

@@ -16,6 +16,7 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3.Engine;
 
+import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.PowerUpType;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.UICommand;
 
 /**
@@ -25,6 +26,7 @@ public class GameTurnResult {
 	private String[] gridLines;
 	private int lives;
 	private UICommand command;
+	PlayerStatus status;
 	
 	public GameTurnResult(UICommand command) {
 		this.gridLines = new String[0];
@@ -32,10 +34,15 @@ public class GameTurnResult {
 		this.command = command;
 	}
 	
-	public GameTurnResult(String[] gridLines, int lives, UICommand command) {
+	public GameTurnResult(String[] gridLines, int lives, UICommand command, PlayerStatus status) {
 		this.gridLines = gridLines;
 		this.lives = lives;
 		this.command = command;
+		this.status = status;
+	}
+	
+	public PlayerStatus getStatus() {
+		return status;
 	}
 	
 	public UICommand getCommand() {

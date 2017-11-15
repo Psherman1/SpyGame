@@ -91,6 +91,7 @@ public class UI implements IGameUI {
 				return;
 			case PrintMoveError:
 				printMoveError();
+				break;
 			case PrintInputError:
 				printInputError();
 			default:
@@ -98,11 +99,34 @@ public class UI implements IGameUI {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param result
+	 */
 	private void printGame(GameTurnResult result) {
-		for (String line : result.getGridLines())
-			System.out.println(line);
-		
-		System.out.println("Player lives: " + result.getLives() + "/" + Constants.PlayerLives);
+		for (int i = 0; i < result.getGridLines().length; i++) {
+			System.out.print(result.getGridLines()[i]);
+			
+			switch (i) {
+				case 1:
+					System.out.println("\tLives: " + result.getLives() + "/" + Constants.PlayerLives);
+					continue;
+				case 2:
+					System.out.println();
+					continue;
+				case 3:
+					System.out.println("\tRadar: " + (result.getStatus().hasRadar() ? "Enabled" : "Disabled"));
+					continue;
+				case 4:
+					System.out.println("\tInvincibility: " + (result.getStatus().isInvincible() ? "Enabled" : "Disabled"));
+					continue;
+				case 5:
+					System.out.println("\tAmmo: " + (result.getStatus().hasAmmo() ? "1" : "0"));
+					continue;
+			}
+			
+			System.out.println();
+		}
 	}
 
 	@Override

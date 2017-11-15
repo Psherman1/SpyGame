@@ -43,19 +43,28 @@ public class Grid {
 		}
 	}
 	
+	/**
+	 * @param obj
+	 * @param pos
+	 */
 	public void add(GameObject obj, Position pos) {
 		grid[pos.getX()][pos.getY()].add(obj);
 	}
 	
-	public void clear() {
-		grid = new GameObjectSet[Constants.GridColumns][Constants.GridRows];
+	/**
+	 * 
+	 * @param obj
+	 * @param pos
+	 */
+	public void remove(GameObject obj, Position pos) {
+		grid[pos.getX()][pos.getY()].remove(obj);
 	}
 	
-	public boolean hasObjectAt(int x, int y) {
-		if (validatePos(new Position(x, y)) == false)
-			return false;
-		
-		return grid[x][y] != null;
+	/**
+	 * 
+	 */
+	public void clear() {
+		grid = new GameObjectSet[Constants.GridColumns][Constants.GridRows];
 	}
 	
 	/**
@@ -160,12 +169,20 @@ public class Grid {
 	/**
 	 * Function to move an agent to a specific location. Updates the grid by removing the old location,
 	 * and updating the index.
-	 * @param agent
-	 * @param pos
+	 * @param agent The agent to move.
+	 * @param pos The new position to move to.
+	 * @param invalidObjects An array of objects that cannot share the same space as the new position. Can be null.
 	 */
-	public void move(ActiveAgent agent, Position pos) throws PositionException {
+	public void move(ActiveAgent agent, Position pos, GameObject[] invalidObjects) throws PositionException {
 		if (validatePos(pos) == false)
 			throw new PositionException("Invalid position.", pos);
+		
+		if (invalidObjects != null) {
+			for (int i = 0; i < invalidObjects.length; i++) {
+				if (invalidObjects[i].getPosition().posEquals(pos))
+					throw new PositionException("Invalid position.", pos);
+			}
+		}
 		
 		grid[agent.getPosition().getX()][agent.getPosition().getY()].remove(agent);
 		agent.move(pos);

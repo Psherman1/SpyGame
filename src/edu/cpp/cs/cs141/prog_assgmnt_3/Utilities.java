@@ -48,13 +48,20 @@ public final class Utilities {
 	}
 	
 	/**
-	 * Gets a random valid position within the grid that is not in a room. 
+	 * Gets a random valid position within the grid that is not in a room, on a ninja's space,
+	 * or within a tolerance of an invalid position.
+	 * 
+	 *  If a value less than 0 is passed for the invalid tolerance, the invalid position will be ignored.
 	 * @param rand
 	 * @param grid
 	 * @param rooms
+	 * @param ninjas
+	 * @param invalidPosition
+	 * @param tolerance Tolerance from the invalid position that invalidates new positions.  
 	 * @return
 	 */
-	public static Position getValidPosition(Random rand, Grid grid, Room[] rooms, ActiveAgent[] ninjas) {
+	public static Position getRandomValidPosition(Random rand, Grid grid, Room[] rooms, ActiveAgent[] ninjas, 
+			Position invalidPosition, int tolerance) {
 		int x, y; 
 		boolean isValid;
 		do {		
@@ -76,6 +83,11 @@ public final class Utilities {
 						break;
 					}
 				}
+			}
+			
+			if (isValid && tolerance > 0) {
+				if (Math.abs(x - invalidPosition.getX()) <= tolerance && Math.abs(y - invalidPosition.getY()) <= tolerance)
+					isValid = false;
 			}
 			
 		} while (isValid == false);

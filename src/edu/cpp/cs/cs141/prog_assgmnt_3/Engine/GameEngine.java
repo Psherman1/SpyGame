@@ -87,7 +87,14 @@ public class GameEngine {
 			//Create a result of the turn.
 			boolean canPrintGame = state == GameState.Playing || state == GameState.PlayingAfterLook || state == GameState.Moving; 
 			GameTurnResult result = canPrintGame ? 
-					new GameTurnResult(grid.getBoardString(player.getPosition(), lookDirection, debug, player.getRadar()), lives, command) : 
+					new GameTurnResult(
+							grid.getBoardString(player.getPosition(),
+							lookDirection, 
+							debug,
+							player.getRadar()),
+							lives,
+							command,
+							new PlayerStatus(player.getRadar(), player.isInvincible(), player.canAttack())) : 
 					new GameTurnResult(command);
 					
 			//Request that the user interface update given the result of the turn.
@@ -214,28 +221,55 @@ public class GameEngine {
 	 */
 	private void processMoveInput(String input) {
 		try {	
+			Position newPos;
 			switch(input) {
 				case "W":
-					grid.move(player, player.getPosition().changeY(player.getPosition().getY() - 1));
+					newPos = player.getPosition().changeY(player.getPosition().getY() - 1);
 					break;
 				case "A":
-					grid.move(player, player.getPosition().changeX(player.getPosition().getX() - 1));
+					newPos = player.getPosition().changeX(player.getPosition().getX() - 1);
 					break;
 				case "S":
-					grid.move(player, player.getPosition().changeY(player.getPosition().getY() + 1));
+					newPos = player.getPosition().changeY(player.getPosition().getY() + 1);
 					break;
 				case "D":
-					grid.move(player, player.getPosition().changeX(player.getPosition().getX() + 1));
+					newPos = player.getPosition().changeX(player.getPosition().getX() + 1);
 					break;
 				default:
 					command = UICommand.PrintInputError;
 					return;
 			}
+			
+			boolean canEnterRoom = false;
+			for (Room r : rooms) {
+				//we can enter a room and thus don't need to check for it if the new move is in a room
+				//and the current position is one space above the room.
+				if (r.getPosition().posEquals(player.getPosition().getX(), player.getPosition().getY() + 1) &&
+					r.getPosition().posEquals(newPos)) {
+					canEnterRoom = true;
+					break;
+				}
+				
+				//if the player is inside a room and isn't moving up, this move is invalid.
+				if (r.getPosition().posEquals(newPos.getX(), newPos.getY() + 1)  == false &&
+					r.getPosition().posEquals(player.getPosition())) {
+					command = UICommand.PrintMoveError;
+					return;
+				}
+			}
+			
+			//only disable 
+			grid.move(player, newPos, canEnterRoom ? null : rooms);
+			
 			command = UICommand.PrintGame;
 			state = GameState.Playing;
 			
+			//move the ninjas
 			processMoveNinjas();
 			
+			//TODO if any ninjas share the same space as the player, kill the player
+			
+			//try to use a power up if the player is standing on one.
 			tryUsePowerUp();
 		}
 		catch(PositionException ex) {
@@ -299,7 +333,7 @@ public class GameEngine {
 			} while(hasCollision);
 			
 			try {
-				grid.move(enemies[i], hold[randomPos]);					
+				grid.move(enemies[i], hold[randomPos], null);					
 			}
 			catch (Exception ex) {
 //				System.out.println("Ninja move error." + enemies[i].getPosition()+"\n\n");
@@ -411,7 +445,7 @@ public class GameEngine {
 	private void resetEnemies() {
 		Random rand = new Random();
 		for (int i = 0; i < Constants.EnemyCount; ++i) {
-			Position pos = Utilities.getValidPosition(rand, grid, rooms, enemies);
+			Position pos = Utilities.getRandomValidPosition(rand, grid, rooms, enemies, player.getPosition(), Constants.StartingPositionTolerance);
 			enemies[i] = new Enemy(pos);
 			grid.add(enemies[i], pos);
 		}
@@ -427,18 +461,18 @@ public class GameEngine {
 	private void resetPowerups() {
 		Random rand = new Random();
 		
-		Position pos = Utilities.getValidPosition(rand, grid, rooms, enemies);
+		Position pos = Utilities.getRandomValidPosition(rand, grid, rooms, enemies, player.getPosition(), -1);
 		grid.add(new PowerUp(pos, PowerUpType.Radar), pos);		
 		
-		pos = Utilities.getValidPosition(rand, grid, rooms, enemies);
+		pos = Utilities.getRandomValidPosition(rand, grid, rooms, enemies, player.getPosition(), -1);
 		grid.add(new PowerUp(pos, PowerUpType.Invincibility), pos);	
 		
-		pos = Utilities.getValidPosition(rand, grid, rooms, enemies);
+		pos = Utilities.getRandomValidPosition(rand, grid, rooms, enemies, player.getPosition(), -1);
 		grid.add(new PowerUp(pos, PowerUpType.Ammo), pos);	
 	}
 	
 	/**
-	 * 
+	 * Uses a power up if one exists on the same space the player does, and removes it from the grid.
 	 */
 	public void tryUsePowerUp() {
 		GameObjectSet set = grid.get(player.getPosition());
@@ -450,7 +484,9 @@ public class GameEngine {
 		if (obj == null || obj instanceof PowerUp == false)
 			return;
 		
-		player.usePowerUp((PowerUp)obj);
+		PowerUp powerUp = (PowerUp)obj;
+		player.usePowerUp(powerUp);
+		grid.remove(powerUp, powerUp.getPosition());
 	}
 }
 

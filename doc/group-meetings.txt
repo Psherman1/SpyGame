@@ -4,3 +4,4 @@
 -11/5/17 - Fixed some merge issues and briefly discussed branches.
 -11/6/17 - Discussed grid milestones and assigned some roles.
 -11/7/17 - Talked about Grid implementation and the coordinate system
+-11/14/17 - Collaborated on moving and power ups.
