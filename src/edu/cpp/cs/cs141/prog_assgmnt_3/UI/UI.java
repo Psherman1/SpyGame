@@ -104,6 +104,10 @@ public class UI implements IGameUI {
 				break;
 			case PrintNoAmmo:
 				printNoAmmo();
+				break;
+			case PrintEnd:
+				printEnd();
+				break;
 			default:
 				break;
 		}
@@ -168,7 +172,11 @@ public class UI implements IGameUI {
 	}
 	
 	private static void printGameOverMenu(boolean won) {
-		System.out.println(won ? "Victory!" : "You died!");
+		if (won)
+			printVictory();
+		else
+			printDeath();
+		
 		System.out.println("1). New Game");
 		System.out.println("2). Load Game");
 		System.out.println("3). Quit");
@@ -189,7 +197,7 @@ public class UI implements IGameUI {
 	}
 	
 	private static void printHelp() {
-		System.out.println("You just entered a pitch-black square room of length" + Constants.GridColumns + " for each side.");
+		System.out.println("You just entered a pitch-black square room of length " + Constants.GridColumns + " for each side.");
 		System.out.println("Your goal is to bypass the ninjas to get to a closet with a briefcase.");
 		System.out.println("The closets can only be accessed from the North side.");
 		System.out.println("At the beginning of each turn, you can choose to 'look' at any cardinal direction ");
@@ -202,9 +210,9 @@ public class UI implements IGameUI {
 		System.out.println("There are also three types of power-ups:");
 		System.out.println("	- Additional bullet: grants one bullet");
 		System.out.println("	- Invincibility: ninjas cannot kill you for 5 turns.");
-		System.out.println("	- Radar: display on screen the location of the briefcase.");
+		System.out.println("	- Radar: display on screen the location of the briefcase.\n");
 		System.out.println("You start the game at the bottom left corner of the room.");
-		System.out.println("Good luck, have fun.");
+		System.out.println("Good luck, have fun.\n");
 	}
 	
 	private static void printInputError() {
@@ -221,6 +229,19 @@ public class UI implements IGameUI {
 	
 	private static void printNoAmmo() {
 		System.out.println("You cannot fire your gun because you have no ammo.");
+	}
+	
+	private static void printDeath() {
+		System.out.println("You died, you lost one life.");
+	}
+	
+	private static void printVictory() {
+		System.out.println("Congratulations. You found the briefcase !!!");
+		System.out.println("You won !!!");
+	}
+	
+	private static void printEnd() {
+		System.out.println("Thank you for playing :)");
 	}
 }
 

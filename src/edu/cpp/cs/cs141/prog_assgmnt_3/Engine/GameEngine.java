@@ -211,6 +211,7 @@ public class GameEngine {
 			break;
 		case "3":
 			state = GameState.Quit;
+			command = UICommand.PrintEnd;
 			break;
 		default:
 			command = UICommand.PrintInputError;
@@ -237,6 +238,7 @@ public class GameEngine {
 				break;
 			case "4":
 				state = GameState.Quit;
+				command = UICommand.PrintEnd;
 				break;
 			default:
 				command = UICommand.PrintInputError;
@@ -371,6 +373,11 @@ public class GameEngine {
 				if (player.isInvincible() == false && ninja.getPosition().posEquals(player.getPosition()))
 				{
 					state = GameState.Dead;
+					lives--;
+					if (lives == 0) {
+						state = GameState.Menu;
+						command = UICommand.PrintEnd;
+					}
 					return;
 				}
 			}

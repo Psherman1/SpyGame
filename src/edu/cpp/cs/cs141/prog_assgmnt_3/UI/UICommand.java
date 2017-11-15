@@ -29,5 +29,6 @@ public enum UICommand {
 	PrintShootHit,
 	PrintShootMiss,
 	PrintNoAmmo,
-	None
+	None, 
+	PrintEnd
 }
