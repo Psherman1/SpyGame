@@ -32,6 +32,10 @@ public class Player extends ActiveAgent {
 		super(new Position(0, Constants.GridRows - 1));
 	}
 	
+	public void shootGun() {
+		gun.setAmmo(0);
+	}
+	
 	public boolean canAttack() {
 		return gun.hasAmmo();
 	}
@@ -89,13 +93,5 @@ public class Player extends ActiveAgent {
 	@Override
 	public char getSymbol(boolean debug, boolean radar) {
 		return 'P';
-	}
-	
-	/*
-	 * 
-	 */
-	@Override
-	public VisibilityPriority getPriority() {
-		return VisibilityPriority.AlwaysRender;
 	}
 }

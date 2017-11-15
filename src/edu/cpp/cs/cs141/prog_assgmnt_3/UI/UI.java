@@ -44,16 +44,15 @@ public class UI implements IGameUI {
 				printPlayingMenu();
 				break;
 			case Looking:
-				printDirectionMenu();
-				break;
 			case Moving:
+			case Shooting:
 				printDirectionMenu();
 				break;
 			case Dead:
-				
+				printGameOverMenu(false);
 				break;
 			case Victory:
-				
+				printGameOverMenu(true);
 				break;
 			default:
 				throw new GameStateException("Cannot process input in given state.", state);
@@ -94,11 +93,22 @@ public class UI implements IGameUI {
 				break;
 			case PrintInputError:
 				printInputError();
+				break;
+			case PrintShootHit:
+				printShotResult(true);
+				printGame(result);
+				break;
+			case PrintShootMiss:
+				printShotResult(false);
+				printGame(result);
+				break;
+			case PrintNoAmmo:
+				printNoAmmo();
 			default:
 				break;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param result
@@ -118,7 +128,7 @@ public class UI implements IGameUI {
 					System.out.println("\tRadar: " + (result.getStatus().hasRadar() ? "Enabled" : "Disabled"));
 					continue;
 				case 4:
-					System.out.println("\tInvincibility: " + (result.getStatus().isInvincible() ? "Enabled" : "Disabled"));
+					System.out.println("\tInvincibility: " + (result.getStatus().isInvincible() ? ("Enabled (" + result.getStatus().getInvincibleTurns() + " turns remaining)") : "Disabled"));
 					continue;
 				case 5:
 					System.out.println("\tAmmo: " + (result.getStatus().hasAmmo() ? "1" : "0"));
@@ -135,23 +145,39 @@ public class UI implements IGameUI {
 	}
 	
 	private static void printWelcomeMessage() {
-		System.out.println("Welcome to SpyGame");//TODO better welcome
+		String message = "║ Welcome to Spy Game ║";
+		String border = "";
+		for (int i = 0; i < message.length() - 2; i++)
+			border += "═";
+			
+		System.out.println("╔" + border + "╗");
+		System.out.println(message);
+		System.out.println("╚" + border + "╝");
 	}
 	
 	private static void printMainMenu() {
-		System.out.println("1). New Game");
+		System.out.println("1). New Game\t4). Quit");
 		System.out.println("2). Load Game");
 		System.out.println("3). Help");
-		System.out.println("4). Quit");
 	}
 	
 	private static void printPlayingMenu() {
-		System.out.println("1). Look");
-		System.out.println("2). Move");
-		System.out.println("3). Menu");
-		System.out.println("4). Save");
-		System.out.println("5). Load");
-		System.out.println("6). Toggle Debug");
+		System.out.println("1). Look\t4). Shoot\t7). Toggle Debug");
+		System.out.println("2). Move\t5). Save\t");
+		System.out.println("3). Menu\t6). Load");
+	}
+	
+	private static void printGameOverMenu(boolean won) {
+		System.out.println(won ? "Victory!" : "You died!");
+		System.out.println("1). New Game");
+		System.out.println("2). Load Game");
+		System.out.println("3). Quit");
+	}
+	
+	private static void printDirectionMenu() {
+		System.out.println("W). Up\tD). Right");
+		System.out.println("A). Left");
+		System.out.println("S). Down");
 	}
 	
 	private static void printLook() {
@@ -160,13 +186,6 @@ public class UI implements IGameUI {
 	
 	private static void printAlreadyLooked() {
 		System.out.println("You may only look once per turn.");
-	}
-	
-	private static void printDirectionMenu() {
-		System.out.println("W). Up");
-		System.out.println("A). Left");
-		System.out.println("S). Down");
-		System.out.println("D). Right");
 	}
 	
 	private static void printHelp() {
@@ -194,6 +213,14 @@ public class UI implements IGameUI {
 	
 	private static void printMoveError() {
 		System.out.println("Invalid move.");
+	}
+	
+	private static void printShotResult(boolean hit) {
+		System.out.println("Shot " + (hit ? "hit!" : "missed."));
+	}
+	
+	private static void printNoAmmo() {
+		System.out.println("You cannot fire your gun because you have no ammo.");
 	}
 }
 

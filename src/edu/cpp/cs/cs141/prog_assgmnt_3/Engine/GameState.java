@@ -17,13 +17,14 @@
 package edu.cpp.cs.cs141.prog_assgmnt_3.Engine;
 
 /**
- *
+ * Finite states of the game.  This describes how input will be processed.
  */
 public enum GameState {
 	Menu,
 	Loading,
 	Playing,
 	Moving,
+	Shooting,
 	PlayingAfterLook,
 	Looking,
 	Dead,

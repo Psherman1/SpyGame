@@ -27,6 +27,10 @@ public class GameObjectSet {
 		
 	}
 	
+	public int getCount() {
+		return count;
+	}
+	
 	public GameObject getAt(int index) {
 		if (count == 0)
 			return null;
@@ -34,13 +38,7 @@ public class GameObjectSet {
 		if (count == 1 && index == 0)
 			return objects[0];
 		
-		if (index == 0)
-			return objects[0];
-		
-		if (index == 1)
-			return objects[1];
-		
-		return null;
+		return index < 2 ? objects[index] : null;
 	}
 	
 	public void add(GameObject obj) throws IndexOutOfBoundsException {

@@ -38,5 +38,4 @@ public class Enemy extends ActiveAgent {
 	public char getSymbol(boolean debug, boolean radar) {
 		return 'X';
 	}
-
 }

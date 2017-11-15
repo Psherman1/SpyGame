@@ -21,11 +21,17 @@ public class PlayerStatus {
 	private boolean radar;
 	private boolean invincibility;
 	private boolean hasAmmo; 
+	private int invincibleTurns;
 	
-	public PlayerStatus(boolean radar, boolean invincibility, boolean hasAmmo) {
+	public PlayerStatus(boolean radar, boolean invincibility, boolean hasAmmo, int invincibleTurns) {
 		this.radar = radar;
 		this.invincibility = invincibility;
 		this.hasAmmo = hasAmmo;
+		this.invincibleTurns = invincibleTurns;
+	}
+	
+	public int getInvincibleTurns() {
+		return invincibleTurns;
 	}
 	
 	public boolean hasAmmo() {

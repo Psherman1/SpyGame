@@ -102,24 +102,6 @@ public class Grid {
 	}
 
 	/**
-	 * Returns all positions in specified row. To be used for shooting and sight.
-	 * @param row Integer of row desired.
-	 * @return sorted array of all valid positions in specified row.
-	 */
-	public Position[] getRow(int row) {
-		return null;
-	}
-
-	/**
-	 * Returns all positions in specified col. To be used for shooting and sight.
-	 * @param col Integer of col desired.
-	 * @return sorted array of all valid positions in specified col.
-	 */
-	public GameObjectSet[] getCol(int col) {
-		return grid[col];
-	}
-
-	/**
 	 * Searches the grid for the specified object. Returns a position.
 	 */
 	public Position search(GameObject obj) {
@@ -143,7 +125,6 @@ public class Grid {
 	 * @return Returns an array of valid positions in the form of [leftPos, topPos, rightPos, bottomPos]
 	 */
 	public Position[] getAdjacent(Position pos) {
-		//TODO: This function could be streamlined....
 		Position[] posArray = new Position[4];
 
 		int leftX = pos.getX() - 1;

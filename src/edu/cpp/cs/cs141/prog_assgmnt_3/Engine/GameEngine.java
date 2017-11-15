@@ -32,6 +32,7 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObject;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObjectSet;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.IGameUI;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.UICommand;
+
 import java.util.Random;
 
 public class GameEngine {
@@ -45,6 +46,7 @@ public class GameEngine {
 	private Room[] rooms;
 	private UICommand command;
 	private CardinalDirection lookDirection;
+	private int invincibleTurns;
 	
 	/**
 	 * 
@@ -94,7 +96,7 @@ public class GameEngine {
 							player.getRadar()),
 							lives,
 							command,
-							new PlayerStatus(player.getRadar(), player.isInvincible(), player.canAttack())) : 
+							new PlayerStatus(player.getRadar(), player.isInvincible(), player.canAttack(), invincibleTurns)) : 
 					new GameTurnResult(command);
 					
 			//Request that the user interface update given the result of the turn.
@@ -121,6 +123,98 @@ public class GameEngine {
 		case Moving:
 			processMoveInput(input);
 			break;
+		case Shooting:
+			processShootingInput(input);
+			break;
+		case Dead:
+		case Victory:
+			processPostGameInput(input);
+			break;
+		}
+	}
+	
+	private void processShootingInput(String input) {
+		int start, end;
+		boolean isX;
+		switch (input) {
+		case "W":
+			start = player.getPosition().getY() - 1;
+			end = -1;
+			isX = false;
+			break;
+		case "A":
+			start = player.getPosition().getX() - 1;
+			end = -1;
+			isX = true;
+			break;
+		case "S":
+			start = player.getPosition().getY() + 1;
+			end = Constants.GridRows;
+			isX = false;
+			break;
+		case "D":
+			start = player.getPosition().getX() + 1;
+			end = Constants.GridColumns;
+			isX = true;
+			break;
+		default:
+			command = UICommand.PrintInputError;
+			return;
+		}
+		
+		//can't shoot into a wall.
+		if (start == end) {
+			command = UICommand.PrintInputError;
+			return;
+		}
+		
+		player.shootGun();
+		state = GameState.Playing;
+		
+		int iterator = start < end ? 1 : -1;
+		while (start < end ? start < end : start > end) {
+			Position newPos = isX ? 
+				new Position(start, player.getPosition().getY()) :
+				new Position(player.getPosition().getX(), start);
+			
+			if (grid.get(newPos).getCount() > 0) {
+				for (Enemy ninja : enemies) {
+					if (ninja.getPosition().posEquals(newPos))
+					{
+						grid.remove(ninja, newPos);
+						enemies = removeFromArray(enemies, ninja);
+						command = UICommand.PrintShootHit;
+						return;
+					}
+				}
+			}
+			
+			start+= iterator;
+		}
+		
+		command = UICommand.PrintShootMiss;
+	}
+
+	/**
+	 * 
+	 * @param input
+	 */
+	private void processPostGameInput(String input) {
+		switch (input) {
+		case "1":
+			state = GameState.Playing;
+			command = UICommand.PrintGame;
+			resetGame();
+			break;
+		case "2":
+			//TODO load
+			break;
+		case "3":
+			state = GameState.Quit;
+			break;
+		default:
+			command = UICommand.PrintInputError;
+			break;
 		}
 	}
 	
@@ -139,7 +233,6 @@ public class GameEngine {
 				//TODO load
 				break;
 			case "3":
-				
 				command = UICommand.PrintHelp;
 				break;
 			case "4":
@@ -174,12 +267,20 @@ public class GameEngine {
 			state = GameState.Menu;
 			break;
 		case "4":
-			//TODO save
+			if (player.canAttack() == false) {
+				command = UICommand.PrintNoAmmo;
+				return;
+			}
+			
+			state = GameState.Shooting;
 			break;
 		case "5":
-			//TODO load
+			//TODO save
 			break;
 		case "6":
+			//TODO load
+			break;
+		case "7":
 			debug = !debug;
 			command = UICommand.PrintGame;
 			break;
@@ -258,19 +359,32 @@ public class GameEngine {
 				}
 			}
 			
-			//only disable 
-			grid.move(player, newPos, canEnterRoom ? null : rooms);
-			
 			command = UICommand.PrintGame;
-			state = GameState.Playing;
+			
+			grid.move(player, newPos, canEnterRoom ? null : rooms);
 			
 			//move the ninjas
 			processMoveNinjas();
 			
-			//TODO if any ninjas share the same space as the player, kill the player
+			//if any ninjas share the same space as the player, kill the player
+			for (Enemy ninja : enemies) {
+				if (player.isInvincible() == false && ninja.getPosition().posEquals(player.getPosition()))
+				{
+					state = GameState.Dead;
+					return;
+				}
+			}
 			
 			//try to use a power up if the player is standing on one.
 			tryUsePowerUp();
+			
+			state = GameState.Playing;
+			
+			if (invincibleTurns > 0) {
+				invincibleTurns--;
+				if (invincibleTurns == 0)
+					player.disableInvincibilty();				
+			}
 		}
 		catch(PositionException ex) {
 			command = UICommand.PrintMoveError;
@@ -283,7 +397,7 @@ public class GameEngine {
 	private void processMoveNinjas() {
 		Random rand = new Random();
 		int randomPos;
-		for(int i = 0; i < Constants.EnemyCount; i++) {
+		for(int i = 0; i < enemies.length; i++) {
 			Position[] hold = grid.getAdjacent(enemies[i].getPosition());
 			boolean hasCollision;
 			randomPos  = rand.nextInt(4);
@@ -341,6 +455,26 @@ public class GameEngine {
 //					System.out.println(p);	
 			}	
 		}
+	}
+	
+	/**
+	 * 
+	 * @param arr
+	 * @param obj
+	 * @return
+	 */
+	private Enemy[] removeFromArray(Enemy[] arr, Enemy obj) {
+		Enemy[] newArr = new Enemy[arr.length - 1];
+		int difference = 0;
+		for (int i = 0; i < arr.length; i++)  {
+			if (arr[i] == obj) {
+				difference = 1;
+				continue;
+			}
+			newArr[i - difference] = arr[i];
+		}
+		
+		return newArr;
 	}
 	
 	
@@ -487,6 +621,9 @@ public class GameEngine {
 		PowerUp powerUp = (PowerUp)obj;
 		player.usePowerUp(powerUp);
 		grid.remove(powerUp, powerUp.getPosition());
+		
+		if (powerUp.getType() == PowerUpType.Invincibility)
+			invincibleTurns = Constants.InvincibleTurns;
 	}
 }
 
