@@ -223,7 +223,9 @@ public class GameEngine {
 				break;
 			
 			}
-			processMoveNinja();	
+			processMoveNinja();
+			
+			tryUsePowerUp();
 		}catch(PositionException ex) {
 			command = UICommand.PrintMoveError;
 		}
@@ -250,7 +252,9 @@ public class GameEngine {
 				Position pos = hold[randomPos];
 				if (pos == null) {
 					hasCollision = true;
-					
+					randomPos++;
+					if (randomPos == hold.length)
+						randomPos = 0;
 					continue;
 				}
 				
@@ -279,8 +283,11 @@ public class GameEngine {
 			try {
 				grid.move(enemies[i], hold[randomPos]);					
 			}
-			catch (PositionException ex) {
-				command = UICommand.PrintMoveError;
+			catch (Exception ex) {
+				//command = UICommand.PrintMoveError;
+				System.out.println("Ninja move error." + enemies[i].getPosition()+"\n\n");
+				for (Position p : hold)
+					System.out.println(p);	
 			}	
 		}
 	}
@@ -430,6 +437,10 @@ public class GameEngine {
 		pos = new Position(randomPosX, randomPosY);
 		grid.add(new PowerUp(pos, PowerUpType.Ammo), pos);	
 	}
+	
+	/**
+	 * 
+	 */
 	public void tryUsePowerUp() {
 		GameObjectSet set = grid.get(player.getPosition());
 		GameObject first = set.getAt(0);
