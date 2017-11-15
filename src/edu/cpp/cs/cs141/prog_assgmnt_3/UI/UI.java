@@ -152,7 +152,14 @@ public class UI implements IGameUI {
 	}
 	
 	private static void printWelcomeMessage() {
-		
+		String message = "║ Welcome to Spy Game ║";
+		String border = "";
+		for (int i = 0; i < message.length() - 2; i++)
+			border += "═";
+			
+		System.out.println("╔" + border + "╗");
+		System.out.println(message);
+		System.out.println("╚" + border + "╝");
 	}
 	
 	private static void printMainMenu() {
