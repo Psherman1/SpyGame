@@ -23,6 +23,8 @@ public enum GameState {
 	Menu,
 	Loading,
 	Playing,
+	PlayingAfterLook,
+	Looking,
 	Dead,
 	Victory,
 	Quit

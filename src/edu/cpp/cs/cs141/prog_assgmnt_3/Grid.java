@@ -72,9 +72,10 @@ public class Grid {
 		
 		for (int i = 0; i < Constants.GridRows; i++) {
 			String line = (i + 1) + "";
-			line += Constants.GridRows >= 10 && (i + 1) < 10 ? "  " : " ";
+			line += " ";
 			for (int j = 0; j < Constants.GridColumns; j++) {
-				line += "[" + grid[j][i].getSymbol(playerPosition.isAdjacent(j, i) || playerPosition.posEquals(j, i), debug) + "]";
+				boolean isLooking = Utilities.positionLooked(playerPosition, new Position(j, i), viewDirection);
+				line += "[" + grid[j][i].getSymbol(isLooking || playerPosition.isAdjacent(j, i) || playerPosition.posEquals(j, i), debug) + "]";
 			}
 			lines[i + 1] = line;
 		}

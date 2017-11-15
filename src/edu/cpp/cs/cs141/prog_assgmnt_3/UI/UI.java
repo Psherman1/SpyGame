@@ -40,7 +40,11 @@ public class UI implements IGameUI {
 				printMainMenu();
 				break;
 			case Playing:
+			case PlayingAfterLook:
 				printPlayingMenu();
+				break;
+			case Looking:
+				printDirectionMenu();
 				break;
 			case Dead:
 				
@@ -58,26 +62,40 @@ public class UI implements IGameUI {
 			line = keyboard.nextLine();
 		}
 		
-		return line;
+		return line.toUpperCase();
 	}
 
+	/*
+	 * Based on a UI command, update the UI.
+	 */
 	@Override
 	public void updateUI(GameTurnResult result) {
 		switch (result.getCommand()) {
 			case None:
 				return;
 			case PrintGame:
-				for (String line : result.getGridLines())
-					System.out.println(line);
-				
-				System.out.println("Player lives: " + result.getLives() + "/" + Constants.PlayerLives);
+				printGame(result);
 				break;
 			case PrintHelp:
 				printHelp();
 				return;
+			case PrintLook:
+				printLook();
+				return;
+			case PrintAlreadyLooked:
+				printAlreadyLooked();
+				printGame(result);
+				return;
 			default:
 				break;
 		}
+	}
+	
+	private void printGame(GameTurnResult result) {
+		for (String line : result.getGridLines())
+			System.out.println(line);
+		
+		System.out.println("Player lives: " + result.getLives() + "/" + Constants.PlayerLives);
 	}
 
 	@Override
@@ -105,6 +123,21 @@ public class UI implements IGameUI {
 		System.out.println("6). Toggle Debug");
 	}
 	
+	private static void printLook() {
+		System.out.println("Choose a direction to look.");
+	}
+	
+	private static void printAlreadyLooked() {
+		System.out.println("You may only look once per turn.");
+	}
+	
+	private static void printDirectionMenu() {
+		System.out.println("W). Up");
+		System.out.println("A). Left");
+		System.out.println("S). Down");
+		System.out.println("D). Right");
+	}
+	
 	private static void printHelp() {
 		System.out.println("You just entered a pitch-black square room of length" + Constants.GridColumns + " for each side.");
 		System.out.println("Your goal is to bypass the ninjas to get to a closet with a briefcase.");
@@ -128,3 +161,4 @@ public class UI implements IGameUI {
 		System.out.println("Invalid input.  Please try again.");
 	}
 }
+

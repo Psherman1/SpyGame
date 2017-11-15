@@ -25,4 +25,21 @@ public final class Utilities {
 	public static boolean priorityGreater(VisibilityPriority p1, VisibilityPriority p2) {
 		return p1.getLevel() > p2.getLevel();
 	}
+	
+	public static boolean positionLooked(Position playerPosition, Position position, ViewDirection direction) {
+		switch (direction) {
+		case None:
+			return false;
+		case Down:
+			return playerPosition.getX() == position.getX() && playerPosition.getY() + 2 == position.getY();
+		case Left:
+			return playerPosition.getX() - 2 == position.getX() && playerPosition.getY() == position.getY();
+		case Right:
+			return playerPosition.getX() + 2 == position.getX() && playerPosition.getY() == position.getY();
+		case Up:
+			return playerPosition.getX() == position.getX() && playerPosition.getY() - 2 == position.getY();
+		default:
+			return false;
+		}
+	}
 }

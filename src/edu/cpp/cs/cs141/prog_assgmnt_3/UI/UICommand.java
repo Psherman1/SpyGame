@@ -22,5 +22,7 @@ package edu.cpp.cs.cs141.prog_assgmnt_3.UI;
 public enum UICommand {
 	PrintHelp,
 	PrintGame,
+	PrintLook,
+	PrintAlreadyLooked,
 	None
 }

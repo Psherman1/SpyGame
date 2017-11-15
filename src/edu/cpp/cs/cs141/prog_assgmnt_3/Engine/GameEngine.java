@@ -41,14 +41,25 @@ public class GameEngine {
 	private Player player;
 	private Enemy[] enemies;
 	private Room[] rooms;
-	private UICommand command;
 	private PowerUp[] powerups;
+	private UICommand command;
 	
+	private ViewDirection lookDirection;
+	
+	/**
+	 * 
+	 * @param ui
+	 */
 	private GameEngine(IGameUI ui) {
 		this.ui = ui;
 		state = GameState.Menu;
 	}
 
+	/**
+	 * 
+	 * @param ui
+	 * @throws GameStateException
+	 */
 	public static void start(IGameUI ui) throws GameStateException {
 		GameEngine engine = new GameEngine(ui);
 		engine.enterLoop();
@@ -64,30 +75,49 @@ public class GameEngine {
 	private void enterLoop() throws GameStateException {
 		ui.initialize();
 		do {
-			command = UICommand.None;
+			//set necessary flags to default values before asking for input.
+			resetTickFlags();
 			
+			//prompt the user interface for input.
 			String input = ui.getKeyInput(state);
+			
+			//process the input based on the same state, execute the turn.
 			processInput(input);
 			
-			boolean canPrintGame = state == GameState.Playing; 
+			//Create a result of the turn.
+			boolean canPrintGame = state == GameState.Playing || state == GameState.PlayingAfterLook; 
 			GameTurnResult result = canPrintGame ? 
-					new GameTurnResult(grid.getBoardString(player.getPosition(), ViewDirection.None, debug), lives, command) : 
+					new GameTurnResult(grid.getBoardString(player.getPosition(), lookDirection, debug), lives, command) : 
 					new GameTurnResult(command);
+					
+			//Request that the user interface update given the result of the turn.
 			ui.updateUI(result);
 		} while (state != GameState.Quit);
 	}
 	
+	/**
+	 * 
+	 * @param input
+	 */
 	private void processInput(String input) {
 		switch (state) {
 		case Menu:
 			processMenuInput(input);
 			break;
 		case Playing:
+		case PlayingAfterLook:
 			procesPlayingInput(input);
+			break;
+		case Looking:
+			processLookingInput(input);
 			break;
 		}
 	}
 	
+	/**
+	 * 
+	 * @param input
+	 */
 	private void processMenuInput(String input) {
 		switch (input) {
 		case "1":
@@ -107,11 +137,20 @@ public class GameEngine {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param input
+	 */
 	private void procesPlayingInput(String input) {
 		switch (input) {
 		case "1":
-			state = GameState.Playing;
-			resetGame();
+			if (state == GameState.PlayingAfterLook) {
+				command = UICommand.PrintAlreadyLooked;
+				return;
+			}
+				
+			command = UICommand.PrintLook;
+			state = GameState.Looking;
 			break;
 		case "2":
 			//TODO move
@@ -130,6 +169,40 @@ public class GameEngine {
 			command = UICommand.PrintGame;
 			break;
 		}
+	}
+	
+	/**
+	 * 
+	 * @param input
+	 */
+	private void processLookingInput(String input) {
+		state = GameState.PlayingAfterLook;
+		command = UICommand.PrintGame;
+		
+		switch (input) {
+		case "W":
+			lookDirection = ViewDirection.Up;
+			break;
+		case "A":
+			lookDirection = ViewDirection.Left;
+			break;
+		case "S":
+			lookDirection = ViewDirection.Down;
+			break;
+		case "D":
+			lookDirection = ViewDirection.Right;
+			break;
+		}
+	}
+	
+	/**
+	 * Sets turn flags to a default value at the beginning of each turn.
+	 */
+	private void resetTickFlags() {
+		command = UICommand.None;
+		
+		if (state != GameState.PlayingAfterLook)
+			lookDirection = ViewDirection.None;
 	}
 	
 	/**

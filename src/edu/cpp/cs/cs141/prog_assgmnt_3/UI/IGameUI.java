@@ -25,8 +25,8 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.GameStateException;
  */
 public interface IGameUI {
 	/**
-	 * 
-	 * @return
+	 * Get an input string value to process commands.
+	 * @return Returns an upper case string. 
 	 */
 	String getKeyInput(GameState state) throws GameStateException;
 	
