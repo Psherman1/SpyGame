@@ -132,13 +132,13 @@ public class UI implements IGameUI {
 					System.out.println();
 					continue;
 				case 3:
-					System.out.println("\tRadar: " + (result.getStatus().hasRadar() ? "Enabled" : "Disabled"));
+					System.out.println("\t(R)adar: " + (result.getStatus().hasRadar() ? "Enabled" : "Disabled"));
 					continue;
 				case 4:
-					System.out.println("\tInvincibility: " + (result.getStatus().isInvincible() ? ("Enabled (" + result.getStatus().getInvincibleTurns() + " turns remaining)") : "Disabled"));
+					System.out.println("\t(I)nvincibility: " + (result.getStatus().isInvincible() ? ("Enabled (" + result.getStatus().getInvincibleTurns() + " turns remaining)") : "Disabled"));
 					continue;
 				case 5:
-					System.out.println("\tAmmo: " + (result.getStatus().hasAmmo() ? "1" : "0"));
+					System.out.println("\t(A)mmo: " + (result.getStatus().hasAmmo() ? "1" : "0"));
 					continue;
 			}
 			
