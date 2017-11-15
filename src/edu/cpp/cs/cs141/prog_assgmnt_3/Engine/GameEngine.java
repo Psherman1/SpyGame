@@ -19,6 +19,7 @@ package edu.cpp.cs.cs141.prog_assgmnt_3.Engine;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Constants;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Grid;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
+import edu.cpp.cs.cs141.prog_assgmnt_3.Utilities;
 import edu.cpp.cs.cs141.prog_assgmnt_3.ViewDirection;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.GameStateException;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.PositionException;
@@ -35,7 +36,6 @@ import java.util.Random;
 
 public class GameEngine {
 	private boolean debug;
-	private boolean radar;
 	private IGameUI ui;
 	private int lives;
 	private Grid grid;
@@ -43,7 +43,6 @@ public class GameEngine {
 	private Player player;
 	private Enemy[] enemies;
 	private Room[] rooms;
-	private PowerUp[] powerups;
 	private UICommand command;
 	
 	private ViewDirection lookDirection;
@@ -114,7 +113,7 @@ public class GameEngine {
 			break;
 		case Moving:
 			processMoveInput(input);
-
+			break;
 		}
 	}
 	
@@ -124,21 +123,24 @@ public class GameEngine {
 	 */
 	private void processMenuInput(String input) {
 		switch (input) {
-		case "1":
-			state = GameState.Playing;
-			command = UICommand.PrintGame;
-			resetGame();
-			break;
-		case "2":
-			//TODO load
-			break;
-		case "3":
-			
-			command = UICommand.PrintHelp;
-			break;
-		case "4":
-			state = GameState.Quit;
-			break;
+			case "1":
+				state = GameState.Playing;
+				command = UICommand.PrintGame;
+				resetGame();
+				break;
+			case "2":
+				//TODO load
+				break;
+			case "3":
+				
+				command = UICommand.PrintHelp;
+				break;
+			case "4":
+				state = GameState.Quit;
+				break;
+			default:
+				command = UICommand.PrintInputError;
+				break;
 		}
 	}
 	
@@ -174,6 +176,9 @@ public class GameEngine {
 			debug = !debug;
 			command = UICommand.PrintGame;
 			break;
+		default:
+			command = UICommand.PrintInputError;
+			break;
 		}
 	}
 	
@@ -182,9 +187,6 @@ public class GameEngine {
 	 * @param input
 	 */
 	private void processLookingInput(String input) {
-		state = GameState.PlayingAfterLook;
-		command = UICommand.PrintGame;
-		
 		switch (input) {
 		case "W":
 			lookDirection = ViewDirection.Up;
@@ -198,7 +200,13 @@ public class GameEngine {
 		case "D":
 			lookDirection = ViewDirection.Right;
 			break;
+		default:
+			command = UICommand.PrintInputError;
+			return;
 		}
+		
+		state = GameState.PlayingAfterLook;
+		command = UICommand.PrintGame;
 	}
 	
 	/**
@@ -206,35 +214,39 @@ public class GameEngine {
 	 */
 	private void processMoveInput(String input) {
 		try {	
+			switch(input) {
+				case "W":
+					grid.move(player, player.getPosition().changeY(player.getPosition().getY() - 1));
+					break;
+				case "A":
+					grid.move(player, player.getPosition().changeX(player.getPosition().getX() - 1));
+					break;
+				case "S":
+					grid.move(player, player.getPosition().changeY(player.getPosition().getY() + 1));
+					break;
+				case "D":
+					grid.move(player, player.getPosition().changeX(player.getPosition().getX() + 1));
+					break;
+				default:
+					command = UICommand.PrintInputError;
+					return;
+			}
 			command = UICommand.PrintGame;
 			state = GameState.Playing;
-			switch(input) {
-			case "W":
-				grid.move(player, player.getPosition().changeY(player.getPosition().getY() - 1));
-				break;
-			case "A":
-				grid.move(player, player.getPosition().changeX(player.getPosition().getX() - 1));
-				break;
-			case "S":
-				grid.move(player, player.getPosition().changeY(player.getPosition().getY() + 1));
-				break;
-			case "D":
-				grid.move(player, player.getPosition().changeX(player.getPosition().getX() + 1));
-				break;
 			
-			}
-			processMoveNinja();
+			processMoveNinjas();
 			
 			tryUsePowerUp();
-		}catch(PositionException ex) {
+		}
+		catch(PositionException ex) {
 			command = UICommand.PrintMoveError;
 		}
-		
 	}
+	
 	/**
 	 *  Moves enemy players to random positions on the grid.
 	 */
-	private void processMoveNinja(){
+	private void processMoveNinjas() {
 		Random rand = new Random();
 		int randomPos;
 		for(int i = 0; i < Constants.EnemyCount; i++) {
@@ -243,6 +255,7 @@ public class GameEngine {
 			randomPos  = rand.nextInt(4);
 			int tries = 0;
 			
+			//get a valid position that is not taken by a room or other ninja.
 			do {
 				if (tries >= hold.length)
 					break;
@@ -258,24 +271,28 @@ public class GameEngine {
 					continue;
 				}
 				
-				for(int j = 0; j < rooms.length; j++) {
-					if (rooms[j].getPosition().posEquals(pos.getX(), pos.getY())) {
-						hasCollision = true;
-						randomPos++;
-						if (randomPos == hold.length)
-							randomPos = 0;
-						continue;
+				if (hasCollision == false) {
+					for (int j = 0; j < rooms.length; j++) {
+						if (rooms[j].getPosition().posEquals(pos.getX(), pos.getY())) {
+							hasCollision = true;
+							break;
+						}
 					}
 				}
 				
-				for(int j = 0; j < enemies.length; j++) {
-					if (enemies[j].getPosition().posEquals(pos.getX(), pos.getY())) {
-						hasCollision = true;
-						randomPos++;
-						if (randomPos == hold.length)
-							randomPos = 0;
-						continue;
+				if (hasCollision == false) {
+					for (int j = 0; j < enemies.length; j++) {
+						if (enemies[j].getPosition().posEquals(pos.getX(), pos.getY())) {
+							hasCollision = true;
+							break;
+						}
 					}
+				}
+				
+				if (hasCollision) {
+					randomPos++;
+					if (randomPos == hold.length)
+						randomPos = 0;
 				}
 				
 			} while(hasCollision);
@@ -284,10 +301,9 @@ public class GameEngine {
 				grid.move(enemies[i], hold[randomPos]);					
 			}
 			catch (Exception ex) {
-				//command = UICommand.PrintMoveError;
-				System.out.println("Ninja move error." + enemies[i].getPosition()+"\n\n");
-				for (Position p : hold)
-					System.out.println(p);	
+//				System.out.println("Ninja move error." + enemies[i].getPosition()+"\n\n");
+//				for (Position p : hold)
+//					System.out.println(p);	
 			}	
 		}
 	}
@@ -393,16 +409,10 @@ public class GameEngine {
 	 */
 	private void resetEnemies() {
 		Random rand = new Random();
-		int randomPosX, randomPosY; 
 		for (int i = 0; i < Constants.EnemyCount; ++i) {
-			do {
-				randomPosX = rand.nextInt(Constants.GridColumns);
-				randomPosY = rand.nextInt(Constants.GridRows);
-			} while (grid.validSpawn(randomPosX, randomPosY) == false);	
-			
-			Position pos = new Position(randomPosX, randomPosY);
+			Position pos = Utilities.getValidPosition(rand, grid, rooms);
 			enemies[i] = new Enemy(pos);
-			grid.add(enemies[i], enemies[i].getPosition());
+			grid.add(enemies[i], pos);
 		}
 	}
 	
@@ -415,26 +425,14 @@ public class GameEngine {
 	 */
 	private void resetPowerups() {
 		Random rand = new Random();
-		int randomPosX, randomPosY; 
-		do {													
-			randomPosX = rand.nextInt(Constants.GridColumns);
-			randomPosY = rand.nextInt(Constants.GridRows);
-		} while (grid.validSpawn(randomPosX, randomPosY) == false);
-		Position pos = new Position(randomPosX, randomPosY);
+		
+		Position pos = Utilities.getValidPosition(rand, grid, rooms);
 		grid.add(new PowerUp(pos, PowerUpType.Radar), pos);		
 		
-		do {													
-			randomPosX = rand.nextInt(Constants.GridColumns);
-			randomPosY = rand.nextInt(Constants.GridRows);
-		} while (grid.validSpawn(randomPosX, randomPosY) == false);
-		pos = new Position(randomPosX, randomPosY);
+		pos = Utilities.getValidPosition(rand, grid, rooms);
 		grid.add(new PowerUp(pos, PowerUpType.Invincibility), pos);	
 		
-		do {												
-			randomPosX = rand.nextInt(Constants.GridColumns);
-			randomPosY = rand.nextInt(Constants.GridRows);
-		} while (grid.validSpawn(randomPosX, randomPosY) == false);
-		pos = new Position(randomPosX, randomPosY);
+		pos = Utilities.getValidPosition(rand, grid, rooms);
 		grid.add(new PowerUp(pos, PowerUpType.Ammo), pos);	
 	}
 	
@@ -443,11 +441,15 @@ public class GameEngine {
 	 */
 	public void tryUsePowerUp() {
 		GameObjectSet set = grid.get(player.getPosition());
-		GameObject first = set.getAt(0);
-		if (first != null && first instanceof PowerUp) {
-			PowerUp powerUp = (PowerUp)first;
-			powerUp.getType();
+		GameObject obj = set.getAt(0);
+		if (obj == null || obj instanceof PowerUp == false) {
+			obj = set.getAt(1);
 		}
+		
+		if (obj == null || obj instanceof PowerUp == false)
+			return;
+		
+		player.usePowerUp((PowerUp)obj);
 	}
 }
 

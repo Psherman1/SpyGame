@@ -18,7 +18,7 @@ package edu.cpp.cs.cs141.prog_assgmnt_3;
 
 
 public class Gun {
-	private int ammo;
+	private int ammo = 1;
 	
 	public boolean hasAmmo() {
 		return ammo > 0;

@@ -39,11 +39,6 @@ public abstract class ActiveAgent extends GameObject {
 	public abstract void kill();
 	
 	/**
-	 * Method signature for allowing the view distance of the Player and Enemy to change.
-	 */
-	public abstract void look();
-	
-	/**
 	 * Moves the agent to a new position.
 	 * @param position
 	 */

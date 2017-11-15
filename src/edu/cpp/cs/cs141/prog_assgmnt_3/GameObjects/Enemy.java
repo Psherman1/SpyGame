@@ -35,12 +35,6 @@ public class Enemy extends ActiveAgent {
 	}
 
 	@Override
-	public void look() {
-		// TODO make it so the view distance can be changed depending on difficulty
-		
-	}
-
-	@Override
 	public char getSymbol(boolean debug, boolean radar) {
 		return 'X';
 	}

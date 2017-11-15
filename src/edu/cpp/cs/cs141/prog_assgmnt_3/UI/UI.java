@@ -91,6 +91,8 @@ public class UI implements IGameUI {
 				return;
 			case PrintMoveError:
 				printMoveError();
+			case PrintInputError:
+				printInputError();
 			default:
 				break;
 		}
@@ -165,6 +167,7 @@ public class UI implements IGameUI {
 	private static void printInputError() {
 		System.out.println("Invalid input.  Please try again.");
 	}
+	
 	private static void printMoveError() {
 		System.out.println("Invalid move.");
 	}

@@ -37,20 +37,48 @@ public class Player extends ActiveAgent {
 		return gun.hasAmmo();
 	}
 	
-	public void ammoPowerUp() {
-		gun.setAmmo(1);
-	}
-	
-	public void radarPowerUp() {
-		radar = true;
-	}
-	
 	public boolean getRadar() {
 		return radar;
 	}
 	
-	public boolean invincibilityPowerUp() {
-		return invincibility = true;
+	public boolean isInvincible() {
+		return invincibility;
+	}
+	
+	public void disableInvincibilty() {
+		invincibility = false;
+	}
+	
+	private void ammoPowerUp() {
+		gun.setAmmo(1);
+	}
+	
+	private void radarPowerUp() {
+		radar = true;
+	}
+	
+	private void invincibilityPowerUp() {
+		invincibility = true;
+	}
+
+	/**
+	 * Uses a power up.
+	 * @param powerUp
+	 */
+	public void usePowerUp(PowerUp powerUp) {
+		switch (powerUp.getType()) {
+		case Radar:
+			radarPowerUp();
+		case Ammo:
+			ammoPowerUp();
+			break;
+		case Invincibility:
+			invincibilityPowerUp();
+			break;
+		default:
+			break;
+			
+		}
 	}
 	
 	@Override
@@ -58,15 +86,17 @@ public class Player extends ActiveAgent {
 		// TODO make it so the Player can kill the Enemy.
 		
 	}
-
-	@Override
-	public void look() {
-		// TODO add code to allow the player to change view distances...
-		
-	}
 	
 	@Override
 	public char getSymbol(boolean debug, boolean radar) {
 		return 'P';
+	}
+	
+	/*
+	 * 
+	 */
+	@Override
+	public VisibilityPriority getPriority() {
+		return VisibilityPriority.AlwaysRender;
 	}
 }

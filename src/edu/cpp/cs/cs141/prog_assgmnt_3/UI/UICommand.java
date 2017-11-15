@@ -25,5 +25,6 @@ public enum UICommand {
 	PrintLook,
 	PrintAlreadyLooked,
 	PrintMoveError,
+	PrintInputError,
 	None
 }

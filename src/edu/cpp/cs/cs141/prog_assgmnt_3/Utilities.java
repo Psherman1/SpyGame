@@ -10,6 +10,9 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
+import java.util.Random;
+
+import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.Room;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.VisibilityPriority;
 
 /**
@@ -41,5 +44,14 @@ public final class Utilities {
 		default:
 			return false;
 		}
+	}
+	
+	public static Position getValidPosition(Random rand, Grid grid, Room[] rooms) {
+		int randomPosX, randomPosY; 
+		do {													
+			randomPosX = rand.nextInt(Constants.GridColumns);
+			randomPosY = rand.nextInt(Constants.GridRows);
+		} while (grid.validSpawn(randomPosX, randomPosY) == false);
+		return new Position(randomPosX, randomPosY);
 	}
 }

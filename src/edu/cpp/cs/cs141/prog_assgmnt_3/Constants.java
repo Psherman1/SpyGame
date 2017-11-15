@@ -28,5 +28,4 @@ public final class Constants {
 	public static final int LookDistance = 2;
 	public static final int EnemyCount = 6;
 	public static final int RoomCount = 9;
-	public static final int PowerUpCount = 3;
 }
