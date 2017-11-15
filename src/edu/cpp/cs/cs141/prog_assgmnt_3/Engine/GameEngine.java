@@ -20,7 +20,7 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Constants;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Grid;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Utilities;
-import edu.cpp.cs.cs141.prog_assgmnt_3.ViewDirection;
+import edu.cpp.cs.cs141.prog_assgmnt_3.CardinalDirection;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.GameStateException;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.PositionException;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.Player;
@@ -44,8 +44,8 @@ public class GameEngine {
 	private Enemy[] enemies;
 	private Room[] rooms;
 	private UICommand command;
+	private CardinalDirection lookDirection;
 	
-	private ViewDirection lookDirection;
 	/**
 	 * 
 	 * @param ui
@@ -189,16 +189,16 @@ public class GameEngine {
 	private void processLookingInput(String input) {
 		switch (input) {
 		case "W":
-			lookDirection = ViewDirection.Up;
+			lookDirection = CardinalDirection.Up;
 			break;
 		case "A":
-			lookDirection = ViewDirection.Left;
+			lookDirection = CardinalDirection.Left;
 			break;
 		case "S":
-			lookDirection = ViewDirection.Down;
+			lookDirection = CardinalDirection.Down;
 			break;
 		case "D":
-			lookDirection = ViewDirection.Right;
+			lookDirection = CardinalDirection.Right;
 			break;
 		default:
 			command = UICommand.PrintInputError;
@@ -251,7 +251,7 @@ public class GameEngine {
 		int randomPos;
 		for(int i = 0; i < Constants.EnemyCount; i++) {
 			Position[] hold = grid.getAdjacent(enemies[i].getPosition());
-			boolean hasCollision = false;
+			boolean hasCollision;
 			randomPos  = rand.nextInt(4);
 			int tries = 0;
 			
@@ -261,8 +261,9 @@ public class GameEngine {
 					break;
 				
 				tries++;
-				
+				hasCollision = false;
 				Position pos = hold[randomPos];
+				
 				if (pos == null) {
 					hasCollision = true;
 					randomPos++;
@@ -316,7 +317,7 @@ public class GameEngine {
 		command = UICommand.None;
 		
 		if (state != GameState.PlayingAfterLook)
-			lookDirection = ViewDirection.None;
+			lookDirection = CardinalDirection.None;
 	}
 	
 	/**
@@ -410,7 +411,7 @@ public class GameEngine {
 	private void resetEnemies() {
 		Random rand = new Random();
 		for (int i = 0; i < Constants.EnemyCount; ++i) {
-			Position pos = Utilities.getValidPosition(rand, grid, rooms);
+			Position pos = Utilities.getValidPosition(rand, grid, rooms, enemies);
 			enemies[i] = new Enemy(pos);
 			grid.add(enemies[i], pos);
 		}
@@ -426,13 +427,13 @@ public class GameEngine {
 	private void resetPowerups() {
 		Random rand = new Random();
 		
-		Position pos = Utilities.getValidPosition(rand, grid, rooms);
+		Position pos = Utilities.getValidPosition(rand, grid, rooms, enemies);
 		grid.add(new PowerUp(pos, PowerUpType.Radar), pos);		
 		
-		pos = Utilities.getValidPosition(rand, grid, rooms);
+		pos = Utilities.getValidPosition(rand, grid, rooms, enemies);
 		grid.add(new PowerUp(pos, PowerUpType.Invincibility), pos);	
 		
-		pos = Utilities.getValidPosition(rand, grid, rooms);
+		pos = Utilities.getValidPosition(rand, grid, rooms, enemies);
 		grid.add(new PowerUp(pos, PowerUpType.Ammo), pos);	
 	}
 	

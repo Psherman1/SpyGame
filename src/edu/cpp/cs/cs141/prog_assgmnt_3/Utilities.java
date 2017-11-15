@@ -12,6 +12,7 @@ package edu.cpp.cs.cs141.prog_assgmnt_3;
 
 import java.util.Random;
 
+import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.ActiveAgent;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.Room;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.VisibilityPriority;
 
@@ -29,29 +30,56 @@ public final class Utilities {
 		return p1.getLevel() > p2.getLevel();
 	}
 	
-	public static boolean positionLooked(Position playerPosition, Position position, ViewDirection direction) {
+	public static boolean positionLooked(Position playerPosition, Position position, CardinalDirection direction) {
 		switch (direction) {
 		case None:
 			return false;
 		case Down:
-			return playerPosition.getX() == position.getX() && playerPosition.getY() + 2 == position.getY();
+			return position.posEquals(playerPosition.getX(), playerPosition.getY() + 2);
 		case Left:
-			return playerPosition.getX() - 2 == position.getX() && playerPosition.getY() == position.getY();
+			return position.posEquals(playerPosition.getX() - 2, playerPosition.getY());
 		case Right:
-			return playerPosition.getX() + 2 == position.getX() && playerPosition.getY() == position.getY();
+			return position.posEquals(playerPosition.getX() + 2, playerPosition.getY());
 		case Up:
-			return playerPosition.getX() == position.getX() && playerPosition.getY() - 2 == position.getY();
+			return position.posEquals(playerPosition.getX(), playerPosition.getY() - 2);
 		default:
 			return false;
 		}
 	}
 	
-	public static Position getValidPosition(Random rand, Grid grid, Room[] rooms) {
-		int randomPosX, randomPosY; 
-		do {													
-			randomPosX = rand.nextInt(Constants.GridColumns);
-			randomPosY = rand.nextInt(Constants.GridRows);
-		} while (grid.validSpawn(randomPosX, randomPosY) == false);
-		return new Position(randomPosX, randomPosY);
+	/**
+	 * Gets a random valid position within the grid that is not in a room. 
+	 * @param rand
+	 * @param grid
+	 * @param rooms
+	 * @return
+	 */
+	public static Position getValidPosition(Random rand, Grid grid, Room[] rooms, ActiveAgent[] ninjas) {
+		int x, y; 
+		boolean isValid;
+		do {		
+			isValid = true;
+			x = rand.nextInt(Constants.GridColumns);
+			y = rand.nextInt(Constants.GridRows);
+			
+			for (int j = 0; j < rooms.length; j++) {
+				if (rooms[j].getPosition().posEquals(x, y)) {
+					isValid = false;
+					break;
+				}
+			}
+			
+			if (isValid) {
+				for (int j = 0; j < ninjas.length; j++) {
+					if (ninjas[j] != null && ninjas[j].getPosition().posEquals(x, y)) {
+						isValid = false;
+						break;
+					}
+				}
+			}
+			
+		} while (isValid == false);
+		
+		return new Position(x, y);
 	}
 }
