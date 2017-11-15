@@ -24,5 +24,6 @@ public enum UICommand {
 	PrintGame,
 	PrintLook,
 	PrintAlreadyLooked,
+	PrintMoveError,
 	None
 }

@@ -21,6 +21,7 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Grid;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 import edu.cpp.cs.cs141.prog_assgmnt_3.ViewDirection;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.GameStateException;
+import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.PositionException;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.Player;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.PowerUp;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.PowerUpType;
@@ -45,7 +46,6 @@ public class GameEngine {
 	private UICommand command;
 	
 	private ViewDirection lookDirection;
-	
 	/**
 	 * 
 	 * @param ui
@@ -85,7 +85,7 @@ public class GameEngine {
 			processInput(input);
 			
 			//Create a result of the turn.
-			boolean canPrintGame = state == GameState.Playing || state == GameState.PlayingAfterLook; 
+			boolean canPrintGame = state == GameState.Playing || state == GameState.PlayingAfterLook || state == GameState.Moving; 
 			GameTurnResult result = canPrintGame ? 
 					new GameTurnResult(grid.getBoardString(player.getPosition(), lookDirection, debug), lives, command) : 
 					new GameTurnResult(command);
@@ -111,6 +111,9 @@ public class GameEngine {
 		case Looking:
 			processLookingInput(input);
 			break;
+		case Moving:
+			processMoveInput(input);
+
 		}
 	}
 	
@@ -129,6 +132,7 @@ public class GameEngine {
 			//TODO load
 			break;
 		case "3":
+			
 			command = UICommand.PrintHelp;
 			break;
 		case "4":
@@ -153,7 +157,8 @@ public class GameEngine {
 			state = GameState.Looking;
 			break;
 		case "2":
-			//TODO move
+			command = UICommand.PrintGame;
+			state = GameState.Moving;
 			break;
 		case "3":
 			state = GameState.Menu;
@@ -194,6 +199,91 @@ public class GameEngine {
 			break;
 		}
 	}
+	
+	/**
+	 * Moves the player according to user input and then moves n i n j a s randomly from processMoveNinja().
+	 */
+	private void processMoveInput(String input) {
+		try {	
+			command = UICommand.PrintGame;
+			state = GameState.Playing;
+			switch(input) {
+			case "W":
+				grid.move(player, player.getPosition().changeY(player.getPosition().getY() - 1));
+				break;
+			case "A":
+				grid.move(player, player.getPosition().changeX(player.getPosition().getX() - 1));
+				break;
+			case "S":
+				grid.move(player, player.getPosition().changeY(player.getPosition().getY() + 1));
+				break;
+			case "D":
+				grid.move(player, player.getPosition().changeX(player.getPosition().getX() + 1));
+				break;
+			
+			}
+			processMoveNinja();	
+		}catch(PositionException ex) {
+			command = UICommand.PrintMoveError;
+		}
+		
+	}
+	/**
+	 *  Moves enemy players to random positions on the grid.
+	 */
+	private void processMoveNinja(){
+		Random rand = new Random();
+		int randomPos;
+		for(int i = 0; i < Constants.EnemyCount; i++) {
+			Position[] hold = grid.getAdjacent(enemies[i].getPosition());
+			boolean hasCollision = false;
+			randomPos  = rand.nextInt(4);
+			int tries = 0;
+			
+			do {
+				if (tries >= hold.length)
+					break;
+				
+				tries++;
+				
+				Position pos = hold[randomPos];
+				if (pos == null) {
+					hasCollision = true;
+					
+					continue;
+				}
+				
+				for(int j = 0; j < rooms.length; j++) {
+					if (rooms[j].getPosition().posEquals(pos.getX(), pos.getY())) {
+						hasCollision = true;
+						randomPos++;
+						if (randomPos == hold.length)
+							randomPos = 0;
+						continue;
+					}
+				}
+				
+				for(int j = 0; j < enemies.length; j++) {
+					if (enemies[j].getPosition().posEquals(pos.getX(), pos.getY())) {
+						hasCollision = true;
+						randomPos++;
+						if (randomPos == hold.length)
+							randomPos = 0;
+						continue;
+					}
+				}
+				
+			} while(hasCollision);
+			
+			try {
+				grid.move(enemies[i], hold[randomPos]);					
+			}
+			catch (PositionException ex) {
+				command = UICommand.PrintMoveError;
+			}	
+		}
+	}
+	
 	
 	/**
 	 * Sets turn flags to a default value at the beginning of each turn.

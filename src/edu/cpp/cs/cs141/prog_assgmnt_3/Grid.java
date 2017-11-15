@@ -148,10 +148,10 @@ public class Grid {
 		if(topY >= 0)
 			posArray[1] = new Position(pos.getX(), topY);
 
-		if(rightX <= Constants.GridColumns)
+		if(rightX < Constants.GridColumns)
 			posArray[2] = new Position(rightX, pos.getY());
 
-		if(bottomY <= Constants.GridRows)
+		if(bottomY < Constants.GridRows)
 			posArray[3] = new Position(pos.getX(), bottomY);
 
 		return posArray;
