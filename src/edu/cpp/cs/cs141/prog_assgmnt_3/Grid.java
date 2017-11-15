@@ -62,7 +62,7 @@ public class Grid {
 	 * Creates a string for each row in the board.
 	 * @return
 	 */
-	public String[] getBoardString(Position playerPosition, ViewDirection viewDirection, boolean debug) {
+	public String[] getBoardString(Position playerPosition, ViewDirection viewDirection, boolean debug, boolean radar) {
 		String[] lines = new String[Constants.GridRows + 1];
 		String header = "   ";
 		for (int i = 1; i <= Constants.GridColumns; i++)
@@ -75,7 +75,7 @@ public class Grid {
 			line += " ";
 			for (int j = 0; j < Constants.GridColumns; j++) {
 				boolean isLooking = Utilities.positionLooked(playerPosition, new Position(j, i), viewDirection);
-				line += "[" + grid[j][i].getSymbol(isLooking || playerPosition.isAdjacent(j, i) || playerPosition.posEquals(j, i), debug) + "]";
+				line += "[" + grid[j][i].getSymbol(isLooking || playerPosition.isAdjacent(j, i) || playerPosition.posEquals(j, i), debug, radar) + "]";
 			}
 			lines[i + 1] = line;
 		}
@@ -192,7 +192,7 @@ public class Grid {
 	 * @return
 	 */
 	public boolean validSpawn(int x, int y) {
-		if (grid[x][y].getSymbol(false, false) == '*' && grid[x][y].getSymbol(true, true) == ' ') {
+		if (grid[x][y].getSymbol(false, false, false) == '*' && grid[x][y].getSymbol(true, true, false) == ' ') {
 			return true;
 		}
 		return false;
