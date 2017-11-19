@@ -679,5 +679,27 @@ public class GameEngine {
 		if (powerUp.getType() == PowerUpType.Invincibility)
 			invincibleTurns = Constants.InvincibleTurns;
 	}
+
+
+	/**
+	 * Creates a GameSaveObject based on the current state of the GameEngine.
+	 * @return
+	 */
+	private GameSave createGameSaveObj() {
+		// Note... we don't save the UI! If you start a game from the CMD line, we can load it up into a gui.
+		GameSave save = new GameSave();
+		save.debug = debug;
+		save.lives = lives;
+		save.grid = grid;
+		save.state = state;
+		save.player = player;
+		save.enemies = enemies;
+		save.rooms = rooms;
+		save.command = command;
+		save.lookDirection = lookDirection;
+		save.invincibleTurns = invincibleTurns;
+
+		return save;
+	}
 }
 
