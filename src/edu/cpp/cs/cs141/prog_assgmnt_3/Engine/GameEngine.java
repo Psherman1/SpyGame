@@ -33,6 +33,7 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObjectSet;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.IGameUI;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.UICommand;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class GameEngine {
@@ -698,8 +699,27 @@ public class GameEngine {
 		save.command = command;
 		save.lookDirection = lookDirection;
 		save.invincibleTurns = invincibleTurns;
-
 		return save;
+	}
+
+	/**
+	 * WARNING: THIS DOES NOT LOAD A UI! Caller handles exceptions!
+	 * @param filename
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	private void loadGame(String filename) throws ClassNotFoundException, IOException {
+		GameSave savedGame = GameSave.loadGameSaveFromFile(filename);
+		debug = savedGame.debug;
+		lives = savedGame.lives;
+		grid = savedGame.grid;
+		state = savedGame.state;
+		player = savedGame.player;
+		enemies = savedGame.enemies;
+		rooms = savedGame.rooms;
+		command = savedGame.command;
+		lookDirection = savedGame.lookDirection;
+		invincibleTurns = savedGame.invincibleTurns;
 	}
 }
 

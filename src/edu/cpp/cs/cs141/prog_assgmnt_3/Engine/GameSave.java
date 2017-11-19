@@ -26,7 +26,7 @@ public class GameSave implements Serializable {
     /**
      * Caller of this Function needs to handle io exceptions!
      */
-    public static void saveGameToFile(String filename, GameSave gameSaveObj) throws FileNotFoundException, IOException {
+    public static void saveGameToFile(String filename, GameSave gameSaveObj) throws IOException {
         FileOutputStream fileOut = new FileOutputStream(filename);
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
         out.writeObject(gameSaveObj);
