@@ -25,8 +25,9 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Engine.GameTurnResult;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.GameStateException;
 
 public class UI implements IGameUI {
-	private Scanner keyboard;
-
+	
+	private static Scanner keyboard;
+	
 	public UI() {
 		keyboard = new Scanner(System.in);
 	}
@@ -245,6 +246,19 @@ public class UI implements IGameUI {
 	
 	private static void printEnd() {
 		System.out.println("Thank you for playing :)");
+	}
+	
+	private static void processSaveInput() {
+		System.out.println("\nName of save file should be a word, or in CamelCase.");
+		System.out.println("Please enter a name for the save file: ");
+		String saveFile = keyboard.nextLine();
+		
+		
+	}
+
+	private static void processLoadInput() {
+		System.out.println("\nPlease enter the name of the save file you wish to load: ");
+		String loadFile = keyboard.nextLine();
 	}
 }
 
