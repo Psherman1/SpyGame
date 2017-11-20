@@ -28,38 +28,68 @@ public class Player extends ActiveAgent {
 	private boolean invincibility;
 	private boolean radar;
 	
+	/**
+	 * 
+	 */
 	public Player() {
 		super(new Position(0, Constants.GridRows - 1));
 	}
 	
+	/**
+	 * 
+	 */
 	public void shootGun() {
 		gun.setAmmo(0);
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean canAttack() {
 		return gun.hasAmmo();
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean getRadar() {
 		return radar;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isInvincible() {
 		return invincibility;
 	}
 	
+	/**
+	 * 
+	 */
 	public void disableInvincibilty() {
 		invincibility = false;
 	}
 	
+	/**
+	 * 
+	 */
 	private void ammoPowerUp() {
 		gun.setAmmo(1);
 	}
 	
+	/**
+	 * 
+	 */
 	private void radarPowerUp() {
 		radar = true;
 	}
 	
+	/**
+	 * 
+	 */
 	private void invincibilityPowerUp() {
 		invincibility = true;
 	}
@@ -84,12 +114,12 @@ public class Player extends ActiveAgent {
 		}
 	}
 	
-	@Override
-	public void kill() {
-		// TODO make it so the Player can kill the Enemy.
-		
-	}
-	
+	/**
+	 * 
+	 * @param debug
+	 * @param radar
+	 * @return
+	 */
 	@Override
 	public char getSymbol(boolean debug, boolean radar) {
 		return 'P';
