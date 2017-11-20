@@ -144,29 +144,29 @@ public class GameEngine {
 		int start, end;
 		boolean isX;
 		switch (input) {
-		case "W":
-			start = player.getPosition().getY() - 1;
-			end = -1;
-			isX = false;
-			break;
-		case "A":
-			start = player.getPosition().getX() - 1;
-			end = -1;
-			isX = true;
-			break;
-		case "S":
-			start = player.getPosition().getY() + 1;
-			end = Constants.GridRows;
-			isX = false;
-			break;
-		case "D":
-			start = player.getPosition().getX() + 1;
-			end = Constants.GridColumns;
-			isX = true;
-			break;
-		default:
-			command = UICommand.PrintInputError;
-			return;
+			case "W":
+				start = player.getPosition().getY() - 1;
+				end = -1;
+				isX = false;
+				break;
+			case "A":
+				start = player.getPosition().getX() - 1;
+				end = -1;
+				isX = true;
+				break;
+			case "S":
+				start = player.getPosition().getY() + 1;
+				end = Constants.GridRows;
+				isX = false;
+				break;
+			case "D":
+				start = player.getPosition().getX() + 1;
+				end = Constants.GridColumns;
+				isX = true;
+				break;
+			default:
+				command = UICommand.PrintInputError;
+				return;
 		}
 		
 		//can't shoot into a wall.
@@ -179,7 +179,8 @@ public class GameEngine {
 		state = GameState.Playing;
 		
 		int iterator = start < end ? 1 : -1;
-		while (start < end ? start < end : start > end) {
+		boolean hitEnemy = false;
+		while (hitEnemy == false && (start < end ? start < end : start > end)) {
 			Position newPos = isX ? 
 				new Position(start, player.getPosition().getY()) :
 				new Position(player.getPosition().getX(), start);
@@ -190,8 +191,8 @@ public class GameEngine {
 					{
 						grid.remove(ninja, newPos);
 						enemies = removeFromArray(enemies, ninja);
-						command = UICommand.PrintShootHit;
-						return;
+						hitEnemy = true;
+						break;
 					}
 				}
 			}
@@ -199,7 +200,16 @@ public class GameEngine {
 			start+= iterator;
 		}
 		
-		command = UICommand.PrintShootMiss;
+		//move the ninjas
+		processMoveNinjas();
+		
+		//if any ninjas share the same space as the player, kill the player
+		if (checkNinjaCollisions())
+			return;
+		
+		consumeInvincibility();
+		
+		command = hitEnemy ? command = UICommand.PrintShootHit : UICommand.PrintShootMiss;
 	}
 
 	/**
@@ -214,7 +224,7 @@ public class GameEngine {
 			resetGame();
 			break;
 		case "2":
-			//TODO load
+			state = GameState.Loading;
 			break;
 		case "3":
 			state = GameState.Quit;
@@ -285,11 +295,9 @@ public class GameEngine {
 			break;
 		case "5":
 			state = GameState.Saving;
-			
 			break;
 		case "6":
 			state = GameState.Loading;
-			
 			break;
 		case "7":
 			debug = !debug;
@@ -383,36 +391,54 @@ public class GameEngine {
 			processMoveNinjas();
 			
 			//if any ninjas share the same space as the player, kill the player
-			for (Enemy ninja : enemies) {
-				if (player.isInvincible() == false && ninja.getPosition().posEquals(player.getPosition()))
-				{
-					command = UICommand.PrintDead;
-					state = GameState.Playing;
-					resetGame();
-					
-					lives--;
-					if (lives == 0) {
-						state = GameState.Dead;
-						command = UICommand.PrintEnd;
-					}
-					return;
-				}
-			}
+			if (checkNinjaCollisions())
+				return;
 			
 			//try to use a power up if the player is standing on one.
 			tryUsePowerUp();
 			
 			state = GameState.Playing;
 			
-			if (invincibleTurns > 0) {
-				invincibleTurns--;
-				if (invincibleTurns == 0)
-					player.disableInvincibilty();				
-			}
+			consumeInvincibility();
 		}
 		catch(PositionException ex) {
 			command = UICommand.PrintMoveError;
 		}
+	}
+	
+	/**
+	 * Decrements the invincibility turns if possible.  If there are no turns remaining, the player is set to be no longer invincible. 
+	 */
+	private void consumeInvincibility() {
+		if (invincibleTurns > 0) {
+			invincibleTurns--;
+			if (invincibleTurns == 0)
+				player.disableInvincibilty();				
+		}
+	}
+	
+	/**
+	 * Checks to see if ninjas are adjacent to the player and can kill him. If so, states are updated. 
+	 * @return Returns true if a ninja can kill the player, false otherwise.
+	 */
+	private boolean checkNinjaCollisions() {
+		for (Enemy ninja : enemies) {
+			if (player.isInvincible() == false && ninja.getPosition().posEquals(player.getPosition()))
+			{
+				command = UICommand.PrintDead;
+				state = GameState.Playing;
+				resetGame();
+				
+				lives--;
+				if (lives == 0) {
+					state = GameState.Dead;
+					command = UICommand.PrintEnd;
+				}
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -753,6 +779,4 @@ public class GameEngine {
 			e.printStackTrace();
 		}
 	}
-	
 }
-
