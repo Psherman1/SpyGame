@@ -19,23 +19,23 @@ package edu.cpp.cs.cs141.prog_assgmnt_3;
 
 import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.PositionException;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.ActiveAgent;
-import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.Enemy;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObject;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObjectSet;
-import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.Player;
 
 /**
- * Contains all game objects.
- * Assumes top left corner is 0,0
- * Column values represent X values.
- * Row values represent Y values.
+ * Contains all game objects. Assumes top left corner is 0,0. Column values represent X values. Row values
+ * represent Y values. Each cell contains a GameObjectSet that allows for multiple GameObjects to be stored
+ * within a single cell.
  */
 public class Grid {
 	private GameObjectSet[][] grid;
-	
+
+	/**
+	 * Default Constructor for Grid. Creates a 2D array of GameObjectSets. Grid size based on the values set in
+	 * Constants.java
+	 */
 	public Grid() {
 		clear();
-		
 		for (int i = 0; i < Constants.GridColumns; i++) {
 			for (int j = 0; j < Constants.GridRows; j++) {
 				grid[i][j] = new GameObjectSet();
@@ -44,32 +44,33 @@ public class Grid {
 	}
 	
 	/**
-	 * @param obj
-	 * @param pos
+	 * Add method to insert a GameObject into a cell of the grid. Multiple objects can reside in a single cell.
+	 * @param obj GameObject to be inserted.
+	 * @param pos position where GameObject should be inserted.
 	 */
 	public void add(GameObject obj, Position pos) {
 		grid[pos.getX()][pos.getY()].add(obj);
 	}
 	
 	/**
-	 * 
-	 * @param obj
-	 * @param pos
+	 * Method to remove a GameObject from a specific cell.
+	 * @param obj The GameObject to be removed.
+	 * @param pos Position where the GameObject should be removed.
 	 */
 	public void remove(GameObject obj, Position pos) {
 		grid[pos.getX()][pos.getY()].remove(obj);
 	}
-	
+
 	/**
-	 * 
+	 * Helper method to reset the grid. Sets the grid to a new empty grid.
 	 */
 	public void clear() {
 		grid = new GameObjectSet[Constants.GridColumns][Constants.GridRows];
 	}
 	
 	/**
-	 * Creates a string for each row in the board.
-	 * @return
+	 * Creates a string representation for each row in the board.
+	 * @return Returns an array of strings where each index is a String representation of the board.
 	 */
 	public String[] getBoardString(Position playerPosition, CardinalDirection viewDirection, boolean debug, boolean radar) {
 		String[] lines = new String[Constants.GridRows + 1];
@@ -93,28 +94,12 @@ public class Grid {
 	}
 
 	/**
-	 *
-	 * @param pos position of an item to get from the grid
+	 * Getter for a grid cell.
+	 * @param pos position of the cell to get from the grid
 	 * @return GameObjectSet at that space.
 	 */
 	public GameObjectSet get(Position pos) {
 		return grid[pos.getX()][pos.getY()];
-	}
-
-	/**
-	 * Searches the grid for the specified object. Returns a position.
-	 */
-	public Position search(GameObject obj) {
-		//TODO we don't need this since the objects have positions stored in them already.
-		for (int i = 0; i < Constants.GridRows; ++i) {
-			for (int j = 0 ; j < Constants.GridColumns; ++j) {
-				GameObjectSet set = grid[i][j];
-				if (set.search(obj)) {
-					return new Position(i,j);
-				}
-			}
-		}
-		return null;
 	}
 
 	/**
@@ -171,9 +156,10 @@ public class Grid {
 	}
 
 	/**
-	 * Helper function to check if a position is valid.
-	 * @param pos
-	 * @return
+	 * Helper function to check if a position is valid by seeing if the position falls within the bounds of the
+	 * grid defined in the constants.
+	 * @param pos The position to validate.
+	 * @return true if valid, false if invalid.
 	 */
 	public boolean validatePos(Position pos) {
 		return pos.getX() >= 0 && pos.getX() < Constants.GridColumns && pos.getY() >= 0 && pos.getY() < Constants.GridRows;

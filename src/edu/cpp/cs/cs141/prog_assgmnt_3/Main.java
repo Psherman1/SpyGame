@@ -23,6 +23,7 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.UI.UI;
 public class Main {
 
 	/**
+	 * Entrypoint to launch the game.
 	 * @param args
 	 * @throws Exception 
 	 */

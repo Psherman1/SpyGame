@@ -53,11 +53,12 @@ public final class Utilities {
 	 * or within a tolerance of an invalid position.
 	 * 
 	 *  If a value less than 0 is passed for the invalid tolerance, the invalid position will be ignored.
-	 * @param rand
-	 * @param grid
+	 * @param rand Random Object to assist with random number generation
+	 * @param grid The grid to generate a random valid position for.
 	 * @param invalidPositions
 	 * @param invalidPosition
-	 * @param tolerance Tolerance from the invalid position that invalidates new positions.  
+	 * @param tolerance distance from the invalid position that invalidates new positions. For example, if tolerance
+	 *                  is 3, cells within 3 of invalidPosition will be invalid as well.
 	 * @return
 	 */
 	public static Position getRandomValidPosition(Random rand, Grid grid, GameObject[] invalidPositions, 

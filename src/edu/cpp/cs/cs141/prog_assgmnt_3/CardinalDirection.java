@@ -17,7 +17,7 @@
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
 /**
- *
+ * A Helper Enum to assist with representing left, up, down, right, and none respectively.
  */
 public enum CardinalDirection {
 	Left,
