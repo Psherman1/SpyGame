@@ -248,17 +248,18 @@ public class UI implements IGameUI {
 		System.out.println("Thank you for playing :)");
 	}
 	
-	private static void processSaveInput() {
+	public String processSaveInput() {
 		System.out.println("\nName of save file should be a word, or in CamelCase.");
 		System.out.println("Please enter a name for the save file: ");
 		String saveFile = keyboard.nextLine();
-		
+		return saveFile;
 		
 	}
 
-	private static void processLoadInput() {
+	private String processLoadInput() {
 		System.out.println("\nPlease enter the name of the save file you wish to load: ");
 		String loadFile = keyboard.nextLine();
+		return loadFile;
 	}
 }
 
