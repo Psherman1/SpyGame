@@ -40,6 +40,10 @@ public class UI implements IGameUI {
 			case Menu:
 				printMainMenu();
 				break;
+			case Loading:
+				return processLoadInput();
+			case Saving:
+				return processSaveInput();
 			case Playing:
 			case PlayingAfterLook:
 				printPlayingMenu();
@@ -248,7 +252,7 @@ public class UI implements IGameUI {
 		System.out.println("Thank you for playing :)");
 	}
 	
-	public String processSaveInput() {
+	private String processSaveInput() {
 		System.out.println("\nName of save file should be a word, or in CamelCase.");
 		System.out.println("Please enter a name for the save file: ");
 		String saveFile = keyboard.nextLine();

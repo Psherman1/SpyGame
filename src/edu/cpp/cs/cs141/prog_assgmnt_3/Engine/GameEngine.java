@@ -114,6 +114,12 @@ public class GameEngine {
 		case Menu:
 			processMenuInput(input);
 			break;
+		case Saving:
+			processSaveInput(input);			
+			break;
+		case Loading:
+			processLoadInput(input);			
+			break;
 		case Playing:
 		case PlayingAfterLook:
 			procesPlayingInput(input);
@@ -278,10 +284,12 @@ public class GameEngine {
 			state = GameState.Shooting;
 			break;
 		case "5":
-			//TODO save
+			state = GameState.Saving;
+			
 			break;
 		case "6":
-			//TODO load
+			state = GameState.Loading;
+			
 			break;
 		case "7":
 			debug = !debug;
@@ -721,5 +729,30 @@ public class GameEngine {
 		lookDirection = savedGame.getCardinalDirection();
 		invincibleTurns = savedGame.getInvincibleTurns();
 	}
+	
+	private void processSaveInput(String input) {
+		GameSave save = new GameSave();
+		save = createGameSaveObj();
+		try {
+			GameSave.saveGameToFile(input, save);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void processLoadInput(String input) {
+		GameSave load = new GameSave();
+		try {
+			GameSave.loadGameSaveFromFile(input);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }
 
