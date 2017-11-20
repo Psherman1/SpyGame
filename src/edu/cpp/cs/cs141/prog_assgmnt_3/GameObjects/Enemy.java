@@ -20,20 +20,24 @@ package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 
 /**
- *	This class represents the Enemy.
+ *	This class represents the Enemy/Ninja.
  */
 public class Enemy extends ActiveAgent {
 
+	/**
+	 * 
+	 * @param pos
+	 */
 	public Enemy(Position pos) {
 		super(pos);
 	}
 
-	@Override
-	public void kill() {
-		// TODO make it so Enemy can kill the player
-		
-	}
-
+	/**
+	 * 
+	 * @param debug
+	 * @param radar
+	 * @return
+	 */
 	@Override
 	public char getSymbol(boolean debug, boolean radar) {
 		return 'X';
