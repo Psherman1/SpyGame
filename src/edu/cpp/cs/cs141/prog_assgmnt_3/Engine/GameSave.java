@@ -12,17 +12,101 @@ import java.io.*;
 public class GameSave implements Serializable {
     // protected so that GameEngine can access them without getters.
     // Note: we don't serialize the UI
-    protected boolean debug;
-    protected int lives;
-    protected Grid grid;
-    protected GameState state;
-    protected Player player;
-    protected Enemy[] enemies;
-    protected Room[] rooms;
-    protected UICommand command;
-    protected CardinalDirection lookDirection;
-    protected int invincibleTurns;
+    private boolean debug;
+    private int lives;
+    private Grid grid;
+    private GameState state;
+    private Player player;
+    private Enemy[] enemies;
+    private Room[] rooms;
+    private UICommand command;
+    private CardinalDirection lookDirection;
+    private int invincibleTurns;
 
+    public void setDebug(boolean debug) {
+    	this.debug = debug;
+    }
+    
+    public void setLives(int lives) {
+    	this.lives = lives;
+    }
+    
+    public void setGrid(Grid grid) {
+    	this.grid = grid;
+    }
+    
+    public void setGameState(GameState state) {
+    	this.state = state;
+    }
+    
+    public void setEnemies(Enemy[] enemies) {
+    	this.enemies = enemies;
+    }
+    
+    public void setRoom(Room[] rooms) {
+    	this.rooms = rooms;
+    }
+    
+    public void setUICommand(UICommand command) {
+    	this.command = command;
+    }
+    
+    public void setCardinalDirection(CardinalDirection lookDirection) {
+    	this.lookDirection = lookDirection;
+    }
+    
+    public void setPlayer(Player player) {
+    	this.player = player;
+    }
+    
+    public void setInvincibleTurns(int invincibleTurns) {
+    	this.invincibleTurns = invincibleTurns;
+    }
+    
+    public boolean getDebug() {
+    	return debug;
+    }
+    
+    public int getLives() {
+    	return lives;
+    }
+    
+    public Grid getGrid() {
+    	return grid;
+    }
+    
+    public GameState getGameState() {
+    	return state;
+    }
+    
+    public Enemy[] getEnemies() {
+    	return enemies;
+    }
+    
+    public Room[] getRoom() {
+    	return rooms;
+    }
+    
+    public UICommand getUICommand() {
+    	return command;
+    }
+    
+    public CardinalDirection getCardinalDirection() {
+    	return lookDirection;
+    }
+    
+    public Player getPlayer() {
+    	return player;
+    }
+    
+    public int getInvincibleTurns() {
+    	return invincibleTurns;
+    }
+    
+    
+    
+    
+    
     /**
      * Caller of this Function needs to handle io exceptions!
      */

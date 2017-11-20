@@ -114,6 +114,12 @@ public class GameEngine {
 		case Menu:
 			processMenuInput(input);
 			break;
+		case Saving:
+			processSaveInput(input);			
+			break;
+		case Loading:
+			processLoadInput(input);			
+			break;
 		case Playing:
 		case PlayingAfterLook:
 			procesPlayingInput(input);
@@ -278,10 +284,12 @@ public class GameEngine {
 			state = GameState.Shooting;
 			break;
 		case "5":
-			//TODO save
+			state = GameState.Saving;
+			
 			break;
 		case "6":
-			//TODO load
+			state = GameState.Loading;
+			
 			break;
 		case "7":
 			debug = !debug;
@@ -689,16 +697,16 @@ public class GameEngine {
 	private GameSave createGameSaveObj() {
 		// Note... we don't save the UI! If you start a game from the CMD line, we can load it up into a gui.
 		GameSave save = new GameSave();
-		save.debug = debug;
-		save.lives = lives;
-		save.grid = grid;
-		save.state = state;
-		save.player = player;
-		save.enemies = enemies;
-		save.rooms = rooms;
-		save.command = command;
-		save.lookDirection = lookDirection;
-		save.invincibleTurns = invincibleTurns;
+		save.setDebug(debug);
+		save.setLives(lives);
+		save.setGrid(grid);
+		save.setGameState(state);
+		save.setPlayer(player);
+		save.setEnemies(enemies);
+		save.setRoom(rooms);
+		save.setUICommand(command);
+		save.setCardinalDirection(lookDirection);
+		save.setInvincibleTurns(invincibleTurns);
 		return save;
 	}
 
@@ -710,16 +718,41 @@ public class GameEngine {
 	 */
 	private void loadGame(String filename) throws ClassNotFoundException, IOException {
 		GameSave savedGame = GameSave.loadGameSaveFromFile(filename);
-		debug = savedGame.debug;
-		lives = savedGame.lives;
-		grid = savedGame.grid;
-		state = savedGame.state;
-		player = savedGame.player;
-		enemies = savedGame.enemies;
-		rooms = savedGame.rooms;
-		command = savedGame.command;
-		lookDirection = savedGame.lookDirection;
-		invincibleTurns = savedGame.invincibleTurns;
+		debug = savedGame.getDebug();
+		lives = savedGame.getLives();
+		grid = savedGame.getGrid();
+		state = savedGame.getGameState();
+		player = savedGame.getPlayer();
+		enemies = savedGame.getEnemies();
+		rooms = savedGame.getRoom();
+		command = savedGame.getUICommand();
+		lookDirection = savedGame.getCardinalDirection();
+		invincibleTurns = savedGame.getInvincibleTurns();
 	}
+	
+	private void processSaveInput(String input) {
+		GameSave save = new GameSave();
+		save = createGameSaveObj();
+		try {
+			GameSave.saveGameToFile(input, save);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void processLoadInput(String input) {
+		GameSave load = new GameSave();
+		try {
+			GameSave.loadGameSaveFromFile(input);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }
 

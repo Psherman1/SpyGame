@@ -20,34 +20,29 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 
 /**
  * @author JoseRodriguez
- * Base class created for the Enemy class and Player class.
+ *  Super class created for the Enemy class and Player class.
  */
 public abstract class ActiveAgent extends GameObject {
 	
 	/**
 	 * 
-	 * @param pos
+	 * @param pos from Position class gives both the X and Y coordinates
 	 */
 	protected ActiveAgent(Position pos) {
 		super(pos);
 	}
 	
-	/** 
-	 * Method signature for an Enemy object killing a Player object or
-	 * a Player object killing an Enemy object.
-	 */
-	public abstract void kill();
-	
 	/**
 	 * Moves the agent to a new position.
-	 * @param position
+	 * @param position in both the X and Y coordinates.
 	 */
 	public void move(Position position) {
 		this.position = position;
 	}
 	
-	/*
+	/**
 	 * 
+	 * @return
 	 */
 	@Override
 	public VisibilityPriority getPriority() {

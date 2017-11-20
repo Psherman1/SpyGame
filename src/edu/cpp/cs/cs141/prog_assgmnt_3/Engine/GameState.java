@@ -21,6 +21,7 @@ package edu.cpp.cs.cs141.prog_assgmnt_3.Engine;
  */
 public enum GameState {
 	Menu,
+	Saving,
 	Loading,
 	Playing,
 	Moving,
