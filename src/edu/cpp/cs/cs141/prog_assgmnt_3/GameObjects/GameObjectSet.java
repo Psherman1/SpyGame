@@ -13,24 +13,36 @@ package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Utilities;
 
 /**
- *
+ * @author Nick Huiting
+ * Class to set the game objects as an array.
  */
 public class GameObjectSet {
 	private GameObject[] objects = new GameObject[2];
 	private int count = 0;
 	
+	//Default constructor that takes a Gameobject as an argument and adds it to the array objects.
 	public GameObjectSet(GameObject obj) {
 		add(obj);
 	}
 	
+	// Default constructor.
 	public GameObjectSet() {
 		
 	}
 	
+	/**
+	 * Gets the counts of the array.
+	 * @return count as an integer type. 
+	 */
 	public int getCount() {
 		return count;
 	}
 	
+	/**
+	 * Gets index of the array.
+	 * @param index place at which you want to access
+	 * @return array if it can be accessed.
+	 */
 	public GameObject getAt(int index) {
 		if (count == 0)
 			return null;
@@ -41,6 +53,11 @@ public class GameObjectSet {
 		return index < 2 ? objects[index] : null;
 	}
 	
+	/**
+	 * Adds an object to the array of the object array.
+	 * @param obj from the GameObject Class that contains; postion, visibility, and symbol. 
+	 * @throws IndexOutOfBoundsException if the set is full.
+	 */
 	public void add(GameObject obj) throws IndexOutOfBoundsException {
 		if (count < 2) {
 			objects[count] = obj;
@@ -89,7 +106,7 @@ public class GameObjectSet {
 	
 	/**
 	 * Gets the symbol for the set in the space.  If the set isn't adjacent, an asterisk is returned to represent an non-visible space.
-	 * @return
+	 * @return the char symbol of the objects on the grid; '*','B','I','P','X','@','A', ' ', etc.
 	 */
 	public char getSymbol(boolean isVisible, boolean debug, boolean radar) {
 		if (count == 0)

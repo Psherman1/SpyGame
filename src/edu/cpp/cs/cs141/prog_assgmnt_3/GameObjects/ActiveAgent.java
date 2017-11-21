@@ -25,7 +25,6 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 public abstract class ActiveAgent extends GameObject {
 	
 	/**
-	 * 
 	 * @param pos from Position class gives both the X and Y coordinates
 	 */
 	protected ActiveAgent(Position pos) {
@@ -41,8 +40,7 @@ public abstract class ActiveAgent extends GameObject {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * @return Enum of VisibilityPriority; None, Elevated, AlwaysRender.
 	 */
 	@Override
 	public VisibilityPriority getPriority() {
