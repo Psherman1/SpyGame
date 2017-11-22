@@ -16,13 +16,15 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 
+import java.io.Serializable;
+
 import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 
 /**
  * @author JoseRodriguez
  *  Super class created for the Enemy class and Player class.
  */
-public abstract class ActiveAgent extends GameObject {
+public abstract class ActiveAgent extends GameObject implements Serializable {
 	
 	/**
 	 * @param pos from Position class gives both the X and Y coordinates

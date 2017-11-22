@@ -29,7 +29,7 @@ public class Enemy extends ActiveAgent implements Serializable {
 
 	/**
 	 * @param pos from the Position class. Sets the X and Y coordinates of the Enemy
-	 * poisiton on the grid.
+	 * position on the grid.
 	 */
 	public Enemy(Position pos) {
 		super(pos);

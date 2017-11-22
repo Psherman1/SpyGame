@@ -749,11 +749,11 @@ public class GameEngine {
 		debug = savedGame.getDebug();
 		lives = savedGame.getLives();
 		grid = savedGame.getGrid();
-		state = savedGame.getGameState();
+		//state = savedGame.getGameState();
 		player = savedGame.getPlayer();
 		enemies = savedGame.getEnemies();
 		rooms = savedGame.getRoom();
-		command = savedGame.getUICommand();
+		//command = savedGame.getUICommand();
 		lookDirection = savedGame.getCardinalDirection();
 		invincibleTurns = savedGame.getInvincibleTurns();
 	}
@@ -765,6 +765,7 @@ public class GameEngine {
 			command = UICommand.PrintGame;
 		}
 		catch (IOException e) {
+			//e.printStackTrace(System.out);
 			command = UICommand.PrintIOError;
 		}
 		
@@ -772,11 +773,13 @@ public class GameEngine {
 	}
 	
 	private void processLoadInput(String input) {
-		GameSave load = new GameSave();
 		try {
-			GameSave.loadGameSaveFromFile(input);
+			loadGame(input);
+			state = GameState.Playing;
+			command = UICommand.PrintGame;
 		}
 		catch (Exception ex) {
+			//ex.printStackTrace(System.out);
 			command = UICommand.PrintIOError;
 			state = GameState.Menu; //TODO if we were playing before, we want to let them keep playing.
 		}

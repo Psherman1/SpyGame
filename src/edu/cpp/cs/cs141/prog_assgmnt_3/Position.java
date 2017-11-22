@@ -16,10 +16,12 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
+import java.io.Serializable;
+
 /**
  * Immutable position class that includes an x and a y value.
  */
-public final class Position {
+public final class Position implements Serializable {
 	private final int x;
 	private final int y;
 

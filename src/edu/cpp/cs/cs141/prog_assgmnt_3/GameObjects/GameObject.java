@@ -16,6 +16,8 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 
+import java.io.Serializable;
+
 import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 
 /**
@@ -23,7 +25,7 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
  *  Class used to hold all the positions and symbols of the ActiveAgents(Player/Enemies) and the power ups.
  *  Also to set their visibility levels.
  */
-public abstract class GameObject {
+public abstract class GameObject implements Serializable {
 	
 	/**
 	 * Field for holding the X and Y of a coordinate.
