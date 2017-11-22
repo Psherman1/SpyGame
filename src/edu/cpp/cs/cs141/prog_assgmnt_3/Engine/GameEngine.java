@@ -33,7 +33,9 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObjectSet;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.IGameUI;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.UICommand;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.NotSerializableException;
 import java.util.Random;
 
 public class GameEngine {
@@ -248,7 +250,7 @@ public class GameEngine {
 				resetGame();
 				break;
 			case "2":
-				//TODO load
+				state = GameState.Loading;
 				break;
 			case "3":
 				command = UICommand.PrintHelp;
@@ -762,7 +764,6 @@ public class GameEngine {
 		try {
 			GameSave.saveGameToFile(input, save);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -772,11 +773,10 @@ public class GameEngine {
 		try {
 			GameSave.loadGameSaveFromFile(input);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			System.out.println("GameSave class not found.");
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (IOException i) {
+			i.printStackTrace();
 		}
 	}
 }

@@ -16,10 +16,12 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3.Engine;
 
+import java.io.Serializable;
+
 /**
  * Finite states of the game.  This describes how input will be processed.
  */
-public enum GameState {
+public enum GameState implements Serializable {
 	Menu,
 	Saving,
 	Loading,

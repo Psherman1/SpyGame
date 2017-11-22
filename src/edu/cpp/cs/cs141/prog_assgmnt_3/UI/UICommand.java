@@ -16,10 +16,12 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3.UI;
 
+import java.io.Serializable;
+
 /**
  * Command sent from the engine to the UI to perform a UI-specific action in lieu of displaying game information.
  */
-public enum UICommand {
+public enum UICommand implements Serializable {
 	PrintHelp,
 	PrintGame,
 	PrintLook,

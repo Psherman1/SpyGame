@@ -17,6 +17,8 @@
 
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
+import java.io.Serializable;
+
 import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.PositionException;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.ActiveAgent;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObject;
@@ -27,7 +29,7 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObjectSet;
  * represent Y values. Each cell contains a GameObjectSet that allows for multiple GameObjects to be stored
  * within a single cell.
  */
-public class Grid {
+public class Grid implements Serializable {
 	private GameObjectSet[][] grid;
 
 	/**

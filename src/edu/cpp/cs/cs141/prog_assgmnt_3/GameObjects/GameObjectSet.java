@@ -10,13 +10,15 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 
+import java.io.Serializable;
+
 import edu.cpp.cs.cs141.prog_assgmnt_3.Utilities;
 
 /**
  * @author Nick Huiting
  * Class to set the game objects as an array.
  */
-public class GameObjectSet {
+public class GameObjectSet implements Serializable  {
 	private GameObject[] objects = new GameObject[2];
 	private int count = 0;
 	

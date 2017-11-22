@@ -8,6 +8,8 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Grid;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.UICommand;
 
 import java.io.*;
+import java.io.Serializable;
+
 
 public class GameSave implements Serializable {
     // protected so that GameEngine can access them without getters.
@@ -102,9 +104,6 @@ public class GameSave implements Serializable {
     public int getInvincibleTurns() {
     	return invincibleTurns;
     }
-    
-    
-    
     
     
     /**

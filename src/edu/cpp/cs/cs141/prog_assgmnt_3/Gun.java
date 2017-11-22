@@ -16,11 +16,12 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
+import java.io.Serializable;
 
 /**
  * Simple Gun class that manages the ammo.
  */
-public class Gun {
+public class Gun implements Serializable {
 	private int ammo = 1;
 
 	/**

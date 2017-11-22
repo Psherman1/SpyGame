@@ -16,6 +16,8 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 
+import java.io.Serializable;
+
 import edu.cpp.cs.cs141.prog_assgmnt_3.Constants;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Gun;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
@@ -24,7 +26,7 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
  * @autho JoseRodriguez
  * This class represent the player. It extends ActiveAgent.
  */
-public class Player extends ActiveAgent {
+public class Player extends ActiveAgent implements Serializable  {
 	
 	/**
 	 * Used to set the gun for the player. 

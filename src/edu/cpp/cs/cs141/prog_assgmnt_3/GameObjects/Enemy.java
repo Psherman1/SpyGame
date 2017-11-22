@@ -17,13 +17,15 @@
 
 package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 
+import java.io.Serializable;
+
 import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 
 /**
  * @author JoseRodriguez
  *	This class represents the Enemy/Ninja.
  */
-public class Enemy extends ActiveAgent {
+public class Enemy extends ActiveAgent implements Serializable {
 
 	/**
 	 * @param pos from the Position class. Sets the X and Y coordinates of the Enemy

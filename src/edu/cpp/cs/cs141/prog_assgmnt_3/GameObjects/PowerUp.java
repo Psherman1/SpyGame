@@ -16,13 +16,15 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 
+import java.io.Serializable;
+
 import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 
 /**
  * @author TenzinTashitsang
  * A class for initializing the types of power ups, setting their positions, assigning their symbols.
  */
-public class PowerUp extends GameObject {
+public class PowerUp extends GameObject implements Serializable {
 	
 	/**
 	 * Default constructor of PowerUp.

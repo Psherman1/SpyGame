@@ -16,6 +16,8 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
 
+import java.io.Serializable;
+
 import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 
 /**
@@ -23,7 +25,7 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
  * A class representing the rooms on the grid.
  * Sets the position, if it contains a briefcase, the symbol for the room, and its visibility.
  */
-public class Room extends GameObject {
+public class Room extends GameObject implements Serializable {
 	/**
 	 * hasBriefcase is used to give the room a false if there is no briefcase and true if there is a briefcase.
 	 */

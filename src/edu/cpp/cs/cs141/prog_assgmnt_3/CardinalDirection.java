@@ -16,10 +16,12 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3;
 
+import java.io.Serializable;
+
 /**
  * A Helper Enum to assist with representing left, up, down, right, and none respectively.
  */
-public enum CardinalDirection {
+public enum CardinalDirection implements Serializable  {
 	Left,
 	Up,
 	Right,
