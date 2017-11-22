@@ -26,6 +26,7 @@ public enum UICommand implements Serializable {
 	PrintGame,
 	PrintLook,
 	PrintAlreadyLooked,
+	PrintIOError,
 	PrintMoveError,
 	PrintInputError,
 	PrintShootHit,

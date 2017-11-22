@@ -759,24 +759,26 @@ public class GameEngine {
 	}
 	
 	private void processSaveInput(String input) {
-		GameSave save = new GameSave();
-		save = createGameSaveObj();
 		try {
+			GameSave save = createGameSaveObj();
 			GameSave.saveGameToFile(input, save);
-		} catch (IOException e) {
-			e.printStackTrace();
+			command = UICommand.PrintGame;
 		}
+		catch (IOException e) {
+			command = UICommand.PrintIOError;
+		}
+		
+		state = GameState.Playing;
 	}
 	
 	private void processLoadInput(String input) {
 		GameSave load = new GameSave();
 		try {
 			GameSave.loadGameSaveFromFile(input);
-		} catch (ClassNotFoundException e) {
-			System.out.println("GameSave class not found.");
-			e.printStackTrace();
-		} catch (IOException i) {
-			i.printStackTrace();
+		}
+		catch (Exception ex) {
+			command = UICommand.PrintIOError;
+			state = GameState.Menu; //TODO if we were playing before, we want to let them keep playing.
 		}
 	}
 }

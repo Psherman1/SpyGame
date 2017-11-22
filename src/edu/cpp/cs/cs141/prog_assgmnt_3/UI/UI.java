@@ -111,6 +111,9 @@ public class UI implements IGameUI {
 			printShotResult(true);
 			printGame(result);
 			break;
+		case PrintIOError:
+			printIOError();
+			break;
 		case PrintShootMiss:
 			printShotResult(false);
 			printGame(result);
@@ -241,6 +244,10 @@ public class UI implements IGameUI {
 
 	private static void printMoveError() {
 		System.out.println("Invalid move.");
+	}
+	
+	private void printIOError() {
+		System.out.println("File error.");
 	}
 
 	private static void printShotResult(boolean hit) {
