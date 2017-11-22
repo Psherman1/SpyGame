@@ -117,14 +117,14 @@ public class GameEngine {
 			processMenuInput(input);
 			break;
 		case Saving:
-			processSaveInput(input);			
+			processSaveInput(input);
 			break;
 		case Loading:
 			processLoadInput(input);			
 			break;
 		case Playing:
 		case PlayingAfterLook:
-			procesPlayingInput(input);
+			processPlayingInput(input);
 			break;
 		case Looking:
 			processLookingInput(input);
@@ -269,7 +269,7 @@ public class GameEngine {
 	 * 
 	 * @param input
 	 */
-	private void procesPlayingInput(String input) {
+	private void processPlayingInput(String input) {
 		switch (input) {
 		case "1":
 			if (state == GameState.PlayingAfterLook) {
