@@ -32,13 +32,13 @@ public interface IGameUI {
 	
 	/**
 	 * 
-	 * @return
+	 * Later to be overridden as a result returned from the game for the UI to display.
 	 */
 	void updateUI(GameTurnResult result);
 	
 	/**
 	 * 
-	 * @return
+	 * Later to be overridden as welcome message prompt for user input.
 	 */
 	void initialize();
 }
