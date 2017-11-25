@@ -4,9 +4,11 @@
  *
  * Programming Assignment FinalProject
  *
- * <description-of-assignment>
+ * A simple yet interesting text-based game where a user is trapped in a square room and must locate 
+ * a briefcase hidden in a room, all while avoiding ninja assassins and using power ups to survive.
+ * The game is turn based, and allows for loading and saving progress.
  *
- *	 Team Members:
+ *	 Team Members (Broncodes):
  *   Nick Huiting
  *   Jose Rodriguez
  *   Thanh Doan
@@ -33,9 +35,7 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObjectSet;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.IGameUI;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.UICommand;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.NotSerializableException;
 import java.util.Random;
 
 public class GameEngine {
@@ -52,7 +52,7 @@ public class GameEngine {
 	private int invincibleTurns;
 	
 	/**
-	 * 
+	 * Creates a new engine given a UI.
 	 * @param ui
 	 */
 	private GameEngine(IGameUI ui) {
@@ -61,7 +61,7 @@ public class GameEngine {
 	}
 
 	/**
-	 * 
+	 * Starts the game.  A new engine is created given a user interface to send and receive input and results.
 	 * @param ui
 	 * @throws GameStateException
 	 */
@@ -108,7 +108,7 @@ public class GameEngine {
 	}
 	
 	/**
-	 * 
+	 * Processes input based on the state of the game.
 	 * @param input
 	 */
 	private void processInput(String input) {
@@ -142,6 +142,11 @@ public class GameEngine {
 		}
 	}
 	
+	/**
+	 * Process input in the shooting state.  Input is a cardinal direction to shoot.  After input has been processed,
+	 * the player's turn is over and ninjas are moved.
+	 * @param input
+	 */
 	private void processShootingInput(String input) {
 		int start, end;
 		boolean isX;
@@ -215,7 +220,7 @@ public class GameEngine {
 	}
 
 	/**
-	 * 
+	 * Processes input in the post game state.  This can occur if the player won or lost.
 	 * @param input
 	 */
 	private void processPostGameInput(String input) {
@@ -239,7 +244,7 @@ public class GameEngine {
 	}
 	
 	/**
-	 * 
+	 * Processes input in the menu state.  The input allows the user to choose what they would like to do.
 	 * @param input
 	 */
 	private void processMenuInput(String input) {
@@ -266,7 +271,7 @@ public class GameEngine {
 	}
 	
 	/**
-	 * 
+	 * Processes input in the playing state. This lets the user choose an option to execute in their turn.
 	 * @param input
 	 */
 	private void processPlayingInput(String input) {
@@ -312,7 +317,7 @@ public class GameEngine {
 	}
 	
 	/**
-	 * 
+	 * Processed input in the looking state.  The input represents a cardinal direction.
 	 * @param input
 	 */
 	private void processLookingInput(String input) {
@@ -515,9 +520,7 @@ public class GameEngine {
 				grid.move(enemies[i], hold[randomPos], null);					
 			}
 			catch (Exception ex) {
-//				System.out.println("Ninja move error." + enemies[i].getPosition()+"\n\n");
-//				for (Position p : hold)
-//					System.out.println(p);	
+				//ignored, the ninja just won't move this turn.
 			}	
 		}
 	}
@@ -728,17 +731,16 @@ public class GameEngine {
 		save.setDebug(debug);
 		save.setLives(lives);
 		save.setGrid(grid);
-		save.setGameState(state);
 		save.setPlayer(player);
 		save.setEnemies(enemies);
 		save.setRoom(rooms);
-		save.setUICommand(command);
 		save.setCardinalDirection(lookDirection);
 		save.setInvincibleTurns(invincibleTurns);
 		return save;
 	}
 
 	/**
+	 * Loads a saved game and sets engine states and fields.
 	 * WARNING: THIS DOES NOT LOAD A UI! Caller handles exceptions!
 	 * @param filename
 	 * @throws ClassNotFoundException
@@ -749,15 +751,17 @@ public class GameEngine {
 		debug = savedGame.getDebug();
 		lives = savedGame.getLives();
 		grid = savedGame.getGrid();
-		//state = savedGame.getGameState();
 		player = savedGame.getPlayer();
 		enemies = savedGame.getEnemies();
 		rooms = savedGame.getRoom();
-		//command = savedGame.getUICommand();
 		lookDirection = savedGame.getCardinalDirection();
 		invincibleTurns = savedGame.getInvincibleTurns();
 	}
 	
+	/**
+	 * Processes input in the save state.  The input string should be a filename.
+	 * @param input
+	 */
 	private void processSaveInput(String input) {
 		try {
 			GameSave save = createGameSaveObj();
@@ -765,13 +769,15 @@ public class GameEngine {
 			command = UICommand.PrintGame;
 		}
 		catch (IOException e) {
-			//e.printStackTrace(System.out);
 			command = UICommand.PrintIOError;
 		}
 		
 		state = GameState.Playing;
 	}
-	
+	/**
+	 * Process input in the load state.  The input string should be a filename.
+	 * @param input
+	 */
 	private void processLoadInput(String input) {
 		try {
 			loadGame(input);
@@ -779,7 +785,6 @@ public class GameEngine {
 			command = UICommand.PrintGame;
 		}
 		catch (Exception ex) {
-			//ex.printStackTrace(System.out);
 			command = UICommand.PrintIOError;
 			state = GameState.Menu; //TODO if we were playing before, we want to let them keep playing.
 		}

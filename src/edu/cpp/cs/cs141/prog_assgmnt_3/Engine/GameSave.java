@@ -1,3 +1,21 @@
+/**
+ * CS 141: Intro to Programming and Problem Solving
+ * Professor: Edwin Rodr&iacute;guez
+ *
+ * Programming Assignment FinalProject
+ *
+ * A simple yet interesting text-based game where a user is trapped in a square room and must locate 
+ * a briefcase hidden in a room, all while avoiding ninja assassins and using power ups to survive.
+ * The game is turn based, and allows for loading and saving progress.
+ *
+ *	 Team Members (Broncodes):
+ *   Nick Huiting
+ *   Jose Rodriguez
+ *   Thanh Doan
+ *   Tenzin Tashitsang
+ *   Dennis Jimenez
+ *   Michael Ackerman
+ */
 package edu.cpp.cs.cs141.prog_assgmnt_3.Engine;
 
 import edu.cpp.cs.cs141.prog_assgmnt_3.CardinalDirection;
@@ -10,18 +28,18 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.UI.UICommand;
 import java.io.*;
 import java.io.Serializable;
 
-
+/**
+ * 
+ * @author Nick Huiting
+ *
+ */
 public class GameSave implements Serializable {
-    // protected so that GameEngine can access them without getters.
-    // Note: we don't serialize the UI
     private boolean debug;
     private int lives;
     private Grid grid;
-    private GameState state;
     private Player player;
     private Enemy[] enemies;
     private Room[] rooms;
-    private UICommand command;
     private CardinalDirection lookDirection;
     private int invincibleTurns;
 
@@ -37,20 +55,12 @@ public class GameSave implements Serializable {
     	this.grid = grid;
     }
     
-    public void setGameState(GameState state) {
-    	this.state = state;
-    }
-    
     public void setEnemies(Enemy[] enemies) {
     	this.enemies = enemies;
     }
     
     public void setRoom(Room[] rooms) {
     	this.rooms = rooms;
-    }
-    
-    public void setUICommand(UICommand command) {
-    	this.command = command;
     }
     
     public void setCardinalDirection(CardinalDirection lookDirection) {
@@ -77,10 +87,6 @@ public class GameSave implements Serializable {
     	return grid;
     }
     
-    public GameState getGameState() {
-    	return state;
-    }
-    
     public Enemy[] getEnemies() {
     	return enemies;
     }
@@ -88,11 +94,7 @@ public class GameSave implements Serializable {
     public Room[] getRoom() {
     	return rooms;
     }
-    
-    public UICommand getUICommand() {
-    	return command;
-    }
-    
+
     public CardinalDirection getCardinalDirection() {
     	return lookDirection;
     }
@@ -118,7 +120,7 @@ public class GameSave implements Serializable {
     }
 
     /**
-     *
+     * Loads a saved game from a file given a relative filename..
      * @param filename name of path to file.
      * @return Returns a GameSave Object to be later loaded into GameEngine.
      */
