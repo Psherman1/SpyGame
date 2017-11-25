@@ -23,23 +23,23 @@ import java.io.Serializable;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 
 /**
- * @author JoseRodriguez
+ * @author Jose Rodriguez
  *	This class represents the Enemy/Ninja.
  */
 public class Enemy extends ActiveAgent implements Serializable {
 
 	/**
-	 * @param pos from the Position class. Sets the X and Y coordinates of the Enemy
-	 * position on the grid.
+	 * Creates a new enemy from a position.
+	 * @param pos The position on the grid.
 	 */
 	public Enemy(Position pos) {
 		super(pos);
 	}
 
 	/**
-	 * Setting the symbol for the enemy/ninja.
-	 * @param debug Used to allow the enemies to be seen for the debug mode.
-	 * @param radar Sets the visual distance of the enemy.
+	 * Gets the symbol for the enemy/ninja.
+	 * @param debug Used to allow the enemies to be seen for the debug mode. Ignored.
+	 * @param radar Sets the visual distance of the enemy.  Ignored.
 	 * @return the symbol of the Enemy. Used to Symbolically represent the 
 	 * enemy/ninja on the grid.
 	 */

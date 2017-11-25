@@ -23,13 +23,17 @@ import java.io.Serializable;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 
 /**
- * @author TenzinTashitsang
- * A class for initializing the types of power ups, setting their positions, assigning their symbols.
+ * @author Tenzin Tashitsang
+ * A class for initializing the types of power ups, setting their positions, returning their symbols.
  */
 public class PowerUp extends GameObject implements Serializable {
+	/**
+	 * The type of power up; invincibility, ammo, radar.
+	 */
+	private PowerUpType type;
 	
 	/**
-	 * Default constructor of PowerUp.
+	 * Creates a new power up with a position and a type.
 	 * @param pos used to assign a position to the powerUp on the grid.
 	 * @param type of the poweUp that is being used.
 	 */
@@ -37,11 +41,6 @@ public class PowerUp extends GameObject implements Serializable {
 		super(pos);
 		this.type = type;
 	}
-	
-	/**
-	 * The type of power up; invincibility, ammo, radar.
-	 */
-	private PowerUpType type;
 	
 	/**
 	 * Gets the type of power up.
@@ -55,7 +54,7 @@ public class PowerUp extends GameObject implements Serializable {
 	 * Gets the symbol of the powerUp depending on what is picked up.
 	 * @param debug used for allowing the item to be seen in debug mode.
 	 * @param radar shows the power up if the player is close enough to see.
-	 * @return The type of power up; 'R','I','A'.
+	 * @return The symbol of the power up: 'R','I','A'.
 	 */
 	@Override
 	public char getSymbol(boolean debug, boolean radar) {

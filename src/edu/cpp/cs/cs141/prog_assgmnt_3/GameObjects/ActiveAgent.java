@@ -24,12 +24,13 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 
 /**
  * @author JoseRodriguez
- *  Super class created for the Enemy class and Player class.
+ *  Super class created for the Enemy class and Player class.  These objects have the ability to move.
  */
 public abstract class ActiveAgent extends GameObject implements Serializable {
 	
 	/**
-	 * @param pos from Position class gives both the X and Y coordinates
+	 * Creates a new agent with a starting position.
+	 * @param pos The position in the grid.
 	 */
 	protected ActiveAgent(Position pos) {
 		super(pos);
@@ -45,7 +46,7 @@ public abstract class ActiveAgent extends GameObject implements Serializable {
 	
 	/**
 	 * Gets the priority with which to render the object.  Higher priorities are rendered on top of lower priorities.
-	 * @return Enum of VisibilityPriority; None, Elevated, AlwaysRender.
+	 * @return Elevated priority.  Agents are rendered on top of other objects such as power ups.
 	 */
 	@Override
 	public VisibilityPriority getPriority() {

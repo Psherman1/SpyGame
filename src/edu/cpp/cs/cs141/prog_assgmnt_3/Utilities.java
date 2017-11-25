@@ -30,7 +30,7 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.VisibilityPriority;
  */
 public final class Utilities {
 	/**
-	 * Returns whether p1 is of a greater priority than p2.  This is in lieu of the lack of operator overloads.
+	 * Returns whether p1 is of a greater priority than p2.  This is in lieu of operator overloads.
 	 * @param p1
 	 * @param p2
 	 * @return
@@ -39,6 +39,13 @@ public final class Utilities {
 		return p1.getLevel() > p2.getLevel();
 	}
 	
+	/**
+	 * Determines whether the position given is the space being looked at by a player looking in a certain direction.
+	 * @param playerPosition The position the player is in.
+	 * @param position The position being tested for looking.
+	 * @param direction The direction the player is looking.
+	 * @return
+	 */
 	public static boolean positionLooked(Position playerPosition, Position position, CardinalDirection direction) {
 		switch (direction) {
 		case None:

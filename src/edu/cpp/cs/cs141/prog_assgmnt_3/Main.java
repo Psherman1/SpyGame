@@ -22,10 +22,13 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Engine.GameEngine;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.IGameUI;
 import edu.cpp.cs.cs141.prog_assgmnt_3.UI.UI;
 
+/**
+ * The entry point of the game.  Creates a UI object and starts the game.
+ */
 public class Main {
 
 	/**
-	 * Entrypoint to launch the game.
+	 * Entry point to launch the game.  Handles global exceptions by printing a header and information.
 	 * @param args
 	 * @throws Exception 
 	 */

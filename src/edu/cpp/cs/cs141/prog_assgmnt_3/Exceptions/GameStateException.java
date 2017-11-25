@@ -22,7 +22,7 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Engine.GameState;
 
 /**
  * @author Nick Huiting
- * Class to handle game state exceptions.
+ * Game state exception.  Thrown is there is an invalid state.
  */
 public class GameStateException extends Exception {
 	
@@ -37,7 +37,7 @@ public class GameStateException extends Exception {
 	private GameState state;
 	
 	/**
-	 * 
+	 * Creates a new exception with the problematic state.
 	 * @param message
 	 * @param state
 	 */

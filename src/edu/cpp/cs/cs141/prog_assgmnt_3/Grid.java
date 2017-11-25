@@ -26,7 +26,7 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObject;
 import edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects.GameObjectSet;
 
 /**
- * Contains all game objects. Assumes top left corner is 0,0. Column values represent X values. Row values
+ * Contains all game objects. The top left corner is 0,0. Column values represent X values. Row values
  * represent Y values. Each cell contains a GameObjectSet that allows for multiple GameObjects to be stored
  * within a single cell.
  */
@@ -34,7 +34,7 @@ public class Grid implements Serializable {
 	private GameObjectSet[][] grid;
 
 	/**
-	 * Default Constructor for Grid. Creates a 2D array of GameObjectSets. Grid size based on the values set in
+	 * Creates a 2D array of GameObjectSets. Grid size based on the values set in
 	 * Constants.java
 	 */
 	public Grid() {
@@ -65,7 +65,7 @@ public class Grid implements Serializable {
 	}
 
 	/**
-	 * Helper method to reset the grid. Sets the grid to a new empty grid.
+	 * Sets the grid to a new empty grid.
 	 */
 	public void clear() {
 		grid = new GameObjectSet[Constants.GridColumns][Constants.GridRows];
@@ -136,8 +136,8 @@ public class Grid implements Serializable {
 	}
 
 	/**
-	 * Function to move an agent to a specific location. Updates the grid by removing the old location,
-	 * and updating the index.
+	 * Function to move an agent to a specific location. Updates the grid by removing the object from its old set, adding it to the new set at the desirec position,
+	 * and changing the objects position.
 	 * @param agent The agent to move.
 	 * @param pos The new position to move to.
 	 * @param invalidObjects An array of objects that cannot share the same space as the new position. Can be null.
@@ -159,7 +159,7 @@ public class Grid implements Serializable {
 	}
 
 	/**
-	 * Helper function to check if a position is valid by seeing if the position falls within the bounds of the
+	 * Helper function to check if a position is valid by checking if the position falls within the bounds of the
 	 * grid defined in the constants.
 	 * @param pos The position to validate.
 	 * @return true if valid, false if invalid.

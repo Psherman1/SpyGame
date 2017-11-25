@@ -27,7 +27,7 @@ public class Gun implements Serializable {
 	private int ammo = 1;
 
 	/**
-	 * Method to check if the gun as ammo.
+	 * Method to check if the gun has ammo.
 	 * @return true if there is ammo, false otherwise.
 	 */
 	public boolean hasAmmo() {

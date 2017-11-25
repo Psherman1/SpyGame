@@ -22,7 +22,7 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 
 /**
  * @author Nick Huiting
- * Class for catching the exceptions of the positions of objects on the grid.
+ * Exception for an invalid position.
  */
 public class PositionException extends Exception {
 	/**
@@ -36,7 +36,7 @@ public class PositionException extends Exception {
 	private final Position position;
 	
 	/**
-	 * 
+	 * Creates a new exception with a position.
 	 * @param message
 	 * @param position
 	 */
@@ -51,6 +51,6 @@ public class PositionException extends Exception {
 	@Override
 	public String toString() {
 		String message = super.toString(); 
-		return  message + "\n\nState: " + position;
+		return  message + "\n\nPosition: " + position;
 	}
 }

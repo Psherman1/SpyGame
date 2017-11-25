@@ -23,41 +23,39 @@ import java.io.Serializable;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Position;
 
 /**
- *  @autho Nick Huiting
- *  Class used to hold all the positions and symbols of the ActiveAgents(Player/Enemies) and the power ups.
- *  Also to set their visibility levels.
+ *  @author Nick Huiting
+ *  Super class used to represent a basic game object that can be added to a 2D grid and represented by a character symbol.
  */
 public abstract class GameObject implements Serializable {
-	
 	/**
-	 * Field for holding the X and Y of a coordinate.
+	 * Holds the objects position in 2D space.
 	 */
 	protected Position position;
 	
 	/**
-	 * Default Constructor.
-	 * @param pos from the Position class. Sets the X and Y coordinates of the object.
-	 * poisiton on the grid.
+	 * Creates a new object from a position.
+	 * @param pos The position on the grid.
 	 */
 	protected GameObject(Position pos) {
 		position = pos;
 	}
 
 	/**
-	 * @return position of the object using the type from the Position class. Sets the X and Y coordinates
-	 *  positon on the grid.
+	 * Gets the object's position in 2D space.
+	 * @return position of the object.
 	 */
 	public Position getPosition() {
 		return position;
 	}
 
 	/**
-	 * @return the char symbol of the object; '*','B','I','P','X','@','A' etc.
+	 * Gets a visual representation of the object.
+	 * @return the char symbol of the object.  This is used to represent objects on a text-based grid.
 	 */
 	public abstract char getSymbol(boolean debug, boolean radar);
 	
 	/**
-	 * @return Enum of VisibilityPriority; None, Elevated, AlwaysRender.
+	 * @return Always returns None by default.  Should be overridden.
 	 */
 	public VisibilityPriority getPriority() {
 		return VisibilityPriority.None;

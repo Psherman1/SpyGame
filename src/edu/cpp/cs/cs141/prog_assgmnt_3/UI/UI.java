@@ -25,20 +25,21 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Engine.GameState;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Engine.GameTurnResult;
 import edu.cpp.cs.cs141.prog_assgmnt_3.Exceptions.GameStateException;
 
+/**
+ * A text-based user interface that gets and displays information via a console command line.
+ */
 public class UI implements IGameUI {
-
-	/**
-	 * declares and initializes Scanner keyboard
-	 */
 	private static Scanner keyboard;
 
+	/**
+	 * Initializes the scanner to use the keyboard.
+	 */
 	public UI() {
 		keyboard = new Scanner(System.in);
 	}
 
 	/**
-	 * Get an input string value to process commands.
-	 * 
+	 * Get an input string value to process commands.  Displays a prompt based on a given state.
 	 * @return Returns an upper case string.
 	 */
 	@Override
@@ -135,7 +136,6 @@ public class UI implements IGameUI {
 
 	/**
 	 * Displays user's available Lives and power ups.
-	 * 
 	 */
 	private void printGame(GameTurnResult result) {
 		for (int i = 0; i < result.getGridLines().length; i++) {
@@ -165,35 +165,50 @@ public class UI implements IGameUI {
 		}
 	}
 
-	// prompt for user input.
+	/**
+	 * Initializes the UI by printing a welcome message.
+	 */
 	@Override
 	public void initialize() {
 		printWelcomeMessage();
 	}
 
+	/**
+	 * Prints a welcome message with a pipe border.
+	 */
 	private static void printWelcomeMessage() {
-		String message = "║ Welcome to Spy Game ║";
+		String message = "| Welcome to Spy Game |";
 		String border = "";
 		for (int i = 0; i < message.length() - 2; i++)
-			border += "═";
+			border += "-";
 
-		System.out.println("╔" + border + "╗");
+		System.out.println("*" + border + "*");
 		System.out.println(message);
-		System.out.println("╚" + border + "╝");
+		System.out.println("*" + border + "*");
 	}
 
+	/**
+	 * Prints the main menu prompt.
+	 */
 	private static void printMainMenu() {
 		System.out.println("1). New Game\t4). Quit");
 		System.out.println("2). Load Game");
 		System.out.println("3). Help");
 	}
 
+	/**
+	 * Prints the playing menu prompt.
+	 */
 	private static void printPlayingMenu() {
 		System.out.println("1). Look\t4). Shoot\t7). Toggle Debug");
 		System.out.println("2). Move\t5). Save\t");
 		System.out.println("3). Menu\t6). Load");
 	}
 
+	/**
+	 * Prints the game over menu prompt.  This can either be called from a winning or losing context.
+	 * @param won Whether the player won or lost.
+	 */
 	private static void printGameOverMenu(boolean won) {
 		if (won)
 			printVictory();
@@ -205,20 +220,32 @@ public class UI implements IGameUI {
 		System.out.println("3). Quit");
 	}
 
+	/**
+	 * Prints a menu for choosing a direction.
+	 */
 	private static void printDirectionMenu() {
 		System.out.println("W). Up\tD). Right");
 		System.out.println("A). Left");
 		System.out.println("S). Down");
 	}
 
+	/**
+	 * Prints a prompt for the user to choose a direction to look.
+	 */
 	private static void printLook() {
 		System.out.println("Choose a direction to look.");
 	}
 
+	/**
+	 * Prints a message informing the user they can only look once per turn.
+	 */
 	private static void printAlreadyLooked() {
 		System.out.println("You may only look once per turn.");
 	}
 
+	/**
+	 * Displays a description of the game.
+	 */
 	private static void printHelp() {
 		System.out.println(
 				"You just entered a pitch-black square room of length " + Constants.GridColumns + " for each side.");
@@ -239,41 +266,65 @@ public class UI implements IGameUI {
 		System.out.println("Good luck, have fun.\n");
 	}
 
+	/**
+	 * Prints a generic input error telling the user that their input was invalid.
+	 */
 	private static void printInputError() {
 		System.out.println("Invalid input.  Please try again.");
 	}
 
+	/**
+	 * Prints an error telling the user their move was invalid.
+	 */
 	private static void printMoveError() {
 		System.out.println("Invalid move.");
 	}
 	
+	/**
+	 * Prints an IO error, resulting from loading or saving.
+	 */
 	private void printIOError() {
 		System.out.println("File error.");
 	}
 
+	/**
+	 * Prints a message informing the user whether their shot hit a ninja or not.
+	 * @param hit
+	 */
 	private static void printShotResult(boolean hit) {
 		System.out.println("Shot " + (hit ? "hit!" : "missed."));
 	}
 
+	/**
+	 * Prints an error message informing the user they have no more ammo remaining.
+	 */
 	private static void printNoAmmo() {
 		System.out.println("You cannot fire your gun because you have no ammo.");
 	}
 
+	/**
+	 * Prints a death message.
+	 */
 	private static void printDeath() {
 		System.out.println("You died, you lost one life.");
 	}
 
+	/**
+	 * Prints a victory message.
+	 */
 	private static void printVictory() {
 		System.out.println("Congratulations. You found the briefcase !!!");
 		System.out.println("You won !!!");
 	}
 
+	/**
+	 * Prints a closing message.
+	 */
 	private static void printEnd() {
 		System.out.println("Thank you for playing :)");
 	}
 
 	/**
-	 * 
 	 * User quits the game and saves his progress in a new file.
 	 */
 	private String processSaveInput() {
@@ -286,7 +337,6 @@ public class UI implements IGameUI {
 
 	/**
 	 * The user reloads a previous saved file and continues the game.
-	 * 
 	 */
 	private String processLoadInput() {
 		System.out.println("\nPlease enter the name of the save file you wish to load: ");

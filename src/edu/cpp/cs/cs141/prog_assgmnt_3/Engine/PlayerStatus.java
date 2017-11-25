@@ -18,13 +18,23 @@
  */
 package edu.cpp.cs.cs141.prog_assgmnt_3.Engine;
 
-
-public class PlayerStatus {
-	private boolean radar;
-	private boolean invincibility;
-	private boolean hasAmmo; 
-	private int invincibleTurns;
+/**
+ * @author Nick Huiting
+ * Represents the status of the player to the UI for a given turn.  This class is immutable.
+ */
+public final class PlayerStatus {
+	private final boolean radar;
+	private final boolean invincibility;
+	private final boolean hasAmmo; 
+	private final int invincibleTurns;
 	
+	/**
+	 * Creates a new status with player information.
+	 * @param radar
+	 * @param invincibility
+	 * @param hasAmmo
+	 * @param invincibleTurns
+	 */
 	public PlayerStatus(boolean radar, boolean invincibility, boolean hasAmmo, int invincibleTurns) {
 		this.radar = radar;
 		this.invincibility = invincibility;
@@ -32,18 +42,34 @@ public class PlayerStatus {
 		this.invincibleTurns = invincibleTurns;
 	}
 	
+	/**
+	 * How many turns remain where the player is invincible. 
+	 * @return
+	 */
 	public int getInvincibleTurns() {
 		return invincibleTurns;
 	}
 	
+	/**
+	 * Whether the player has ammo remaining.
+	 * @return
+	 */
 	public boolean hasAmmo() {
 		return hasAmmo;
 	}
 	
+	/**
+	 * Whether the player has radar active.
+	 * @return
+	 */
 	public boolean hasRadar() {
 		return radar;
 	}
 	
+	/**
+	 * Whether the player is invincible this turn.
+	 * @return
+	 */
 	public boolean isInvincible() {
 		return invincibility;
 	}

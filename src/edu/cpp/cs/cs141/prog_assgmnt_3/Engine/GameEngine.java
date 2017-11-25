@@ -38,6 +38,9 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.UI.UICommand;
 import java.io.IOException;
 import java.util.Random;
 
+/**
+ * The engine of the game, which processes input, keeps track of states, and interfaces with the UI.
+ */
 public class GameEngine {
 	private boolean debug;
 	private IGameUI ui;
@@ -110,8 +113,9 @@ public class GameEngine {
 	/**
 	 * Processes input based on the state of the game.
 	 * @param input
+	 * @throws GameStateException 
 	 */
-	private void processInput(String input) {
+	private void processInput(String input) throws GameStateException {
 		switch (state) {
 		case Menu:
 			processMenuInput(input);
@@ -139,6 +143,10 @@ public class GameEngine {
 		case Victory:
 			processPostGameInput(input);
 			break;
+		case Quit:
+			break;
+		default:
+			throw new GameStateException("Cannot process input in an unknown state.", state);
 		}
 	}
 	
@@ -526,7 +534,7 @@ public class GameEngine {
 	}
 	
 	/**
-	 * 
+	 * Removes an enemy from an array of enemies and returns the new resulting array.
 	 * @param arr
 	 * @param obj
 	 * @return
@@ -726,7 +734,7 @@ public class GameEngine {
 	 * @return
 	 */
 	private GameSave createGameSaveObj() {
-		// Note... we don't save the UI! If you start a game from the CMD line, we can load it up into a gui.
+		// Note: we don't save the UI
 		GameSave save = new GameSave();
 		save.setDebug(debug);
 		save.setLives(lives);
@@ -734,14 +742,13 @@ public class GameEngine {
 		save.setPlayer(player);
 		save.setEnemies(enemies);
 		save.setRoom(rooms);
-		save.setCardinalDirection(lookDirection);
+		save.setLookDirection(lookDirection);
 		save.setInvincibleTurns(invincibleTurns);
 		return save;
 	}
 
 	/**
 	 * Loads a saved game and sets engine states and fields.
-	 * WARNING: THIS DOES NOT LOAD A UI! Caller handles exceptions!
 	 * @param filename
 	 * @throws ClassNotFoundException
 	 * @throws IOException
@@ -754,7 +761,7 @@ public class GameEngine {
 		player = savedGame.getPlayer();
 		enemies = savedGame.getEnemies();
 		rooms = savedGame.getRoom();
-		lookDirection = savedGame.getCardinalDirection();
+		lookDirection = savedGame.getLookDirection();
 		invincibleTurns = savedGame.getInvincibleTurns();
 	}
 	

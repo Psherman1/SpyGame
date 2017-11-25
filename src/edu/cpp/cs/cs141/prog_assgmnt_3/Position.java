@@ -28,7 +28,7 @@ public final class Position implements Serializable {
 	private final int y;
 
 	/**
-	 *
+	 * Creates a new position given an X and Y.
 	 * @param x x value of the position
 	 * @param y y value of the position
 	 */
@@ -108,7 +108,7 @@ public final class Position implements Serializable {
 	}
 	
 	/**
-	 * Helper method to compare two positions
+	 * Helper method to compare two positions.
 	 * @param pos other position to compare to
 	 * @return true if the two positions are equal, otherwise false.
 	 */

@@ -33,14 +33,12 @@ public interface IGameUI {
 	String getKeyInput(GameState state) throws GameStateException;
 	
 	/**
-	 * 
-	 * Later to be overridden as a result returned from the game for the UI to display.
+	 * Displays a result from a game turn.
 	 */
 	void updateUI(GameTurnResult result);
 	
 	/**
-	 * 
-	 * Later to be overridden as welcome message prompt for user input.
+	 * General purpose initialization method.  This should be called only once.
 	 */
 	void initialize();
 }

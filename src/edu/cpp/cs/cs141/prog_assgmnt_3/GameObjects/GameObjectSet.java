@@ -24,34 +24,38 @@ import edu.cpp.cs.cs141.prog_assgmnt_3.Utilities;
 
 /**
  * @author Nick Huiting
- * Class to set the game objects as an array.
+ * Class to hold game objects.  Can hold 0, 1, or 2 objects.
  */
 public class GameObjectSet implements Serializable  {
 	private GameObject[] objects = new GameObject[2];
 	private int count = 0;
 	
-	//Default constructor that takes a Gameobject as an argument and adds it to the array objects.
+	/**
+	 * Creates a new set with one object.
+	 */
 	public GameObjectSet(GameObject obj) {
 		add(obj);
 	}
 	
-	// Default constructor.
+	/**
+	 * Creates an empty game object set.
+	 */
 	public GameObjectSet() {
 		
 	}
 	
 	/**
-	 * Gets the counts of the array.
-	 * @return count as an integer type. 
+	 * Gets the number of objects stored in the set.
+	 * @return count. 
 	 */
 	public int getCount() {
 		return count;
 	}
 	
 	/**
-	 * Gets index of the array.
+	 * Gets an object at the specified index.
 	 * @param index place at which you want to access
-	 * @return array if it can be accessed.
+	 * @return The object if it can be accessed, null otherwise.
 	 */
 	public GameObject getAt(int index) {
 		if (count == 0)
@@ -64,8 +68,8 @@ public class GameObjectSet implements Serializable  {
 	}
 	
 	/**
-	 * Adds an object to the array of the object array.
-	 * @param obj from the GameObject Class that contains; postion, visibility, and symbol. 
+	 * Adds an object to the set of objects.
+	 * @param obj from the GameObject Class. 
 	 * @throws IndexOutOfBoundsException if the set is full.
 	 */
 	public void add(GameObject obj) throws IndexOutOfBoundsException {
@@ -116,6 +120,7 @@ public class GameObjectSet implements Serializable  {
 	
 	/**
 	 * Gets the symbol for the set in the space.  If the set isn't adjacent, an asterisk is returned to represent an non-visible space.
+	 * The symbol returned is dependent on the priority levels of the objects it contains.
 	 * @return the char symbol of the objects on the grid; '*','B','I','P','X','@','A', ' ', etc.
 	 */
 	public char getSymbol(boolean isVisible, boolean debug, boolean radar) {
@@ -140,24 +145,5 @@ public class GameObjectSet implements Serializable  {
 		return Utilities.priorityGreater(objects[0].getPriority(), objects[1].getPriority()) ? 
 				objects[0].getSymbol(debug, radar) : 
 				objects[1].getSymbol(debug, radar);
-	}
-
-	/**
-	 * Determines whether the object is contained within the set.
-	 */
-	public boolean search(GameObject entry) {
-		
-		if (count == 0)
-			return false;
-		
-		if (count == 1) {
-			return objects[0] == entry;
-		}
-		
-		if (count == 2) {
-			return objects[0] == entry || objects[1] == entry;
-		}
-		
-		return false;
 	}
 }

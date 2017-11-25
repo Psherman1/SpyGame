@@ -29,9 +29,8 @@ import java.io.*;
 import java.io.Serializable;
 
 /**
- * 
  * @author Nick Huiting
- *
+ *	A serializable class to save parts of the Game engine that can then be reloaded at a later time.
  */
 public class GameSave implements Serializable {
     private boolean debug;
@@ -43,73 +42,137 @@ public class GameSave implements Serializable {
     private CardinalDirection lookDirection;
     private int invincibleTurns;
 
+    /**
+     * Whether the game was in debug mode.
+     * @param debug
+     */
     public void setDebug(boolean debug) {
     	this.debug = debug;
     }
     
+    /**
+     * How many lives the player has.
+     * @param lives
+     */
     public void setLives(int lives) {
     	this.lives = lives;
     }
     
+    /**
+     * The grid being played in.
+     * @param grid
+     */
     public void setGrid(Grid grid) {
     	this.grid = grid;
     }
     
+    /**
+     * All current enemies.
+     * @param enemies
+     */
     public void setEnemies(Enemy[] enemies) {
     	this.enemies = enemies;
     }
     
+    /**
+     * All the rooms in the game.
+     * @param rooms
+     */
     public void setRoom(Room[] rooms) {
     	this.rooms = rooms;
     }
     
-    public void setCardinalDirection(CardinalDirection lookDirection) {
+    /**
+     * The direction the player is looking.
+     * @param lookDirection
+     */
+    public void setLookDirection(CardinalDirection lookDirection) {
     	this.lookDirection = lookDirection;
     }
     
+    /**
+     * The player in the game.
+     * @param player
+     */
     public void setPlayer(Player player) {
     	this.player = player;
     }
     
+    /**
+     * How many turns the player is still invincible for.
+     * @param invincibleTurns
+     */
     public void setInvincibleTurns(int invincibleTurns) {
     	this.invincibleTurns = invincibleTurns;
     }
     
+    /**
+     * Whether the game was in debug mode.
+     * @return
+     */
     public boolean getDebug() {
     	return debug;
     }
     
+    /**
+     * How many lives the player has.
+     * @return
+     */
     public int getLives() {
     	return lives;
     }
     
+    /**
+     * The grid being played in.
+     * @return
+     */
     public Grid getGrid() {
     	return grid;
     }
     
+    /**
+     * All current enemies.
+     * @return
+     */
     public Enemy[] getEnemies() {
     	return enemies;
     }
     
+    /**
+     * All the rooms in the game.
+     * @return
+     */
     public Room[] getRoom() {
     	return rooms;
     }
 
-    public CardinalDirection getCardinalDirection() {
+    /**
+     * The direction the player is looking.
+     * @return
+     */
+    public CardinalDirection getLookDirection() {
     	return lookDirection;
     }
     
+    /**
+     * The player in the game.
+     * @return
+     */
     public Player getPlayer() {
     	return player;
     }
     
+    /**
+     * How many turns the player is still invincible for.
+     * @return
+     */
     public int getInvincibleTurns() {
     	return invincibleTurns;
     }
     
-    
     /**
-     * Caller of this Function needs to handle io exceptions!
+     * Saves a game to a file with the given relative filename.
+     * Throws an IO exception if an error is encountered.
      */
     public static void saveGameToFile(String filename, GameSave gameSaveObj) throws IOException {
         FileOutputStream fileOut = new FileOutputStream(filename);

@@ -23,8 +23,19 @@ package edu.cpp.cs.cs141.prog_assgmnt_3.GameObjects;
  * A class that used the enum to have the different visibility states of agents and items on the grid.
  */
 public enum VisibilityPriority {
+	/**
+	 * Standard priority.
+	 */
 	None(0),
+	
+	/**
+	 * Elevated priority.  This will be rendered instead of a standard priority. 
+	 */
 	Elevated(1),
+	
+	/**
+	 * Always render no matter what.  This will render on top of all others.
+	 */
 	AlwaysRender(2);
 
 	/**
@@ -33,10 +44,10 @@ public enum VisibilityPriority {
     private int level;
 
     /**
-     * Default constructor.
+     * Creates a new priority with a level. 
      * @param level as an integer value that is associated to the VisibiblePriority.
      */
-    VisibilityPriority(int level) {
+    private VisibilityPriority(int level) {
         this.level = level;
     }
 
