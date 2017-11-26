@@ -5,3 +5,6 @@
 -11/6/17 - Discussed grid milestones and assigned some roles.
 -11/7/17 - Talked about Grid implementation and the coordinate system
 -11/14/17 - Collaborated on moving and power ups.
+-11/19/17 - Talked about how the game would implement loading and saving.
+-11/20/17 - Worked out what needed to be done for the next milestone.
+-11/21/17 - Discussed implementation of serialization and exception handling.
