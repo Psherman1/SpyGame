@@ -142,4 +142,12 @@ public class Player extends ActiveAgent implements Serializable  {
 	public char getSymbol(boolean debug, boolean radar) {
 		return 'P';
 	}
+	
+	/**
+	 * Players are set to always render.
+	 */
+	@Override
+	public VisibilityPriority getPriority() {
+		return VisibilityPriority.AlwaysRender;
+	}
 }

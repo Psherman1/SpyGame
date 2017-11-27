@@ -130,13 +130,12 @@ public class GameObjectSet implements Serializable  {
 		if (count == 1)
 			return debug || (isVisible || objects[0].getPriority() == VisibilityPriority.AlwaysRender) ? objects[0].getSymbol(debug, radar) : '*';
 		
-		
 		if (isVisible == false) {
-			if (objects[0].getPriority() == VisibilityPriority.AlwaysRender)
-				return objects[0].getSymbol(debug, radar);
-			
 			if (objects[1].getPriority() == VisibilityPriority.AlwaysRender)
 				return objects[1].getSymbol(debug, radar);
+			
+			if (objects[0].getPriority() == VisibilityPriority.AlwaysRender)
+				return objects[0].getSymbol(debug, radar);
 			
 			if (debug == false)
 				return '*';
