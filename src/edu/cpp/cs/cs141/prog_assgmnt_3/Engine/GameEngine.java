@@ -724,8 +724,9 @@ public class GameEngine {
 		player.usePowerUp(powerUp);
 		grid.remove(powerUp, powerUp.getPosition());
 		
+		//set the turns to one more than the invincibility turns because the current turn does not count against the player.
 		if (powerUp.getType() == PowerUpType.Invincibility)
-			invincibleTurns = Constants.InvincibleTurns;
+			invincibleTurns = Constants.InvincibleTurns + 1;
 	}
 
 
