@@ -93,8 +93,7 @@ public class GameEngine {
 			processInput(input);
 			
 			//Create a result of the turn.
-			boolean canPrintGame = state == GameState.Playing || state == GameState.PlayingAfterLook || state == GameState.Moving; 
-			GameTurnResult result = canPrintGame ? 
+			GameTurnResult result = canPrintGame() ? 
 					new GameTurnResult(
 							grid.getBoardString(player.getPosition(),
 							lookDirection, 
@@ -108,6 +107,16 @@ public class GameEngine {
 			//Request that the user interface update given the result of the turn.
 			ui.updateUI(result);
 		} while (state != GameState.Quit);
+	}
+	
+	/**
+	 * Determines whether the game should be printed in the current state.
+	 * @return 
+	 */
+	private boolean canPrintGame() {
+		return state == GameState.Playing || 
+				state == GameState.PlayingAfterLook ||
+				state == GameState.Moving;
 	}
 	
 	/**
@@ -236,7 +245,7 @@ public class GameEngine {
 		case "1":
 			state = GameState.Playing;
 			command = UICommand.PrintGame;
-			resetGame();
+			resetGame(true);
 			break;
 		case "2":
 			state = GameState.Loading;
@@ -260,7 +269,7 @@ public class GameEngine {
 			case "1":
 				state = GameState.Playing;
 				command = UICommand.PrintGame;
-				resetGame();
+				resetGame(true);
 				break;
 			case "2":
 				state = GameState.Loading;
@@ -395,12 +404,24 @@ public class GameEngine {
 			
 			command = UICommand.PrintGame;
 			
-			grid.move(player, newPos, canEnterRoom ? null : rooms);
+			//if there are already two objects in the space the player wants to move,
+			// then it means there's a ninja in that space, so kill the player
+			GameObjectSet set = grid.get(newPos);
+			if (set != null && set.getCount() == 2) {
+				killPlayer();
+			}
+			else
+				grid.move(player, newPos, canEnterRoom ? null : rooms);
 			
 			if (checkRoomVictory()) {
 				state = GameState.Victory;
 				return;
 			}
+			
+			//before we move the ninjas, check to see if the player moved into a ninja space.
+			//if any ninjas share the same space as the player, kill the player
+			if (checkNinjaCollisions())
+				return;
 			
 			//move the ninjas
 			processMoveNinjas();
@@ -440,20 +461,27 @@ public class GameEngine {
 		for (Enemy ninja : enemies) {
 			if (player.isInvincible() == false && ninja.getPosition().posEquals(player.getPosition()))
 			{
-				command = UICommand.PrintDead;
-				state = GameState.Playing;
-				resetGame();
-				
-				lives--;
-				if (lives == 0) {
-					state = GameState.Dead;
-					command = UICommand.PrintEnd;
-				}
+				killPlayer();
 				return true;
 			}
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Kills the player, decrementing lives and resetting the game.  If the player has no more lives, the game is over.
+	 */
+	private void killPlayer() {
+		command = UICommand.PrintDead;
+		state = GameState.Playing;
+		resetGame(false);
+		
+		lives--;
+		if (lives == 0) {
+			state = GameState.Dead;
+			command = UICommand.None;
+		}
 	}
 	
 	/**
@@ -567,8 +595,10 @@ public class GameEngine {
 	/**
 	 * Resets all game objects and creates a new randomized game board.
 	 */
-	private void resetGame() {
-		lives = Constants.PlayerLives;
+	private void resetGame(boolean resetLives) {
+		if (resetLives)
+			lives = Constants.PlayerLives;
+		
 		grid = new Grid();
 		player = new Player();
 		enemies = new Enemy[Constants.EnemyCount];

@@ -128,6 +128,7 @@ public class UI implements IGameUI {
 			break;
 		case PrintDead:
 			printDeath();
+			printGame(result);
 			break;
 		default:
 			break;
@@ -135,7 +136,7 @@ public class UI implements IGameUI {
 	}
 
 	/**
-	 * Displays user's available Lives and power ups.
+	 * Displays user's available Lives and power ups, as well as the grid.
 	 */
 	private void printGame(GameTurnResult result) {
 		for (int i = 0; i < result.getGridLines().length; i++) {
@@ -213,7 +214,7 @@ public class UI implements IGameUI {
 		if (won)
 			printVictory();
 		else
-			printDeath();
+			prinGameOver();
 
 		System.out.println("1). New Game");
 		System.out.println("2). Load Game");
@@ -308,13 +309,19 @@ public class UI implements IGameUI {
 	private static void printDeath() {
 		System.out.println("You died, you lost one life.");
 	}
+	
+	/**
+	 * Prints a death message.
+	 */
+	private static void prinGameOver() {
+		System.out.println("You lost all your lives.  Game over.");
+	}
 
 	/**
 	 * Prints a victory message.
 	 */
 	private static void printVictory() {
-		System.out.println("Congratulations. You found the briefcase !!!");
-		System.out.println("You won !!!");
+		System.out.println("Congratulations. You found the briefcase!!!");
 	}
 
 	/**

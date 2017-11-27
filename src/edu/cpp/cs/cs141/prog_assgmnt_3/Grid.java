@@ -99,10 +99,10 @@ public class Grid implements Serializable {
 	/**
 	 * Getter for a grid cell.
 	 * @param pos position of the cell to get from the grid
-	 * @return GameObjectSet at that space.
+	 * @return GameObjectSet at that space, or null if the space is invalid.
 	 */
 	public GameObjectSet get(Position pos) {
-		return grid[pos.getX()][pos.getY()];
+		return validatePos(pos) ? grid[pos.getX()][pos.getY()] : null;
 	}
 
 	/**
