@@ -657,24 +657,6 @@ public class GameEngine {
 		rooms[briefCaseRoom].setHasBriefcaseTrue();	
 	}
 	
-	/* In progress, more efficient alternative to resetRooms()
-	private void resetRooms() {
-		int tempArray[] = {1, 4, 7, 4, 1};
-		Position pos;
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				pos = new Position(tempArray[i], tempArray[j]);
-				grid.add(new Room(pos), pos);
-			}
-		}
-		
-		Random rand = new Random(); // TODO briefcase isn't working yet
-		pos = new Position(tempArray[rand.nextInt(3)], tempArray[rand.nextInt(3)]);
-		grid.add(new Room(pos, true), pos);
-		
-	}
-	*/
-	
 	/**
 	 * Adds enemies to valid random locations.
 	 * The coordinates are first randomized then checked for validity
