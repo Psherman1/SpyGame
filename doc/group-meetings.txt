@@ -1,6 +1,6 @@
 -10/30/17 - Discussed program architecture and get people up to speed with the Github repo.
 -10/31/17 - Got people using git to push and pull, added classes and discussed architecture choices.
--11/1/17 - Planned out TODO list items after a basic architecture was added.
+-11/1/17 - Planned out to-do list items after a basic architecture was added.
 -11/5/17 - Fixed some merge issues and briefly discussed branches.
 -11/6/17 - Discussed grid milestones and assigned some roles.
 -11/7/17 - Talked about Grid implementation and the coordinate system
@@ -8,3 +8,5 @@
 -11/19/17 - Talked about how the game would implement loading and saving.
 -11/20/17 - Worked out what needed to be done for the next milestone.
 -11/21/17 - Discussed implementation of serialization and exception handling.
+-11/27/17 - Discussed roles for the presentation and assigned tasks to members for test cases.
+-11/28/17 - Talked about content of the report and discussed test cases.
